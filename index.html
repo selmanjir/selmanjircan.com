@@ -387,7 +387,7 @@ html,body{margin:0}
     d_bal:'balance ',d_clk:' clicks'
   };
   var S={
-    tr:{bal:'Dengele',chaos:'Kaos',copy:'Kopyala',copied:'Kopyalandı',pick:'Bir kutu seç.',done:'Denge sağlandı ✓',morder:'DENGE',mchaos:'KAOS',gtitle:'Mini oyun: Kaos ile savaş',ghow:function(T){return 'Sitedeki imleçler artık düşmanın ve çoğalıyorlar. Dokunurlarsa can gider. Yaklaştıklarında tıkla ya da dokun: darbe dalgası çevrendekileri yok eder. '+T+' klonu yok et, kaos çöksün.'},again:'Tekrar oyna',close:'Kapat',fight:'Kaos ile savaş',w1:'Kaos artıyor…',w2:'Site dağılmaya başladı. Dengelemek ister misin?',w3:'Kritik seviye! Dengele ya da savaş.',ptitle:'Kaos kontrolü ele geçirdi',ptext:'Site dağıldı. Ya tek tuşla dengele ya da kaosla kendin savaş.',wtitle:'Denge sağlandı!',win:function(s,b){return 'Bütün klonlar çöktü, site artık dengede. Skor '+s+' · en iyi '+b},ltitle:'Kaos kazandı',lose:function(k,T,s,b){return k+' klon yok ettin, hedef '+T+'. Skor '+s+' · en iyi '+b+'. Oynamak istersen tekrar dene, siteyi gezmek istersen dengele.'},frz:'DONDU',hit:'DARBE',ghowT:function(T){return 'Sitedeki imleçler artık düşmanın ve çoğalıyorlar. Dokunurlarsa can gider. Sol alttaki yuvarlakla hareket et; yaklaştıklarında sağdaki DARBE tuşuna bas, çevrendekiler yok olsun. '+T+' klonu yok et, kaos çöksün.'},memo:'Gerçek sistemlerde de işim bu: kaosu alıp dengeye çevirmek.',reach:'Bana yaz',browse:'Siteyi gez',balgo:'Dengele ve gez',htitle:'Hoş geldin',htext:'Bu site iki şekilde gezilir. Sakin modda her şey yerinde durur. Kaos modunda site yavaş yavaş dağılır; dengelemek ya da savaşmak sana kalır. Alttaki tuşla istediğin an değiştirebilirsin.',hcalm:'Sakin: kariyerimi incele',hchaos:'Kaosu serbest bırak',away:'⚠ Kaos büyüyor… geri dön',ranks:['Düzen çırağı','Denge ustası','Kaos terbiyecisi','Entropi düşmanı'],status:function(e,b){return 'kaos %'+e+' · denge %'+b},clients:'İstemciler',
+    tr:{bal:'Dengele',chaos:'Kaos',copy:'Kopyala',copied:'Kopyalandı',pick:'Bir kutu seç.',done:'Denge sağlandı ✓',morder:'DENGE',mchaos:'KAOS',gtitle:'Mini oyun: Kaos ile savaş',ghow:function(T){return 'Sitedeki imleçler artık düşmanın ve çoğalıyorlar. Dokunurlarsa can gider. Yaklaştıklarında tıkla ya da dokun: darbe dalgası çevrendekileri yok eder. Elmasları topla: kırmızı bomba, sarı yavaşlatır, mavi dondurur. '+T+' klonu yok et, kaos çöksün.'},again:'Tekrar oyna',close:'Kapat',fight:'Kaos ile savaş',w1:'Kaos artıyor…',w2:'Site dağılmaya başladı. Dengelemek ister misin?',w3:'Kritik seviye! Dengele ya da savaş.',ptitle:'Kaos kontrolü ele geçirdi',ptext:'Site dağıldı. Ya tek tuşla dengele ya da kaosla kendin savaş.',wtitle:'Denge sağlandı!',win:function(s,b){return 'Bütün klonlar çöktü, site artık dengede. Skor '+s+' · en iyi '+b},ltitle:'Kaos kazandı',lose:function(k,T,s,b){return k+' klon yok ettin, hedef '+T+'. Skor '+s+' · en iyi '+b+'. Oynamak istersen tekrar dene, siteyi gezmek istersen dengele.'},frz:'DONDU',hit:'DARBE',pw:['BOMBA','YAVAŞ','DONDU'],ghowT:function(T){return 'Sitedeki imleçler artık düşmanın ve çoğalıyorlar. Dokunurlarsa can gider. Sol alttaki yuvarlakla hareket et; yaklaştıklarında sağdaki DARBE tuşuna bas, çevrendekiler yok olsun. Elmasları topla: kırmızı bomba, sarı yavaşlatır, mavi dondurur. '+T+' klonu yok et, kaos çöksün.'},memo:'Gerçek sistemlerde de işim bu: kaosu alıp dengeye çevirmek.',reach:'Bana yaz',browse:'Siteyi gez',balgo:'Dengele ve gez',htitle:'Hoş geldin',htext:'Bu site iki şekilde gezilir. Sakin modda her şey yerinde durur. Kaos modunda site yavaş yavaş dağılır; dengelemek ya da savaşmak sana kalır. Alttaki tuşla istediğin an değiştirebilirsin.',hcalm:'Sakin: kariyerimi incele',hchaos:'Kaosu serbest bırak',away:'⚠ Kaos büyüyor… geri dön',ranks:['Düzen çırağı','Denge ustası','Kaos terbiyecisi','Entropi düşmanı'],status:function(e,b){return 'kaos %'+e+' · denge %'+b},clients:'İstemciler',
       hud:function(k,T,s){return 'klon '+k+'/'+T+' · skor '+s},
       n:{c:'İstemciler: web, mobil ve dış sistemler. Her şey buradan başlar.',k:'Kong: API gateway. İstekleri karşılar, yönlendirir, sınırlar.',g:'GraphQL: istemcinin tam ihtiyacı kadar veri istediği API katmanı.',n:'Nest.js: düzenli, modüler servisler için ana çatım.',e:'Express.js: hafif ve hızlı servisler için.',r:'Redis: önbellek. Aynı soruyu veritabanına iki kez sormamak için.',q:'RabbitMQ: mesaj kuyruğu. Servisler birbirini beklemeden konuşur.',w:'Node.js worker: kuyruktaki işleri arka planda tüketir.',m:'MySQL: ilişkisel veri.',o:'MongoDB: doküman tabanlı veri.'},
       p:['Hakkımda','Yolculuk','Sistem haritası','Terminal','İletişim','Dili değiştir: English','Kaos / denge','Mini oyun: kaos ile savaş','E-postayı kopyala'],ph:'Komut ara…',
@@ -401,7 +401,7 @@ html,body{margin:0}
       langok:'Dil: Türkçe',langbad:'Kullanım: lang tr | lang en',t_chaos:'Kaos serbest.',t_balance:'Denge sağlandı.',t_game:'Kaos ile savaş başlıyor.',
       dog:'Hav! Sahibim şu an kod yazıyor.',sudo:'Yetki reddedildi. Ama işe almak istersen: contact',vim:'Vim açıldı. Çıkmak için… şaka, kapattım bile.',exit:'Buradan çıkış yok. Sekmeyi kapatabilirsin ama kalmanı tercih ederim.',
       nofile:'Böyle bir dosya yok. ls ile bak.',nf404:function(c){return 'komut bulunamadı: '+c+'. help yazabilirsin.'}},
-    en:{bal:'Balance',chaos:'Chaos',copy:'Copy',copied:'Copied',pick:'Pick a box.',done:'Balance restored ✓',morder:'BALANCE',mchaos:'CHAOS',gtitle:'Mini game: Fight the chaos',ghow:function(T){return 'The cursors on this site are now your enemies, and they multiply. A touch costs a life. When they get close, click or tap: a shockwave destroys the ones around you. Destroy '+T+' clones and the chaos collapses.'},again:'Play again',close:'Close',fight:'Fight the chaos',w1:'Chaos is rising…',w2:'The site is starting to fall apart. Want to balance it?',w3:'Critical! Balance or fight.',ptitle:'Chaos has taken over',ptext:'The site fell apart. Balance it with one button, or fight the chaos yourself.',wtitle:'Balance restored!',win:function(s,b){return 'Every clone collapsed and the site is balanced. Score '+s+' · best '+b},ltitle:'Chaos won',lose:function(k,T,s,b){return 'You destroyed '+k+' clones, the goal is '+T+'. Score '+s+' · best '+b+'. Play again if you like, or balance the site to look around.'},frz:'FROZEN',hit:'HIT',ghowT:function(T){return 'The cursors on this site are now your enemies, and they multiply. A touch costs a life. Move with the round pad at the bottom left; when they get close, press HIT on the right to destroy the ones around you. Destroy '+T+' clones and the chaos collapses.'},memo:'This is what I do with real systems too: take the chaos and turn it into balance.',reach:'Write to me',browse:'Browse the site',balgo:'Balance and browse',htitle:'Welcome',htext:'There are two ways to visit this site. In calm mode everything stays in place. In chaos mode the site slowly falls apart; balancing it or fighting back is up to you. You can switch any time with the button below.',hcalm:'Calm: just the career',hchaos:'Release the chaos',away:'⚠ Chaos is growing… come back',ranks:['Order apprentice','Balance master','Chaos tamer','Enemy of entropy'],status:function(e,b){return 'chaos '+e+'% · balance '+b+'%'},clients:'Clients',
+    en:{bal:'Balance',chaos:'Chaos',copy:'Copy',copied:'Copied',pick:'Pick a box.',done:'Balance restored ✓',morder:'BALANCE',mchaos:'CHAOS',gtitle:'Mini game: Fight the chaos',ghow:function(T){return 'The cursors on this site are now your enemies, and they multiply. A touch costs a life. When they get close, click or tap: a shockwave destroys the ones around you. Collect the diamonds: red is a bomb, yellow slows, blue freezes. Destroy '+T+' clones and the chaos collapses.'},again:'Play again',close:'Close',fight:'Fight the chaos',w1:'Chaos is rising…',w2:'The site is starting to fall apart. Want to balance it?',w3:'Critical! Balance or fight.',ptitle:'Chaos has taken over',ptext:'The site fell apart. Balance it with one button, or fight the chaos yourself.',wtitle:'Balance restored!',win:function(s,b){return 'Every clone collapsed and the site is balanced. Score '+s+' · best '+b},ltitle:'Chaos won',lose:function(k,T,s,b){return 'You destroyed '+k+' clones, the goal is '+T+'. Score '+s+' · best '+b+'. Play again if you like, or balance the site to look around.'},frz:'FROZEN',hit:'HIT',pw:['BOMB','SLOW','FREEZE'],ghowT:function(T){return 'The cursors on this site are now your enemies, and they multiply. A touch costs a life. Move with the round pad at the bottom left; when they get close, press HIT on the right to destroy the ones around you. Collect the diamonds: red is a bomb, yellow slows, blue freezes. Destroy '+T+' clones and the chaos collapses.'},memo:'This is what I do with real systems too: take the chaos and turn it into balance.',reach:'Write to me',browse:'Browse the site',balgo:'Balance and browse',htitle:'Welcome',htext:'There are two ways to visit this site. In calm mode everything stays in place. In chaos mode the site slowly falls apart; balancing it or fighting back is up to you. You can switch any time with the button below.',hcalm:'Calm: just the career',hchaos:'Release the chaos',away:'⚠ Chaos is growing… come back',ranks:['Order apprentice','Balance master','Chaos tamer','Enemy of entropy'],status:function(e,b){return 'chaos '+e+'% · balance '+b+'%'},clients:'Clients',
       hud:function(k,T,s){return 'clones '+k+'/'+T+' · score '+s},
       n:{c:'Clients: web, mobile and external systems. Everything starts here.',k:'Kong: API gateway. It receives, routes and rate-limits requests.',g:'GraphQL: an API layer where the client asks for exactly the data it needs.',n:'Nest.js: my main framework for tidy, modular services.',e:'Express.js: for light, fast services.',r:'Redis: cache. So the database is not asked the same question twice.',q:'RabbitMQ: message queue. Services talk without waiting on each other.',w:'Node.js worker: consumes queued jobs in the background.',m:'MySQL: relational data.',o:'MongoDB: document data.'},
       p:['About','Journey','System map','Terminal','Contact','Switch language: Türkçe','Chaos / balance','Mini game: fight the chaos','Copy email'],ph:'Search commands…',
@@ -657,7 +657,7 @@ html,body{margin:0}
     setOrder(false); pre=true; document.body.classList.add('game');
     var dpr=Math.min(devicePixelRatio||1,2); gcv.width=W*dpr; gcv.height=H*dpr; gcv.hidden=false;
     if(mouse.x<0){ mouse.x=W/2; mouse.y=H/2; }
-    G={px:mouse.x,py:mouse.y,en:[],sparks:[],waves:[],texts:[],rain:[],lives:3,inv:0,cd:0,kills:0,target:small?70:100,max:small?36:70,score:0,t:0,spawn:0,shake:0,flash:0,bolt:0,slow:0,fin:0,finR:0,hs:''};
+    G={px:mouse.x,py:mouse.y,en:[],sparks:[],waves:[],texts:[],rain:[],lives:3,inv:0,cd:0,kills:0,target:small?70:100,max:small?36:70,score:0,t:0,spawn:0,shake:0,flash:0,bolt:0,slow:0,pk:null,pkT:240,slowT:0,frz:0,fin:0,finR:0,hs:''};
     /* sitedeki imleçler oyunun ilk düşmanları olur */
     start.slice(0,small?8:16).forEach(function(q){ G.en.push(mk(Math.max(0,Math.min(W,q[0])),Math.max(0,Math.min(H,q[1])))) });
     for(var i=0;i<(small?40:80);i++) G.rain.push({x:rnd(0,W*1.3),y:rnd(0,H),l:rnd(14,34),v:rnd(13,22)});
@@ -672,6 +672,13 @@ html,body{margin:0}
   function burst(x,y,n,v,red){ for(var j=0;j<n;j++){ var a=rnd(0,6.28), q=rnd(1,v); G.sparks.push({x:x,y:y,vx:Math.cos(a)*q,vy:Math.sin(a)*q,l:1,red:red}); } }
   function shove2(R,F){
     var g=G; for(var i=0;i<g.en.length;i++){ var e=g.en[i], dx=e.x-g.px, dy=e.y-g.py, d=Math.sqrt(dx*dx+dy*dy)||1; if(d<R){ var f=(R-d)/R*F; e.vx+=dx/d*f; e.vy+=dy/d*f; } }
+  }
+  var GEM=['#ff3b3b','#ffd166','#4fd8e0'];
+  function bomb(x,y){
+    var g=G, k=0; g.waves.push({x:x,y:y,r:20,m:300}); g.shake=18;
+    for(var i=g.en.length-1;i>=0;i--){ var e=g.en[i], dx=e.x-x, dy=e.y-y; if(dx*dx+dy*dy<280*280){ burst(e.x,e.y,7,6,true); g.en.splice(i,1); k++; } }
+    if(k){ g.kills+=k; var pts=k*k*10; g.score+=pts; g.texts.push({x:x,y:y-26,t:'x'+k+'  +'+pts,l:1}); if(k>=5) g.slow=26; }
+    if(g.kills>=g.target&&!g.fin){ g.fin=1; g.finR=20; g.slow=0; g.flash=0; }
   }
   function blast(){
     var g=G; if(g.cd>0||g.fin) return;
@@ -692,8 +699,11 @@ html,body{margin:0}
   function stepGame(active){
     var g=G, i, j, e, dx, dy, d;
     var ts=g.slow>0?.3:1; if(g.slow>0) g.slow--;
-    if(joy){ mouse.x=Math.max(8,Math.min(W-8,g.px+joy.x*40)); mouse.y=Math.max(8,Math.min(H-8,g.py+joy.y*40)); }
-    var mvx=(mouse.x-g.px)*.45, mvy=(mouse.y-g.py)*.45, mv=Math.sqrt(mvx*mvx+mvy*mvy); if(mv>8){ mvx*=8/mv; mvy*=8/mv; } g.px+=mvx*ts; g.py+=mvy*ts;
+    var cap=isTouch?5:8, mvx, mvy, mv;
+    if(joy){ mvx=joy.x*cap; mvy=joy.y*cap; }
+    else { mvx=(mouse.x-g.px)*.45; mvy=(mouse.y-g.py)*.45; mv=Math.sqrt(mvx*mvx+mvy*mvy); if(mv>cap){ mvx*=cap/mv; mvy*=cap/mv; } }
+    g.px=Math.max(8,Math.min(W-8,g.px+mvx*ts)); g.py=Math.max(8,Math.min(H-8,g.py+mvy*ts));
+    if(joy){ mouse.x=g.px; mouse.y=g.py; }
     if(g.cd>0) g.cd--; if(g.inv>0) g.inv--;
     if(active&&!g.fin){
       g.t+=ts; g.spawn+=(.03+g.t/60*.0016)*ts*(W<640?.65:1);
@@ -714,22 +724,41 @@ html,body{margin:0}
     if(active&&Math.random()<.004) g.bolt=1;
     if(g.bolt>0){ gx.globalAlpha=g.bolt*.13; gx.fillStyle='#d9ffe9'; gx.fillRect(0,0,W,H); g.bolt-=.09; gx.globalAlpha=1; }
     /* klon imleçler */
-    var spd=1.9+Math.min(9,g.t/60*.045);
+    var spd=(1.9+Math.min(9,g.t/60*.045))*(isTouch?.72:1);
+    if(active){ if(g.frz>0) g.frz--; if(g.slowT>0) g.slowT--; }
+    var em=g.frz>0?0:(g.slowT>0?.4:1), ec=g.frz>0?'#4fd8e0':(g.slowT>0?'#ffd166':'#ff6b5e');
     for(i=g.en.length-1;i>=0;i--){
       e=g.en[i]; dx=g.px-e.x; dy=g.py-e.y; d=Math.sqrt(dx*dx+dy*dy)||1;
       if(g.fin){ if(d<g.finR){ burst(e.x,e.y,6,6,true); g.en.splice(i,1); continue; } }
       else {
         var dir=(active||d>250)?1:-1;
-        e.vx+=dx/d*.17*ts*dir; e.vy+=dy/d*.17*ts*dir;
+        e.vx+=dx/d*.17*ts*dir*em; e.vy+=dy/d*.17*ts*dir*em;
         for(j=0;j<i;j++){ var o=g.en[j], sx=e.x-o.x, sy=e.y-o.y, sd2=sx*sx+sy*sy; if(sd2<484&&sd2>.01){ var sq=Math.sqrt(sd2), pf=(22-sq)/22*.5; e.vx+=sx/sq*pf; e.vy+=sy/sq*pf; o.vx-=sx/sq*pf; o.vy-=sy/sq*pf; } }
         var v=Math.sqrt(e.vx*e.vx+e.vy*e.vy), mx=spd+e.sp; if(v>mx){ var nv=Math.max(mx,v*.9); e.vx*=nv/v; e.vy*=nv/v; }
-        e.x+=e.vx*ts; e.y+=e.vy*ts;
-        if(active&&g.inv<=0&&d<15){
+        e.x+=e.vx*ts*em; e.y+=e.vy*ts*em;
+        if(active&&g.inv<=0&&g.frz<=0&&d<15){
           g.lives--; g.inv=85; g.flash=1; g.shake=16; g.waves.push({x:g.px,y:g.py,r:14,m:200}); shove2(260,11);
           if(g.lives<=0){ endGame(false); return; }
         }
       }
-      arrow(e.x,e.y,Math.atan2(dy,dx)-3.927,e.fast?1.35:1.1,e.fast?'#ff6b5e':'#1a0d0c',e.fast?'#ffd0cb':'#ff6b5e');
+      arrow(e.x,e.y,Math.atan2(dy,dx)-3.927,e.fast?1.35:1.1,e.fast?ec:'#1a0d0c',e.fast?'#ffffff':ec);
+    }
+    /* elmaslar: kırmızı bomba, sarı yavaşlatır, mavi dondurur */
+    if(active&&!g.fin&&!g.pk&&--g.pkT<=0){ g.pk={x:rnd(40,W-40),y:rnd(90,H-(isTouch?200:70)),k:Math.random()*3|0,l:480}; g.pkT=rnd(280,400); }
+    if(g.pk){
+      var pk=g.pk, pc=GEM[pk.k]; pk.l--; dx=pk.x-g.px; dy=pk.y-g.py;
+      if(active&&dx*dx+dy*dy<36*36){
+        g.texts.push({x:pk.x,y:pk.y,t:L().pw[pk.k],l:1.3}); burst(pk.x,pk.y,16,6,false);
+        if(pk.k===0) bomb(pk.x,pk.y); else if(pk.k===1) g.slowT=330; else g.frz=220;
+        g.pk=null;
+      } else if(pk.l<=0||g.fin) g.pk=null;
+      else {
+        var ps=13+Math.sin(g.t/9)*2.5;
+        gx.save(); gx.translate(pk.x,pk.y); gx.rotate(.7854); gx.globalAlpha=pk.l<100?.35+.65*((pk.l/8|0)%2):1;
+        gx.shadowColor=pc; gx.shadowBlur=22; gx.fillStyle=pc; gx.fillRect(-ps,-ps,ps*2,ps*2);
+        gx.shadowBlur=0; gx.fillStyle='#ffffff'; gx.globalAlpha*=.85; gx.fillRect(-ps*.4,-ps*.4,ps*.8,ps*.8);
+        gx.restore(); gx.globalAlpha=1;
+      }
     }
     for(i=g.sparks.length-1;i>=0;i--){
       var s=g.sparks[i]; s.x+=s.vx*ts; s.y+=s.vy*ts; s.vx*=.95; s.vy*=.95; s.l-=.04*ts;
@@ -793,8 +822,8 @@ html,body{margin:0}
     if((game||pre)&&e.pointerType==='touch'){
       if(joy&&e.pointerId===joy.id){ joyMove(e); return; }
       if(!tch||e.pointerId!==tch.id) return;
-      mouse.x=Math.max(8,Math.min(W-8,tch.hx+(e.clientX-tch.sx)*1.6));
-      mouse.y=Math.max(8,Math.min(H-8,tch.hy+(e.clientY-tch.sy)*1.6));
+      mouse.x=Math.max(8,Math.min(W-8,tch.hx+(e.clientX-tch.sx)*1.2));
+      mouse.y=Math.max(8,Math.min(H-8,tch.hy+(e.clientY-tch.sy)*1.2));
       if(Math.abs(e.clientX-tch.sx)+Math.abs(e.clientY-tch.sy)>12) tch.moved=true;
       return;
     }
