@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Selman Jir Can · Backend Developer</title>
+<meta name="description" content="Selman Jir Can: backend developer ve yazılım mühendisi. Kaosu dengeye çeviren kişisel site.">
+<link rel="canonical" href="https://www.selmanjircan.com/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#060b09">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.selmanjircan.com/">
+<meta property="og:title" content="Selman Jir Can · Backend Developer">
+<meta property="og:description" content="Selman Jir Can: backend developer ve yazılım mühendisi. Kaosu dengeye çeviren kişisel site.">
+<meta property="og:image" content="https://www.selmanjircan.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: ortada sakin tek bir içerik sütunu; arkasında kısık kod yağmuru. Kaosta yağmur ve imleçler dağınık, dengede hizalı. Sitenin kendisi beceriyi gösterir: canlı sistem haritası, terminal, komut paleti, oyun. Tek (koyu) tema, bilinçli tercih. */
+:root{
+  color-scheme:dark;
+  --bg:#060b09; --surface:#0c1512; --ink:#dfeee6; --muted:#86a093; --line:#1b2c25; --green:#4fe08a; --dim:#1f7a4a; --head:#d9ffe9; --bug:#ff6b5e; --cyan:#4fd8e0;
+  --display:"Syne","Arial Black",system-ui,sans-serif;
+  --body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{background:var(--bg); color:var(--ink); font-family:var(--body); font-size:17px; line-height:1.6; overflow-x:hidden}
+#rain{position:fixed; inset:0; width:100%; height:100%; z-index:0; opacity:.5; transition:opacity 1.2s}
+body.order #rain{opacity:.32}
+
+.wrap{
+  position:relative; z-index:1; max-width:940px; margin:0 auto; padding-block:24px 150px;
+  padding-left:max(16px,env(safe-area-inset-left,0px)); padding-right:max(16px,env(safe-area-inset-right,0px));
+  display:flex; flex-direction:column; gap:84px;
+  background:color-mix(in srgb,var(--bg) 88%,transparent);
+}
+.wrap > *{padding-inline:clamp(0px,3vw,40px); min-width:0}
+section{scroll-margin-top:24px}
+
+nav{display:flex; align-items:center; justify-content:space-between; gap:16px; font-family:var(--mono); font-size:13px}
+.logo{color:var(--green); font-weight:600; text-decoration:none}
+.links{display:flex; gap:22px}
+.links a{color:var(--muted); text-decoration:none}
+.links a:hover{color:var(--ink)}
+.tools{display:flex; gap:8px; align-items:center}
+.seg{display:flex; border:1px solid var(--line); border-radius:4px; overflow:hidden}
+.seg button{font:600 12px var(--mono); background:none; color:var(--muted); border:0; padding:7px 10px; cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--green); color:var(--bg)}
+.btn{font:600 13px var(--mono); color:var(--green); background:none; border:1px solid var(--dim); border-radius:4px; padding:9px 14px; cursor:pointer; text-decoration:none; display:inline-block}
+.btn:hover{border-color:var(--green); background:color-mix(in srgb,var(--green) 12%,transparent)}
+.btn.solid{background:var(--green); color:var(--bg); border-color:var(--green)}
+.btn.solid:hover{background:var(--head)}
+.btn.sm{padding:6px 10px; font-size:12px}
+:focus-visible{outline:2px solid var(--green); outline-offset:3px}
+
+.eyebrow{font-family:var(--mono); font-size:13px; letter-spacing:.08em; text-transform:uppercase; color:var(--green); margin:0}
+h1{font-family:var(--display); font-weight:800; font-size:clamp(3rem,11vw,7.5rem); line-height:.92; letter-spacing:-.04em; margin:18px 0 0; display:flex; flex-direction:column; align-items:flex-start}
+h1 span{display:inline-block}
+.lede{font-size:clamp(1.15rem,2.4vw,1.6rem); line-height:1.35; max-width:25em; margin:28px 0 0; text-wrap:balance; color:var(--muted)}
+.lede b{font-weight:500; color:var(--ink)}
+.cta{display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-top:32px}
+.cta small{font-family:var(--mono); font-size:12px; color:var(--muted)}
+h2{font-family:var(--display); font-weight:600; font-size:clamp(1.4rem,3vw,2rem); letter-spacing:-.02em; margin:0 0 20px; text-wrap:balance; display:inline-block}
+.sub{color:var(--muted); margin:-8px 0 20px; max-width:38em}
+p{margin:0}
+code{font-family:var(--mono); font-size:.88em; color:var(--green)}
+
+.about p{max-width:38em}
+.about p + p{margin-top:14px}
+.bento{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:32px}
+.item{padding:24px 22px 28px; background:var(--surface)}
+.item h3{font-family:var(--display); font-weight:600; font-size:1.15rem; margin:0 0 8px}
+.item p{color:var(--muted); font-size:.97rem}
+
+.tl{display:grid; gap:36px}
+.tl article{display:grid; grid-template-columns:132px minmax(0,1fr); gap:6px 24px}
+.yr{font-family:var(--mono); font-size:13px; color:var(--green); padding-top:5px; font-variant-numeric:tabular-nums}
+.tl h3{font-family:var(--display); font-weight:600; font-size:1.2rem; margin:0}
+.place{color:var(--muted); font-size:.95rem}
+.tl ul{margin:10px 0 0; padding-left:18px; color:var(--muted); font-size:.97rem; display:grid; gap:4px}
+.tl li::marker{color:var(--dim)}
+
+.mapbox{border:1px solid var(--line); background:var(--surface); overflow-x:auto}
+#map{display:block; width:100%; min-width:640px; height:auto}
+#map .edge{stroke:var(--line); stroke-width:1.5}
+#map .cluster{fill:none; stroke:var(--line); stroke-dasharray:5 5}
+#map .cl{fill:var(--muted); font:11px var(--mono)}
+#map .node{cursor:pointer}
+#map .node rect{fill:var(--bg); stroke:var(--dim); transition:stroke .3s}
+#map .node text{fill:var(--ink); font:13px var(--mono); text-anchor:middle; dominant-baseline:central; pointer-events:none}
+#map .node:hover rect,#map .node:focus rect,#map .node.on rect{stroke:var(--green)}
+#map .node:focus{outline:none}
+#map .pk{fill:var(--green); transition:opacity .3s}
+#map .pk.bad{fill:var(--bug)}
+#map .pk.lost{opacity:0}
+.mstat{display:flex; flex-wrap:wrap; align-items:center; gap:10px 22px; font-family:var(--mono); font-size:13px; color:var(--muted); margin-top:12px; font-variant-numeric:tabular-nums}
+.mstat b{color:var(--ink); font-weight:600}
+.mstat #mlost{color:var(--bug)}
+body.order .mstat #mlost{color:var(--green)}
+.badge{border:1px solid var(--bug); color:var(--bug); padding:3px 8px; border-radius:3px; font-weight:600; letter-spacing:.06em}
+body.order .badge{border-color:var(--green); color:var(--green)}
+.mstat .btn{margin-left:auto}
+#ninfo{font-family:var(--mono); font-size:13px; color:var(--muted); margin-top:12px; min-height:3em}
+
+.term{border:1px solid var(--line); border-radius:8px; background:var(--surface); font-family:var(--mono); font-size:14px; overflow:hidden}
+.tbar{display:flex; align-items:center; gap:6px; padding:10px 14px; border-bottom:1px solid var(--line); color:var(--muted); font-size:12px}
+.tbar i{width:10px; height:10px; border-radius:50%; background:var(--line)}
+.tbar span{margin-left:8px}
+#tout{padding:14px 16px 4px; max-height:340px; overflow:auto; white-space:pre-wrap; overflow-wrap:anywhere; line-height:1.5}
+#tout .c{color:var(--green)}
+#tout .m{color:var(--muted)}
+#tout a{color:var(--green)}
+.tline{display:flex; gap:8px; align-items:center; padding:6px 16px 14px}
+.tline label{color:var(--green); white-space:nowrap}
+#tin{flex:1; min-width:0; background:none; border:0; outline:0; color:var(--ink); font:16px var(--mono); padding:0; caret-color:var(--green)}
+
+.clist{border-top:1px solid var(--line); margin-top:8px}
+.crow{display:grid; grid-template-columns:120px minmax(0,1fr) auto; gap:16px; align-items:center; padding:16px 4px; border-bottom:1px solid var(--line); color:var(--ink); text-decoration:none}
+.ck{font-family:var(--mono); font-size:13px; color:var(--green)}
+.cv{font-family:var(--display); font-weight:600; font-size:clamp(1.05rem,2.6vw,1.4rem); overflow-wrap:anywhere; transition:color .3s}
+#mail{user-select:all}
+.ca{font-family:var(--mono); color:var(--muted)}
+a.crow:hover .cv,a.crow:hover .ca{color:var(--green)}
+@media (max-width:640px){.crow{grid-template-columns:78px minmax(0,1fr) auto; gap:10px}}
+footer{font-family:var(--mono); font-size:13px; color:var(--muted)}
+
+[data-hit]{transition:color .5s, transform .8s cubic-bezier(.2,1.5,.4,1)}
+[data-hit].hit,[data-hit].hit h3{color:var(--green)}
+
+#chaos{position:fixed; inset:0; pointer-events:none; z-index:20; overflow:hidden}
+.cur{position:absolute; left:0; top:0; will-change:transform; transform-origin:4px 2px}
+.cur .ar{display:block; width:22px; height:22px; filter:drop-shadow(0 0 5px var(--green))}
+.cur .bg{display:none; width:34px; height:34px; margin:-15px 0 0 -13px; color:var(--bug); filter:drop-shadow(0 0 6px var(--bug))}
+.cur.gold .bg{color:var(--gold); filter:drop-shadow(0 0 8px var(--gold))}
+.cur i{transition:opacity .3s}
+body.order .cur i{opacity:0}
+body.game #chaos,body.game #core{display:none}
+body.game #rain{opacity:.1!important}
+body.game{cursor:none}
+.gbox{cursor:auto}
+#gcv{position:fixed; inset:0; width:100%; height:100%; z-index:44; touch-action:none}
+.lt{transition:transform .25s,color .25s}
+.lt:hover{transform:translateY(-7px); color:var(--green)}
+h1 .ol{color:transparent; -webkit-text-stroke:2px var(--green)}
+h1 .ol.hit,h1 .ol .lt:hover{color:var(--green)}
+.caret{animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+@keyframes glitch{0%,91%,97%,100%{text-shadow:none} 92%{text-shadow:3px 0 var(--bug),-3px 0 var(--cyan)} 94%{text-shadow:-4px 0 var(--bug),4px 0 var(--cyan)} 96%{text-shadow:2px 0 var(--bug),-2px 0 var(--cyan)}}
+body.e2 h1{animation:glitch 2.8s steps(1) infinite}
+body.e3 h1{animation-duration:1.3s}
+@keyframes nudge{from{box-shadow:0 0 0 0 color-mix(in srgb,var(--green) 75%,transparent)} to{box-shadow:0 0 0 12px color-mix(in srgb,var(--green) 0%,transparent)}}
+body.e1 #toggle{animation:nudge 2.4s ease-out infinite}
+body.e2 #toggle{animation-duration:1.4s}
+body.e3 #toggle{animation-duration:.8s}
+#dock{transition:border-color .6s}
+.wrap{transition:opacity .4s, background-color .8s}
+body.e2 .wrap{background:color-mix(in srgb,var(--bg) 72%,transparent)}
+body.e3 .wrap{background:color-mix(in srgb,var(--bg) 56%,transparent); animation:shake .3s steps(2) infinite}
+@keyframes shake{0%{transform:translate(1.5px,-1px)} 50%{transform:translate(-1.5px,1px)}}
+body.e3 .cur .ar{filter:drop-shadow(0 0 6px var(--bug))}
+body.e3 .cur i{background:var(--bug)}
+@media (prefers-reduced-motion:reduce){body.e3 .wrap{animation:none}}
+body.e2 #dock{border-color:var(--bug)}
+body.e2 #dock .pct{color:var(--bug)}
+@media (prefers-reduced-motion:reduce){body.e2 h1{animation:none}}
+body.game .wrap{opacity:.22; pointer-events:none}
+body.game #dock{opacity:.3; pointer-events:none}
+.rip.big{border-width:2px; animation:ripbig 1.2s ease-out forwards}
+@keyframes ripbig{from{transform:scale(.3); opacity:1} to{transform:scale(11); opacity:0}}
+.pop{position:absolute; font:600 18px var(--mono); color:var(--head); margin:-28px 0 0 -10px; animation:pop .8s ease-out forwards}
+@keyframes pop{to{transform:translateY(-34px); opacity:0}}
+#core{position:fixed; z-index:19; width:0; height:0; pointer-events:none; opacity:0; transition:opacity .5s}
+body.order #core{opacity:1; transition:opacity .9s .5s}
+#core span{position:absolute; border-radius:50%}
+#core .bk{left:-84px; top:-84px; width:168px; height:168px; background:radial-gradient(circle,color-mix(in srgb,var(--bg) 94%,transparent) 52%,transparent 70%)}
+#core .dot{left:-8px; top:-8px; width:16px; height:16px; background:var(--green); box-shadow:0 0 26px 7px color-mix(in srgb,var(--green) 55%,transparent); animation:pulse 2.4s ease-in-out infinite}
+#core .r1{left:-24px; top:-24px; width:48px; height:48px; border:1px dashed var(--green); animation:spin 12s linear infinite}
+#core .r2{left:-70px; top:-70px; width:140px; height:140px; border:1px solid var(--line)}
+@keyframes pulse{50%{transform:scale(1.35)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+#gov{position:fixed; inset:0; z-index:45; display:grid; place-items:center; padding:16px; pointer-events:none}
+.gbox{pointer-events:auto; background:var(--surface); border:1px solid var(--green); border-radius:10px; padding:28px 28px 26px; max-width:430px; text-align:center}
+.gbox h3{font-family:var(--display); font-weight:800; font-size:1.7rem; margin:0 0 10px; text-wrap:balance}
+.gbox p{color:var(--muted); font-size:1rem}
+#gn{font-family:var(--display); font-weight:800; font-size:4.5rem; line-height:1; color:var(--green); margin-top:14px}
+#gact{display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:20px}
+#gm{color:var(--ink); margin-top:12px; font-weight:500}
+@media (prefers-reduced-motion:reduce){#core .dot,#core .r1{animation:none}}
+.cur i{position:absolute; left:15px; top:17px; font:600 10px/1 var(--mono); font-style:normal; color:var(--bg); background:var(--green); padding:3px 5px; border-radius:2px; white-space:nowrap}
+.rip{position:absolute; width:34px; height:34px; margin:-17px 0 0 -17px; border-radius:50%; border:1px solid var(--green); animation:rip .8s ease-out forwards}
+@keyframes rip{from{transform:scale(.1); opacity:.9} to{transform:scale(1.3); opacity:0}}
+
+#dock,#hud{
+  position:fixed; z-index:30; left:50%; transform:translateX(-50%);
+  display:flex; align-items:center; gap:14px; padding:8px 8px 8px 16px; max-width:calc(100% - 32px);
+  background:var(--surface); color:var(--ink); border:1px solid var(--line); border-radius:6px; font-family:var(--mono); font-size:13px;
+  font-variant-numeric:tabular-nums; white-space:nowrap;
+}
+#dock{bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+#hud{top:calc(14px + env(safe-area-inset-top,0px)); z-index:40; padding:10px 16px; border-color:var(--green); color:var(--green)}
+.level{position:relative; width:72px; height:14px; border:1px solid var(--muted); border-radius:999px; flex:none}
+.level::before,.level::after{content:""; position:absolute; top:0; bottom:0; width:1px; background:var(--muted)}
+.level::before{left:calc(50% - 9px)} .level::after{left:calc(50% + 8px)}
+#bubble{position:absolute; top:2px; left:50%; width:10px; height:8px; margin-left:-5px; border-radius:50%; background:var(--green)}
+
+#pal{position:fixed; inset:0; z-index:50; background:color-mix(in srgb,var(--bg) 78%,transparent); padding:12vh 16px 0}
+.palbox{max-width:520px; margin:0 auto; background:var(--surface); border:1px solid var(--dim); border-radius:8px; overflow:hidden; font-family:var(--mono)}
+#pin{width:100%; background:none; border:0; border-bottom:1px solid var(--line); outline:0; color:var(--ink); font:16px var(--mono); padding:16px}
+#plist{list-style:none; margin:0; padding:6px; max-height:46vh; overflow:auto}
+#plist li{padding:10px 12px; border-radius:4px; font-size:14px; cursor:pointer; color:var(--muted)}
+#plist li.sel{background:color-mix(in srgb,var(--green) 14%,transparent); color:var(--ink)}
+
+@media (max-width:640px){
+  .links{display:none} .bento{grid-template-columns:1fr} .wrap{gap:60px}
+  .tl article{grid-template-columns:1fr} #dock{gap:10px; font-size:12px} #dock .lbl{display:none}
+  #tout{font-size:12.5px} #hud{font-size:12px; padding:8px 12px} #core .bk{left:-56px; top:-56px; width:112px; height:112px} #core .r2{display:none}
+  .gbox{padding:22px 18px 20px} .gbox h3{font-size:1.4rem} .gbox p{font-size:.93rem}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+html,body{margin:0}
+</style>
+</head>
+<body>
+
+<canvas id="rain" aria-hidden="true"></canvas>
+
+<main class="wrap">
+  <nav>
+    <a class="logo" id="logo" href="#top"><span id="logot">sjc</span><span class="caret">_</span></a>
+    <div class="links">
+      <a href="#about" data-i18n="nav1">Hakkımda</a><a href="#journey" data-i18n="nav2">Yolculuk</a><a href="#system" data-i18n="nav3">Sistem</a><a href="#terminal">Terminal</a><a href="#contact" data-i18n="nav5">İletişim</a>
+    </div>
+    <div class="tools">
+      <div class="seg" role="group" aria-label="Dil / Language"><button type="button" id="ltr" aria-pressed="true">TR</button><button type="button" id="len" aria-pressed="false">EN</button></div>
+      <button type="button" class="btn sm" id="palbtn" aria-label="Komut paleti">⌘K</button>
+    </div>
+  </nav>
+
+  <header id="top">
+    <p class="eyebrow" data-hit>Backend Developer · Software Engineer</p>
+    <h1><span data-hit>Selman</span><span data-hit class="ol">Jir</span><span data-hit>Can</span></h1>
+    <p class="lede" data-hit data-i18n="lede">Yazılım, benim için soyut bir varlıkla konuşmanın yolu. <b>Birlikte problem çözüyoruz, ortaya işe yarar bir şey çıkıyor ve bu bana keyif veriyor.</b></p>
+    <div class="cta">
+      <a class="btn solid" href="#terminal" data-i18n="cta1">Terminali dene</a>
+      <button type="button" class="btn" id="gamebtn" data-i18n="cta2">▶ Kaos ile savaş · mini oyun</button>
+      <small data-i18n="cta3">ya da Ctrl / ⌘ + K</small>
+    </div>
+  </header>
+
+  <section class="about" id="about">
+    <h2 data-hit data-i18n="h_about">Hakkımda</h2>
+    <p data-hit data-i18n="ab1">Her gün bir öncekinden biraz daha iyi olmaya çalışan bir yazılım mühendisiyim. 2021'den beri profesyonel olarak kod yazıyorum; bugün ağırlıklı olarak backend, mikroservisler ve sistemlerin birbiriyle konuşması üzerine çalışıyorum.</p>
+    <p data-hit data-i18n="ab2">Arkadaki kod yağmuru tesadüf değil: backend dünyasında her şey aynı anda akar. Sevdiğim kısım, o gürültünün içinden sakin ve düzenli çalışan bir sistem çıkarmak. Alttaki Dengele tuşu tam olarak bunu yapıyor.</p>
+    <div class="bento">
+      <article class="item" data-hit><h3 data-i18n="b1t">Oyunlar</h3><p data-i18n="b1">Oyun oynamak ve oyun sektörünü takip etmek benim için bir rutin. Bu yüzden bu sitenin içinde de bir oyun var. Kaos yeterince büyürse kendiliğinden ortaya çıkar.</p></article>
+      <article class="item" data-hit><h3 data-i18n="b2t">Teknoloji ve felsefe</h3><p data-i18n="b2">Yakın arkadaşlarımla teknolojideki gelişmeleri takip eder, üzerine felsefi bir derinlikte uzun uzun tartışırız.</p></article>
+      <article class="item" data-hit><h3 data-i18n="b3t">Köpek sahibi</h3><p data-i18n="b3">Hepsinin üstüne bir de köpeğim var. Terminale <code>dog</code> yazarsan selam verir.</p></article>
+      <article class="item" data-hit><h3 data-i18n="b4t">Her gün biraz daha iyi</h3><p data-i18n="b4">Dün yazdığım kodu bugün daha iyi yazabiliyorsam doğru yoldayım.</p></article>
+    </div>
+  </section>
+
+  <section id="journey">
+    <h2 data-hit data-i18n="h_journey">Yolculuk</h2>
+    <div class="tl">
+      <article>
+        <div class="yr" data-i18n="y1">2022 — bugün</div>
+        <div><h3 data-hit>Backend Developer</h3><p class="place">Pixa Software · YTÜ Yıldız Teknopark, İstanbul</p>
+          <ul data-i18n="e1"><li>Platformu pazaryeri, kargo ve ERP sistemleriyle entegre ettim.</li><li>Performans ve ölçeklenebilirlik için mikroservis mimarisi kurdum.</li><li>Bitbucket üzerinde CI/CD hatlarını yönettim: build, test ve deploy otomatik.</li><li>Uygulamaları Docker ile paketleyip GKE üzerinde Kubernetes'e deploy ettim.</li></ul></div>
+      </article>
+      <article>
+        <div class="yr">2021 — 2022</div>
+        <div><h3 data-hit>Full Stack Developer</h3><p class="place">Noda Bilişim · Gazi Teknopark, Ankara</p>
+          <ul data-i18n="e2"><li>C# ile web uygulamaları geliştirdim: arayüz, veritabanı ve sunucu tarafı.</li></ul></div>
+      </article>
+      <article>
+        <div class="yr">2018 — 2022</div>
+        <div><h3 data-hit data-i18n="e3t">Yazılım Mühendisliği, Lisans</h3><p class="place" data-i18n="e3p">Fırat Üniversitesi · Elazığ</p>
+          <ul data-i18n="e3"><li>Akademik projelerde ve araştırmalarda teoriyi pratiğe döktüm.</li></ul></div>
+      </article>
+    </div>
+  </section>
+
+  <section id="system">
+    <h2 data-hit data-i18n="h_system">Kafamdaki sistem</h2>
+    <p class="sub" data-i18n="s_sub">Çalıştığım araçların temsili, canlı bir haritası. Kaosta istekler düzensiz akar ve kırmızı olanlar yolda kaybolur. Dengele'ye bas: hepsi sıraya girer, kayıp sıfıra iner. Bir kutuya dokunursan ne işe yaradığını söyler.</p>
+    <div class="mapbox"><svg id="map" viewBox="0 0 760 400" role="img" aria-label="Kong, GraphQL, Nest.js, Express.js, Redis, RabbitMQ, Node.js, MySQL, MongoDB"></svg></div>
+    <div class="mstat"><span class="badge" id="mmode"></span><span><span data-i18n="m_ok">teslim</span> <b id="mok">0</b></span><span><span data-i18n="m_lost">kayıp</span> <b id="mlost">0</b></span><span><span data-i18n="m_lat">gecikme</span> <b id="mlat">–</b></span><button type="button" class="btn sm" id="mtoggle"></button></div>
+    <p id="ninfo" aria-live="polite"></p>
+  </section>
+
+  <section id="terminal">
+    <h2 data-hit>Terminal</h2>
+    <p class="sub" data-i18n="t_sub">Sitenin diğer yüzü. <code>help</code> yazarak başla; Tab tamamlar, yukarı ok geçmişi getirir.</p>
+    <div class="term" id="term">
+      <div class="tbar"><i></i><i></i><i></i><span>visitor@sjc: ~</span></div>
+      <div id="tout" role="log"></div>
+      <div class="tline"><label for="tin">~$</label><input id="tin" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Terminal"></div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2 data-hit data-i18n="h_contact">İletişim</h2>
+    <p class="sub" data-i18n="c_sub">Bir fikir, bir iş ya da iyi bir oyun önerisi için yaz.</p>
+    <div class="clist">
+      <div class="crow"><span class="ck">Mail</span><span class="cv" id="mail" data-hit>cselmanjir@gmail.com</span><button type="button" class="btn sm" id="copy">Kopyala</button></div>
+      <a class="crow" href="https://www.linkedin.com/in/selmanjir" target="_blank" rel="noopener"><span class="ck">LinkedIn</span><span class="cv" data-hit>/in/selmanjir</span><span class="ca">↗</span></a>
+      <a class="crow" id="c_gh" target="_blank" rel="noopener" hidden><span class="ck">GitHub</span><span class="cv" data-hit></span><span class="ca">↗</span></a>
+      <a class="crow" id="c_ig" target="_blank" rel="noopener" hidden><span class="ck">Instagram</span><span class="cv" data-hit></span><span class="ca">↗</span></a>
+    </div>
+  </section>
+
+  <footer data-hit data-i18n="foot">© 2026 Selman Jir Can · Kaos arkada akar, denge önde durur.</footer>
+</main>
+
+<div id="chaos" aria-hidden="true"></div>
+<div id="core" aria-hidden="true"><span class="bk"></span><span class="r2"></span><span class="r1"></span><span class="dot"></span></div>
+<div id="hud" hidden></div>
+<canvas id="gcv" hidden></canvas>
+<div id="gov" hidden><div class="gbox"><h3 id="gt"></h3><p id="gp"></p><p id="gm" hidden></p><div id="gn"></div><div id="gact"><button type="button" class="btn solid" id="gagain"></button><button type="button" class="btn" id="gclose"></button><button type="button" class="btn" id="gmail" hidden></button></div></div></div>
+
+<div id="dock">
+  <div class="level" title="Denge"><span id="bubble"></span></div>
+  <span class="pct"><span class="lbl" data-i18n="d_bal">denge </span>%<span id="bal">100</span></span>
+  <span><span id="cnt">0</span><span class="lbl" data-i18n="d_clk"> tıklama</span></span>
+  <button type="button" class="btn solid sm" id="toggle">Dengele</button>
+</div>
+
+<div id="pal" hidden>
+  <div class="palbox" role="dialog" aria-label="Komut paleti">
+    <input id="pin" type="text" autocomplete="off" spellcheck="false" aria-label="Komut ara">
+    <ul id="plist"></ul>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var layer=$('chaos'), cntEl=$('cnt'), balEl=$('bal'), bubble=$('bubble'), btn=$('toggle'), cv=$('rain'), g=cv.getContext('2d'), hud=$('hud');
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var W=innerWidth, H=innerHeight;
+  function rnd(a,b){return a+Math.random()*(b-a)}
+  function esc(s){return String(s).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})}
+  function store(k,v){try{if(v===undefined)return localStorage.getItem(k); localStorage.setItem(k,v)}catch(e){return null}}
+  var MAIL='cselmanjir@gmail.com', LI='https://www.linkedin.com/in/selmanjir';
+  var SOCIAL={github:'selmanjir',instagram:'selmanjir'}; /* kullanıcı adını yaz, satır kendiliğinden görünür */
+  [['c_gh','github','https://github.com/'],['c_ig','instagram','https://www.instagram.com/']].forEach(function(x){
+    var u=SOCIAL[x[1]]; if(!u) return; var a=$(x[0]); a.href=x[2]+u; a.querySelector('.cv').textContent='@'+u; a.hidden=false;
+  });
+  var YEARS=new Date().getFullYear()-2021;
+
+  /* ================= dil ================= */
+  var EN={
+    nav1:'About',nav2:'Journey',nav3:'System',nav5:'Contact',
+    lede:'To me, software is a way of talking with an abstract existence. <b>We solve problems together, something useful comes out of it, and that is a joy.</b>',
+    cta1:'Try the terminal',cta2:'▶ Fight the chaos · mini game',cta3:'or Ctrl / ⌘ + K',
+    h_about:'About',
+    ab1:"I'm a software engineer who tries to be a little better every day. I've been writing code professionally since 2021; today I mostly work on backend, microservices and getting systems to talk to each other.",
+    ab2:'The code rain behind this page is no accident: in backend, everything flows at once. The part I enjoy is pulling a calm, orderly system out of that noise. The Balance button below does exactly that.',
+    b1t:'Games',b1:'Playing games and following the game industry is a routine for me. That is why this site has a game in it too. Let the chaos grow enough and it shows up on its own.',
+    b2t:'Technology and philosophy',b2:'My close friends and I follow new developments in technology and discuss them at length, with some philosophical depth.',
+    b3t:'Dog owner',b3:'On top of all this, I have a dog. Type <code>dog</code> in the terminal to get a hello.',
+    b4t:'A little better each day',b4:"If I can write yesterday's code better today, I'm on the right track.",
+    h_journey:'Journey',y1:'2022 — present',
+    e1:'<li>Integrated the platform with marketplace, shipping and ERP systems.</li><li>Built a microservices architecture for performance and scalability.</li><li>Managed CI/CD pipelines on Bitbucket: automated build, test and deploy.</li><li>Dockerized applications and deployed them to Kubernetes on GKE.</li>',
+    e2:'<li>Built web applications in C#: user interface, database and server side.</li>',
+    e3t:'BSc, Software Engineering',e3p:'Fırat University · Elazığ',
+    e3:'<li>Applied theory to practice in academic projects and research.</li>',
+    h_system:'The system in my head',
+    s_sub:'A live, illustrative map of the tools I work with. In chaos, requests flow unevenly and the red ones get lost on the way. Press Balance: they fall in line and losses drop to zero. Tap a box to see what it does.',m_ok:'delivered',m_lost:'lost',m_lat:'latency',
+    t_sub:'The other face of this site. Start with <code>help</code>; Tab completes, arrow up recalls history.',
+    h_contact:'Contact',c_sub:'Write to me about an idea, a job or a good game recommendation.',
+    foot:'© 2026 Selman Jir Can · Chaos flows behind, balance stands in front.',
+    d_bal:'balance ',d_clk:' clicks'
+  };
+  var S={
+    tr:{bal:'Dengele',chaos:'Kaos',copy:'Kopyala',copied:'Kopyalandı',pick:'Bir kutu seç.',done:'Denge sağlandı ✓',morder:'DENGE',mchaos:'KAOS',gtitle:'Mini oyun: Kaos ile savaş',ghow:function(T){return 'Sitedeki imleçler artık düşmanın ve çoğalıyorlar. Dokunurlarsa can gider. Yaklaştıklarında tıkla ya da dokun: darbe dalgası çevrendekileri yok eder. '+T+' klonu yok et, kaos çöksün.'},again:'Tekrar oyna',close:'Kapat',fight:'Kaos ile savaş',w1:'Kaos artıyor…',w2:'Site dağılmaya başladı. Dengelemek ister misin?',w3:'Kritik seviye! Dengele ya da savaş.',ptitle:'Kaos kontrolü ele geçirdi',ptext:'Site dağıldı. Ya tek tuşla dengele ya da kaosla kendin savaş.',wtitle:'Denge sağlandı!',win:function(s,b){return 'Bütün klonlar çöktü, site artık dengede. Skor '+s+' · en iyi '+b},ltitle:'Kaos kazandı',lose:function(k,T,s,b){return k+' klon yok ettin, hedef '+T+'. Skor '+s+' · en iyi '+b+'. Oynamak istersen tekrar dene, siteyi gezmek istersen dengele.'},frz:'DONDU',memo:'Gerçek sistemlerde de işim bu: kaosu alıp dengeye çevirmek.',reach:'Bana yaz',browse:'Siteyi gez',balgo:'Dengele ve gez',htitle:'Hoş geldin',htext:'Bu site iki şekilde gezilir. Sakin modda her şey yerinde durur. Kaos modunda site yavaş yavaş dağılır; dengelemek ya da savaşmak sana kalır. Alttaki tuşla istediğin an değiştirebilirsin.',hcalm:'Sakin: kariyerimi incele',hchaos:'Kaosu serbest bırak',away:'⚠ Kaos büyüyor… geri dön',ranks:['Düzen çırağı','Denge ustası','Kaos terbiyecisi','Entropi düşmanı'],status:function(e,b){return 'kaos %'+e+' · denge %'+b},clients:'İstemciler',
+      hud:function(l,k,T,s){return '♥'.repeat(l)+'♡'.repeat(3-l)+' · klon '+k+'/'+T+' · skor '+s},
+      n:{c:'İstemciler: web, mobil ve dış sistemler. Her şey buradan başlar.',k:'Kong: API gateway. İstekleri karşılar, yönlendirir, sınırlar.',g:'GraphQL: istemcinin tam ihtiyacı kadar veri istediği API katmanı.',n:'Nest.js: düzenli, modüler servisler için ana çatım.',e:'Express.js: hafif ve hızlı servisler için.',r:'Redis: önbellek. Aynı soruyu veritabanına iki kez sormamak için.',q:'RabbitMQ: mesaj kuyruğu. Servisler birbirini beklemeden konuşur.',w:'Node.js worker: kuyruktaki işleri arka planda tüketir.',m:'MySQL: ilişkisel veri.',o:'MongoDB: doküman tabanlı veri.'},
+      p:['Hakkımda','Yolculuk','Sistem haritası','Terminal','İletişim','Dili değiştir: English','Kaos / denge','Mini oyun: kaos ile savaş','E-postayı kopyala'],ph:'Komut ara…',
+      welcome:'Hoş geldin. Komutlar için <span class="c">help</span> yaz.',
+      help:'Komutlar:\n  whoami     ben kimim\n  about      kısaca ben\n  exp        deneyim\n  skills     kullandığım araçlar\n  edu        eğitim\n  contact    bana ulaş\n  neofetch   sistem bilgisi\n  lang en    dili değiştir (tr | en)\n  chaos      kaosu serbest bırak\n  balance    dengele\n  game       kaos ile savaş: klon imleçleri yok et\n  status     kaos seviyesi\n  dog        hav\n  ls, cat    dosyalara bak\n  clear      ekranı temizle',
+      whoami:'Selman Jir Can. Backend developer, yazılım mühendisi.\nYazılım benim için soyut bir varlıkla konuşmanın yolu.',
+      about:"Her gün biraz daha iyi olmaya çalışan bir yazılım mühendisiyim.\nOyun oynarım, oyun sektörünü takip ederim.\nArkadaşlarımla teknolojiyi felsefi bir derinlikte tartışırım.\nBir de köpeğim var.",
+      exp:'2022 — bugün   Backend Developer · Pixa Software, İstanbul\n2021 — 2022    Full Stack Developer · Noda Bilişim, Ankara',
+      edu:'2018 — 2022    Fırat Üniversitesi · Yazılım Mühendisliği, Lisans',
+      nf:[' rol       Backend Developer',' uptime    '+YEARS+' yıldır profesyonel kod',' evcil     1 köpek'],
+      langok:'Dil: Türkçe',langbad:'Kullanım: lang tr | lang en',t_chaos:'Kaos serbest.',t_balance:'Denge sağlandı.',t_game:'Kaos ile savaş başlıyor.',
+      dog:'Hav! Sahibim şu an kod yazıyor.',sudo:'Yetki reddedildi. Ama işe almak istersen: contact',vim:'Vim açıldı. Çıkmak için… şaka, kapattım bile.',exit:'Buradan çıkış yok. Sekmeyi kapatabilirsin ama kalmanı tercih ederim.',
+      nofile:'Böyle bir dosya yok. ls ile bak.',nf404:function(c){return 'komut bulunamadı: '+c+'. help yazabilirsin.'}},
+    en:{bal:'Balance',chaos:'Chaos',copy:'Copy',copied:'Copied',pick:'Pick a box.',done:'Balance restored ✓',morder:'BALANCE',mchaos:'CHAOS',gtitle:'Mini game: Fight the chaos',ghow:function(T){return 'The cursors on this site are now your enemies, and they multiply. A touch costs a life. When they get close, click or tap: a shockwave destroys the ones around you. Destroy '+T+' clones and the chaos collapses.'},again:'Play again',close:'Close',fight:'Fight the chaos',w1:'Chaos is rising…',w2:'The site is starting to fall apart. Want to balance it?',w3:'Critical! Balance or fight.',ptitle:'Chaos has taken over',ptext:'The site fell apart. Balance it with one button, or fight the chaos yourself.',wtitle:'Balance restored!',win:function(s,b){return 'Every clone collapsed and the site is balanced. Score '+s+' · best '+b},ltitle:'Chaos won',lose:function(k,T,s,b){return 'You destroyed '+k+' clones, the goal is '+T+'. Score '+s+' · best '+b+'. Play again if you like, or balance the site to look around.'},frz:'FROZEN',memo:'This is what I do with real systems too: take the chaos and turn it into balance.',reach:'Write to me',browse:'Browse the site',balgo:'Balance and browse',htitle:'Welcome',htext:'There are two ways to visit this site. In calm mode everything stays in place. In chaos mode the site slowly falls apart; balancing it or fighting back is up to you. You can switch any time with the button below.',hcalm:'Calm: just the career',hchaos:'Release the chaos',away:'⚠ Chaos is growing… come back',ranks:['Order apprentice','Balance master','Chaos tamer','Enemy of entropy'],status:function(e,b){return 'chaos '+e+'% · balance '+b+'%'},clients:'Clients',
+      hud:function(l,k,T,s){return '♥'.repeat(l)+'♡'.repeat(3-l)+' · clones '+k+'/'+T+' · score '+s},
+      n:{c:'Clients: web, mobile and external systems. Everything starts here.',k:'Kong: API gateway. It receives, routes and rate-limits requests.',g:'GraphQL: an API layer where the client asks for exactly the data it needs.',n:'Nest.js: my main framework for tidy, modular services.',e:'Express.js: for light, fast services.',r:'Redis: cache. So the database is not asked the same question twice.',q:'RabbitMQ: message queue. Services talk without waiting on each other.',w:'Node.js worker: consumes queued jobs in the background.',m:'MySQL: relational data.',o:'MongoDB: document data.'},
+      p:['About','Journey','System map','Terminal','Contact','Switch language: Türkçe','Chaos / balance','Mini game: fight the chaos','Copy email'],ph:'Search commands…',
+      welcome:'Welcome. Type <span class="c">help</span> for commands.',
+      help:'Commands:\n  whoami     who I am\n  about      me, briefly\n  exp        experience\n  skills     tools I use\n  edu        education\n  contact    reach me\n  neofetch   system info\n  lang tr    switch language (tr | en)\n  chaos      release the chaos\n  balance    restore balance\n  game       fight the chaos: destroy the clone cursors\n  status     chaos level\n  dog        woof\n  ls, cat    look at files\n  clear      clear the screen',
+      whoami:'Selman Jir Can. Backend developer, software engineer.\nTo me, software is a way of talking with an abstract existence.',
+      about:'A software engineer trying to be a little better every day.\nI play games and follow the game industry.\nMy friends and I discuss technology with some philosophical depth.\nAlso, I have a dog.',
+      exp:'2022 — present  Backend Developer · Pixa Software, Istanbul\n2021 — 2022     Full Stack Developer · Noda Bilişim, Ankara',
+      edu:'2018 — 2022     Fırat University · BSc, Software Engineering',
+      nf:[' role      Backend Developer',' uptime    '+YEARS+' years of professional code',' pets      1 dog'],
+      langok:'Language: English',langbad:'Usage: lang tr | lang en',t_chaos:'Chaos released.',t_balance:'Balance restored.',t_game:'Fight the chaos is starting.',
+      dog:'Woof! My owner is writing code right now.',sudo:'Permission denied. But if you want to hire me: contact',vim:'Vim opened. To quit… just kidding, already closed it.',exit:'There is no exit. You can close the tab, but I would rather you stayed.',
+      nofile:'No such file. Try ls.',nf404:function(c){return 'command not found: '+c+'. Try help.'}}
+  };
+  var SKILLS='lang      JavaScript, TypeScript, C#\nbackend   Node.js, Nest.js, Express.js, GraphQL\nmessaging RabbitMQ, Redis, Kong\ndata      MySQL, MongoDB\nops       Docker, Kubernetes, GKE, Bitbucket CI/CD';
+  var DOG='  / \\__\n (    @\\___\n /         O\n/   (_____/\n/_____/   U';
+  var i18nEls=[].slice.call(document.querySelectorAll('[data-i18n]')), TR={};
+  i18nEls.forEach(function(e){TR[e.dataset.i18n]=e.innerHTML});
+  var DICT={tr:TR,en:EN}, lang='tr';
+  function L(){return S[lang]}
+  var SC='01<>/{}=;#$%*+';
+  function scramble(el,txt){
+    var id=(el._s=(el._s||0)+1), f=0, n=12;
+    (function s(){ if(el._s!==id) return; f++;
+      var k=Math.floor(txt.length*f/n), o=txt.slice(0,k);
+      for(var i=k;i<txt.length;i++) o+=txt[i]===' '?' ':SC[Math.random()*SC.length|0];
+      el.textContent=f<n?o:txt; if(f<n) setTimeout(s,35);
+    })();
+  }
+  function setLang(l,anim){
+    if(curs.length) restoreText(false);
+    lang=l; document.documentElement.lang=l; store('sjc_lang',l);
+    i18nEls.forEach(function(e){
+      var v=DICT[l][e.dataset.i18n]; if(v==null) return;
+      e._s=(e._s||0)+1;
+      if(anim&&!reduce&&!/[<&]/.test(v)&&v.length<60) scramble(e,v); else e.innerHTML=v;
+    });
+    $('ltr').setAttribute('aria-pressed',l==='tr'); $('len').setAttribute('aria-pressed',l==='en');
+    syncBtn(); $('copy').textContent=L().copy; $('pin').placeholder=L().ph;
+    if(clientLabel) clientLabel.textContent=L().clients;
+    $('ninfo').textContent=curNode?L().n[curNode]:L().pick;
+  }
+  $('ltr').onclick=function(){setLang('tr',true)}; $('len').onclick=function(){setLang('en',true)};
+
+  /* ================= kod yağmuru ================= */
+  var GLYPHS='アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワン0123456789<>{}=;/'.split('');
+  var CW=18, RH=20, cols=0, rows=0, drops=[], last=0, order=false;
+  function glyph(){return GLYPHS[Math.random()*GLYPHS.length|0]}
+  function initRain(){
+    var dpr=Math.min(devicePixelRatio||1,2);
+    cv.width=W*dpr; cv.height=H*dpr; g.setTransform(dpr,0,0,dpr,0,0);
+    g.fillStyle='#060b09'; g.fillRect(0,0,W,H);
+    cols=Math.ceil(W/CW); rows=Math.ceil(H/RH); drops=[];
+    for(var i=0;i<cols;i++) drops.push({y:rnd(-rows,rows)|0, sp:rnd(.25,1), acc:0, ch:glyph()});
+    if(order) alignRain();
+  }
+  function alignRain(){ for(var i=0;i<cols;i++){ drops[i].y=(i*3)%(rows+10); drops[i].acc=0; } }
+  function stepRain(){
+    g.fillStyle='rgba(6,11,9,'+(order?.07:.1)+')'; g.fillRect(0,0,W,H);
+    g.font='15px "JetBrains Mono",monospace'; g.textBaseline='top';
+    for(var i=0;i<cols;i++){
+      var d=drops[i]; d.acc+=order?1:d.sp*(1+ent/80);
+      if(d.acc<1) continue; d.acc-=1;
+      var x=i*CW;
+      g.fillStyle='#060b09'; g.fillRect(x,d.y*RH,CW,RH);
+      var rc=!order&&!game&&!pre&&(stage>=3||(stage===2&&i%3===0));
+      g.fillStyle=rc?'#7a2a25':'#1f7a4a'; g.fillText(d.ch,x+3,d.y*RH+2);
+      d.y++; d.ch=glyph();
+      if(order){ if(d.y>rows+10) d.y=0; }
+      else if(d.y>rows && Math.random()>.96){ d.y=0; d.sp=rnd(.25,1); }
+      g.fillStyle=order?'#4fe08a':(rc?'#ff6b5e':'#d9ffe9'); g.fillText(d.ch,x+3,d.y*RH+2);
+    }
+  }
+
+  /* ================= sistem haritası ================= */
+  var NS='http://www.w3.org/2000/svg', map=$('map'), curNode=null, clientLabel=null;
+  var ND={c:[70,200,''],k:[215,200,'Kong'],g:[375,90,'GraphQL'],n:[375,200,'Nest.js'],e:[375,310,'Express.js'],r:[535,90,'Redis'],q:[535,200,'RabbitMQ'],w:[535,310,'Node.js worker'],m:[690,90,'MySQL'],o:[690,310,'MongoDB']};
+  var EDGES=['ck','kg','kn','ke','gr','nq','eq','qw','rm','wo'], ROUTES=['ckgrm','cknqwo','ckeqwo'];
+  function sv(tag,attrs,parent){var e=document.createElementNS(NS,tag); for(var k in attrs) e.setAttribute(k,attrs[k]); (parent||map).appendChild(e); return e}
+  sv('rect',{class:'cluster',x:296,y:30,width:456,height:340,rx:6});
+  sv('text',{class:'cl',x:306,y:50}).textContent='Docker · Kubernetes (GKE)';
+  sv('text',{class:'cl',x:306,y:358}).textContent='CI/CD · Bitbucket Pipelines';
+  EDGES.forEach(function(e){var a=ND[e[0]],b=ND[e[1]]; sv('line',{class:'edge',x1:a[0],y1:a[1],x2:b[0],y2:b[1]})});
+  var pkLayer=sv('g',{}), nodeEls={};
+  Object.keys(ND).forEach(function(id){
+    var n=ND[id], gr=sv('g',{class:'node',tabindex:0,role:'button'});
+    sv('rect',{x:n[0]-58,y:n[1]-19,width:116,height:38,rx:4},gr);
+    var t=sv('text',{x:n[0],y:n[1]},gr); t.textContent=n[2]; if(id==='c') clientLabel=t;
+    function show(){curNode=id; $('ninfo').textContent=L().n[id]}
+    gr.addEventListener('pointerenter',show); gr.addEventListener('focus',show); gr.addEventListener('click',show);
+    nodeEls[id]=gr;
+  });
+  var pks=[], pkTick=0, pkRoute=0, mok=0, mlost=0;
+  function mstat(){ $('mok').textContent=mok; $('mlost').textContent=mlost; }
+  function spawnPk(r){
+    if(pks.length>24) return;
+    var bad=!order&&Math.random()<.3, R=ROUTES[r];
+    pks.push({r:R,seg:0,p:0,sp:order?.012:rnd(.005,.024),ph:rnd(0,6),bad:bad,ds:1+(Math.random()*(R.length-2)|0),dp:rnd(.2,.8),el:sv('circle',{class:'pk'+(bad?' bad':''),r:bad?4.5:3.5},pkLayer)});
+  }
+  function stepPk(t){
+    pkTick++;
+    if(order){ if(pkTick%34===0){ spawnPk(pkRoute); pkRoute=(pkRoute+1)%3; } }
+    else if(Math.random()<(reduce?.012:.05)) spawnPk(Math.random()*3|0);
+    if(pkTick%30===1) $('mlat').textContent=order?'42 ms':Math.round(rnd(90,950))+' ms';
+    for(var i=pks.length-1;i>=0;i--){
+      var k=pks[i]; k.p+=order?.012:k.sp;
+      if(k.bad&&k.seg===k.ds&&k.p>=k.dp){
+        mlost++; mstat(); k.el.classList.add('lost'); (function(e){setTimeout(function(){e.remove()},350)})(k.el); pks.splice(i,1); continue;
+      }
+      if(k.p>=1){ k.p=0; k.seg++;
+        var hitN=nodeEls[k.r[k.seg]]; hitN.classList.add('on'); (function(n){setTimeout(function(){n.classList.remove('on')},260)})(hitN);
+        if(k.seg>=k.r.length-1){ mok++; mstat(); k.el.remove(); pks.splice(i,1); continue; }
+      }
+      var a=ND[k.r[k.seg]], b=ND[k.r[k.seg+1]], x=a[0]+(b[0]-a[0])*k.p, y=a[1]+(b[1]-a[1])*k.p;
+      if(!order){ y+=Math.sin(t/150+k.ph)*8; x+=Math.cos(t/200+k.ph)*4; }
+      k.el.setAttribute('cx',x.toFixed(1)); k.el.setAttribute('cy',y.toFixed(1));
+    }
+  }
+
+  /* ================= imleçler ve kaos seviyesi ================= */
+  var labels=['order','sync','retry','queue','ack'];
+  var BASE=reduce?3:(W<640?5:10);
+  var hits=[].slice.call(document.querySelectorAll('[data-hit]'));
+  var curs=[], count=0, mouse={x:-999,y:-999}, bx=0, bv=0, rips=0, balS=100, rot=0, core=$('core'), gov=$('gov'), fc={x:0,y:0,R:46};
+  var game=false, pre=false, gameEnd=0, lastSec=-1, hudTimer=0, ent=0, stage=0, prompted=false, tickN=0;
+  var ARROW='<svg class="ar" viewBox="0 0 24 24"><path d="M4 2l15 9.5-6.6 1.4 3.8 7.3-2.7 1.4-3.8-7.4L5 19z" fill="var(--head)" stroke="var(--dim)" stroke-width="1.5" stroke-linejoin="round"/></svg>';
+  function addCursor(){
+    var i=curs.length, el=document.createElement('div'); el.className='cur';
+    el.innerHTML=ARROW+(i%2===0&&i<10?'<i>'+labels[(i/2)%labels.length|0]+'</i>':'');
+    layer.appendChild(el);
+    var edge=i>=BASE, o={el:el,x:edge?(Math.random()<.5?-20:W+20):rnd(0,W),y:rnd(0,H),vx:0,vy:0,tx:0,ty:0,t:null,wait:rnd(0,120),k:rnd(.004,.009),r:0};
+    pick(o); curs.push(o);
+  }
+  function pick(o){
+    o.t=null;
+    if(!game&&!pre&&Math.random()<.75){
+      for(var tries=0;tries<6;tries++){
+        var e=hits[Math.random()*hits.length|0], r=e.getBoundingClientRect();
+        if(r.bottom>10&&r.top<H-10&&r.width>0){
+          o.t=e; o.tx=rnd(r.left+4,Math.min(r.right,W)-4); o.ty=rnd(Math.max(r.top,4),Math.min(r.bottom,H-4)); return;
+        }
+      }
+    }
+    o.tx=rnd(30,W-30); o.ty=rnd(30,H-30);
+  }
+  function form(){
+    var m=(W-940)/2;
+    if(m>=170){ fc.x=W-m/2; fc.y=H*.42; fc.R=curs.length>12?58:46; } else { fc.x=W/2; fc.y=H-124; fc.R=W<640?26:40; }
+    fc.s=W<640?.7:1;
+    core.style.left=fc.x+'px'; core.style.top=fc.y+'px';
+  }
+  function ripple(x,y,big){
+    if(!big){ if(rips>=30) return; rips++; }
+    var r=document.createElement('div'); r.className=big?'rip big':'rip'; r.style.left=x+'px'; r.style.top=y+'px';
+    r.addEventListener('animationend',function(){r.remove(); if(!big) rips--;}); layer.appendChild(r);
+  }
+  function flashHud(txt){
+    if(game||pre) return;
+    hud.textContent=txt; hud.hidden=false; clearTimeout(hudTimer);
+    hudTimer=setTimeout(function(){ if(!game) hud.hidden=true },2600);
+  }
+  function click(x,y,target,w){
+    ripple(x,y); count++; cntEl.textContent=count.toLocaleString('tr-TR');
+    if(order) return;
+    bv+=rnd(-3,3); ent=Math.min(100,ent+w);
+    if(target){
+      target.classList.add('hit'); setTimeout(function(){target.classList.remove('hit')},600);
+      if(ent>=25&&!reduce) shove(target);
+    }
+  }
+  function shove(el){
+    var d=el._d||(el._d=[0,0,0]), a=ent/100;
+    d[0]=Math.max(-42,Math.min(42,d[0]+rnd(-16,16)*a)); d[1]=Math.max(-26,Math.min(26,d[1]+rnd(-10,10)*a)); d[2]=Math.max(-9,Math.min(9,d[2]+rnd(-3.5,3.5)*a));
+    el.style.transform='translate('+d[0].toFixed(1)+'px,'+d[1].toFixed(1)+'px) rotate('+d[2].toFixed(2)+'deg)';
+  }
+  var leaves=hits.filter(function(e){return !e.children.length&&e.textContent.length>2&&e.parentNode.tagName!=='H1'});
+  function corrupt(){
+    if(Math.random()<.35){
+      var ls=document.querySelectorAll('h1 .lt'), l=ls[Math.random()*ls.length|0];
+      if(l&&!l._b){ l.textContent=SC[Math.random()*SC.length|0]; l._c=1; } return;
+    }
+    var e=leaves[Math.random()*leaves.length|0], t=e.textContent; if(e._o==null) e._o=t;
+    var i=Math.random()*t.length|0; if(t[i]===' ') return;
+    e._s=(e._s||0)+1; e.textContent=t.slice(0,i)+SC[Math.random()*SC.length|0]+t.slice(i+1);
+  }
+  function restoreText(anim){
+    leaves.forEach(function(e){ if(e._o!=null){ var o=e._o; e._o=null; if(anim&&!reduce) scramble(e,o); else { e._s=(e._s||0)+1; e.textContent=o; } } });
+    nameSpans.forEach(function(x,wi){ [].forEach.call(x.children,function(l,li){ if(l._c){ l._c=0; l.textContent=NAME[wi][li]; } }) });
+  }
+  function setStage(st){
+    if(st===stage) return;
+    var up=st>stage; stage=st;
+    document.body.classList.toggle('e1',st>=1); document.body.classList.toggle('e2',st>=2); document.body.classList.toggle('e3',st>=3);
+    if(up&&st>0) flashHud(L()['w'+st]);
+  }
+  function syncBtn(){
+    btn.textContent=$('mtoggle').textContent=order?L().chaos:L().bal;
+    $('mmode').textContent=order?L().morder:L().mchaos;
+  }
+  function setOrder(v,quiet){
+    if(v===order||((game||pre)&&v)) return;
+    order=v; document.body.classList.toggle('order',order); syncBtn(); mok=mlost=0; mstat();
+    ent=0; prompted=false; setStage(0); cv.style.opacity='';
+    if(order){
+      hits.forEach(function(h){ if(h._d){ h._d=null; h.style.transform=''; } }); restoreText(true);
+      form(); alignRain(); pks.forEach(function(k){k.bad=false; k.sp=.012; k.el.classList.remove('bad')});
+      if(!quiet) setTimeout(function(){ if(order){ ripple(fc.x,fc.y,true); flashHud(L().done); } },800);
+    } else {
+      while(curs.length>BASE){ curs.pop().el.remove(); }
+      curs.forEach(function(o){pick(o); o.wait=rnd(0,80)}); drops.forEach(function(d){d.sp=rnd(.25,1); d.y=rnd(-rows,rows)|0});
+    }
+  }
+  btn.addEventListener('click',function(){setOrder(!order)});
+  $('mtoggle').addEventListener('click',function(){setOrder(!order)});
+  for(var i=0;i<BASE;i++) addCursor();
+  function stepChaos(){
+    tickN++;
+    if(order||game||pre) return;
+    ent=Math.min(100,ent+.02);
+    setStage(ent>=70?3:ent>=45?2:ent>=22?1:0);
+    if(!reduce&&stage>=2&&tickN%(stage>=3?7:24)===0){ if(Math.random()<.5) corrupt(); else shove(hits[Math.random()*hits.length|0]); }
+    if(tickN%30===0){
+      cv.style.opacity=(.5+ent*.0045).toFixed(2);
+      if(curs.length<BASE+Math.floor(ent/8)) addCursor();
+    }
+    if(ent>=100&&!prompted&&gov.hidden){ prompted=true; govShow(L().ptitle,L().ptext,null,L().fight,startGame,L().bal,function(){setOrder(true)}); }
+  }
+
+  /* ================= oyun: kaos ile savaş ================= */
+  var gcv=$('gcv'), gx=gcv.getContext('2d'), G=null;
+  function govShow(title,text,num,b1,f1,b2,f2,memo){
+    $('gm').hidden=$('gmail').hidden=!memo;
+    if(memo){ $('gm').textContent=L().memo; $('gmail').textContent=L().reach; $('gmail').onclick=function(){gov.hidden=true; setOrder(true); go('contact')}; }
+    $('gt').textContent=title; $('gp').textContent=text;
+    $('gn').hidden=num==null; if(num!=null) $('gn').textContent=num;
+    $('gact').hidden=!b1;
+    if(b1){
+      $('gagain').textContent=b1; $('gagain').onclick=function(){gov.hidden=true; f1()};
+      $('gclose').textContent=b2; $('gclose').onclick=function(){gov.hidden=true; if(f2) f2()};
+    }
+    gov.hidden=false;
+  }
+  var ARW=[[4,2],[19,11.5],[12.4,12.9],[16.2,20.2],[13.5,21.6],[9.7,14.2],[5,19]];
+  function arrow(x,y,rt,sc,fill,stroke){
+    gx.save(); gx.translate(x,y); gx.rotate(rt); gx.scale(sc,sc); gx.translate(-4,-2);
+    gx.beginPath(); gx.moveTo(4,2); for(var q=1;q<7;q++) gx.lineTo(ARW[q][0],ARW[q][1]); gx.closePath();
+    gx.fillStyle=fill; gx.fill(); gx.lineWidth=1.6; gx.strokeStyle=stroke; gx.stroke(); gx.restore();
+  }
+  function mk(x,y){ var fast=Math.random()<.17; return {x:x,y:y,vx:0,vy:0,sp:fast?rnd(2,2.8):rnd(0,.6),fast:fast} }
+  function startGame(){
+    if(game||pre) return;
+    var small=W<640, start=curs.map(function(o){return [o.x,o.y]});
+    setOrder(false); pre=true; document.body.classList.add('game');
+    var dpr=Math.min(devicePixelRatio||1,2); gcv.width=W*dpr; gcv.height=H*dpr; gcv.hidden=false;
+    if(mouse.x<0){ mouse.x=W/2; mouse.y=H/2; }
+    G={px:mouse.x,py:mouse.y,en:[],sparks:[],waves:[],texts:[],rain:[],lives:3,inv:0,cd:0,kills:0,target:small?40:60,max:small?36:70,score:0,t:0,spawn:0,shake:0,flash:0,bolt:0,slow:0,fin:0,finR:0,hs:''};
+    /* sitedeki imleçler oyunun ilk düşmanları olur */
+    start.slice(0,small?8:16).forEach(function(q){ G.en.push(mk(Math.max(0,Math.min(W,q[0])),Math.max(0,Math.min(H,q[1])))) });
+    for(var i=0;i<(small?40:80);i++) G.rain.push({x:rnd(0,W*1.3),y:rnd(0,H),l:rnd(14,34),v:rnd(13,22)});
+    clearTimeout(hudTimer); hud.hidden=true;
+    var c=3; govShow(L().gtitle,L().ghow(G.target),c);
+    (function tick(){ setTimeout(function(){
+      c--;
+      if(c>0){ $('gn').textContent=c; tick(); }
+      else { gov.hidden=true; pre=false; game=true; hud.hidden=false; }
+    },1200) })();
+  }
+  function burst(x,y,n,v,red){ for(var j=0;j<n;j++){ var a=rnd(0,6.28), q=rnd(1,v); G.sparks.push({x:x,y:y,vx:Math.cos(a)*q,vy:Math.sin(a)*q,l:1,red:red}); } }
+  function shove2(R,F){
+    var g=G; for(var i=0;i<g.en.length;i++){ var e=g.en[i], dx=e.x-g.px, dy=e.y-g.py, d=Math.sqrt(dx*dx+dy*dy)||1; if(d<R){ var f=(R-d)/R*F; e.vx+=dx/d*f; e.vy+=dy/d*f; } }
+  }
+  function blast(){
+    var g=G; if(g.cd>0||g.fin) return;
+    g.cd=60; g.waves.push({x:g.px,y:g.py,r:14,m:140}); g.shake=6;
+    var k=0;
+    for(var i=g.en.length-1;i>=0;i--){
+      var e=g.en[i], dx=e.x-g.px, dy=e.y-g.py;
+      if(dx*dx+dy*dy<115*115){ burst(e.x,e.y,7,5,true); g.en.splice(i,1); k++; }
+    }
+    shove2(270,9);
+    if(k){
+      g.kills+=k; var pts=k*k*10; g.score+=pts;
+      g.texts.push({x:g.px,y:g.py,t:(k>1?'x'+k+'  ':'')+'+'+pts,l:1});
+      if(k>=5){ g.slow=26; g.shake=14; }
+    }
+    if(g.kills>=g.target){ g.fin=1; g.finR=20; g.slow=0; g.flash=0; }
+  }
+  function stepGame(active){
+    var g=G, i, j, e, dx, dy, d;
+    var ts=g.slow>0?.3:1; if(g.slow>0) g.slow--;
+    var mvx=(mouse.x-g.px)*.45, mvy=(mouse.y-g.py)*.45, mv=Math.sqrt(mvx*mvx+mvy*mvy); if(mv>8){ mvx*=8/mv; mvy*=8/mv; } g.px+=mvx*ts; g.py+=mvy*ts;
+    if(g.cd>0) g.cd--; if(g.inv>0) g.inv--;
+    if(active&&!g.fin){
+      g.t+=ts; g.spawn+=(.034+g.t/60*.0026)*ts*(W<640?.65:1);
+      while(g.spawn>=1){
+        g.spawn--;
+        if(g.en.length<g.max){ var sd=Math.random()*4|0; g.en.push(mk(sd===0?-20:sd===1?W+20:rnd(0,W),sd===2?-20:sd===3?H+20:rnd(0,H))); }
+      }
+    }
+    gx.setTransform(gcv.width/W,0,0,gcv.height/H,0,0); gx.clearRect(0,0,W,H);
+    if(g.shake>0){ gx.translate(rnd(-g.shake,g.shake)*.5,rnd(-g.shake,g.shake)*.5); g.shake--; }
+    /* yağmur ve şimşek */
+    gx.strokeStyle='#86a093'; gx.globalAlpha=.17; gx.lineWidth=1; gx.beginPath();
+    for(i=0;i<g.rain.length;i++){
+      var r=g.rain[i]; r.y+=r.v*ts; r.x-=r.v*.25*ts; if(r.y>H){ r.y=-r.l; r.x=rnd(0,W*1.3); }
+      gx.moveTo(r.x,r.y); gx.lineTo(r.x-r.l*.25,r.y+r.l);
+    }
+    gx.stroke(); gx.globalAlpha=1;
+    if(active&&Math.random()<.004) g.bolt=1;
+    if(g.bolt>0){ gx.globalAlpha=g.bolt*.13; gx.fillStyle='#d9ffe9'; gx.fillRect(0,0,W,H); g.bolt-=.09; gx.globalAlpha=1; }
+    /* klon imleçler */
+    var spd=1.9+Math.min(9,g.t/60*.07);
+    for(i=g.en.length-1;i>=0;i--){
+      e=g.en[i]; dx=g.px-e.x; dy=g.py-e.y; d=Math.sqrt(dx*dx+dy*dy)||1;
+      if(g.fin){ if(d<g.finR){ burst(e.x,e.y,6,6,true); g.en.splice(i,1); continue; } }
+      else {
+        var dir=(active||d>250)?1:-1;
+        e.vx+=dx/d*.17*ts*dir; e.vy+=dy/d*.17*ts*dir;
+        for(j=0;j<i;j++){ var o=g.en[j], sx=e.x-o.x, sy=e.y-o.y, sd2=sx*sx+sy*sy; if(sd2<484&&sd2>.01){ var sq=Math.sqrt(sd2), pf=(22-sq)/22*.5; e.vx+=sx/sq*pf; e.vy+=sy/sq*pf; o.vx-=sx/sq*pf; o.vy-=sy/sq*pf; } }
+        var v=Math.sqrt(e.vx*e.vx+e.vy*e.vy), mx=spd+e.sp; if(v>mx){ var nv=Math.max(mx,v*.9); e.vx*=nv/v; e.vy*=nv/v; }
+        e.x+=e.vx*ts; e.y+=e.vy*ts;
+        if(active&&g.inv<=0&&d<15){
+          g.lives--; g.inv=85; g.flash=1; g.shake=16; g.waves.push({x:g.px,y:g.py,r:14,m:200}); shove2(260,11);
+          if(g.lives<=0){ endGame(false); return; }
+        }
+      }
+      arrow(e.x,e.y,Math.atan2(dy,dx)-3.927,e.fast?1.35:1.1,e.fast?'#ff6b5e':'#1a0d0c',e.fast?'#ffd0cb':'#ff6b5e');
+    }
+    for(i=g.sparks.length-1;i>=0;i--){
+      var s=g.sparks[i]; s.x+=s.vx*ts; s.y+=s.vy*ts; s.vx*=.95; s.vy*=.95; s.l-=.04*ts;
+      if(s.l<=0){ g.sparks.splice(i,1); continue; }
+      gx.globalAlpha=s.l; gx.fillStyle=s.red?'#ff6b5e':'#4fe08a'; gx.fillRect(s.x-1.5,s.y-1.5,3,3);
+    }
+    gx.lineWidth=2.5; gx.strokeStyle='#d9ffe9';
+    for(i=g.waves.length-1;i>=0;i--){
+      var w=g.waves[i]; w.r+=10*ts;
+      if(w.r>w.m){ g.waves.splice(i,1); continue; }
+      gx.globalAlpha=1-w.r/w.m; gx.beginPath(); gx.arc(w.x,w.y,w.r,0,6.2832); gx.stroke();
+      gx.globalAlpha*=.5; gx.beginPath(); gx.arc(w.x,w.y,w.r*.7,0,6.2832); gx.stroke();
+    }
+    gx.font='600 17px "JetBrains Mono",monospace'; gx.textAlign='center'; gx.textBaseline='middle'; gx.fillStyle='#d9ffe9';
+    for(i=g.texts.length-1;i>=0;i--){
+      var tx=g.texts[i]; tx.y-=.9; tx.l-=.018; if(tx.l<=0){ g.texts.splice(i,1); continue; }
+      gx.globalAlpha=tx.l; gx.fillText(tx.t,tx.x,tx.y-40);
+    }
+    gx.globalAlpha=1;
+    /* seçilmiş imleç: oyuncu */
+    if(g.inv<=0||(g.inv>>2)%2){
+      gx.strokeStyle='#4fe08a'; gx.lineWidth=1; gx.globalAlpha=.1; gx.beginPath(); gx.arc(g.px,g.py,115,0,6.2832); gx.stroke();
+      gx.globalAlpha=1; gx.lineWidth=2.5; gx.strokeStyle=g.cd>0?'#1f7a4a':'#4fe08a';
+      gx.beginPath(); gx.arc(g.px,g.py,30,-1.5708,-1.5708+6.2832*(1-g.cd/60)); gx.stroke();
+      gx.shadowColor='#4fe08a'; gx.shadowBlur=28; arrow(g.px,g.py,0,1.5,'#ffffff','#4fe08a'); gx.shadowBlur=0;
+    }
+    gx.setTransform(gcv.width/W,0,0,gcv.height/H,0,0);
+    if(g.flash>0){ gx.globalAlpha=g.flash*.22; gx.fillStyle='#ff6b5e'; gx.fillRect(0,0,W,H); g.flash-=.06; gx.globalAlpha=1; }
+    if(g.fin){
+      g.finR+=26; var mxr=Math.max(W,H)*1.25;
+      gx.globalAlpha=Math.max(0,.55*(1-g.finR/mxr)); gx.fillStyle='#d9ffe9'; gx.fillRect(0,0,W,H);
+      gx.globalAlpha=1; gx.lineWidth=5; gx.strokeStyle='#d9ffe9'; gx.beginPath(); gx.arc(g.px,g.py,g.finR,0,6.2832); gx.stroke();
+      if(g.finR>mxr){ endGame(true); return; }
+    }
+    gx.fillStyle='#1b2c25'; gx.fillRect(0,0,W,4); gx.fillStyle='#4fe08a'; gx.fillRect(0,0,W*Math.min(1,g.kills/g.target),4);
+  }
+  function endGame(win){
+    game=false; document.body.classList.remove('game'); hud.hidden=true; gcv.hidden=true;
+    var g=G; if(win) g.score+=g.lives*100;
+    var best=Math.max(g.score,+(store('sjc_best5')||0)); store('sjc_best5',best);
+    if(win){
+      setOrder(true); ripple(W/2,H/2,true); setTimeout(function(){ripple(W/2,H/2,true)},250);
+      govShow(L().wtitle,L().win(g.score,best),null,L().again,startGame,L().browse,null,true);
+    } else {
+      ent=70;
+      govShow(L().ltitle,L().lose(g.kills,g.target,g.score,best),null,L().again,startGame,L().balgo,function(){setOrder(true)},true);
+    }
+  }
+  $('gamebtn').addEventListener('click',startGame);
+
+  function track(e){ if(game&&e.isPrimary===false) return; mouse.x=e.clientX; mouse.y=e.clientY-((game||pre)&&e.pointerType==='touch'?64:0); }
+  addEventListener('pointermove',track);
+  addEventListener('pointerdown',function(e){
+    track(e);
+    if(pre||e.target.closest('#dock,#pal,#hud,.gbox')) return;
+    if(game){ blast(); return; }
+    click(e.clientX,e.clientY,e.target.closest('[data-hit]'),1.5);
+  });
+  addEventListener('resize',function(){W=innerWidth; H=innerHeight; initRain(); form();});
+
+  /* ================= isim ve logo ================= */
+  var nameSpans=[].slice.call(document.querySelectorAll('h1 > span')), NAME=nameSpans.map(function(x){return x.textContent});
+  nameSpans.forEach(function(x){ x.innerHTML=x.textContent.split('').map(function(c){return '<span class="lt">'+c+'</span>'}).join('') });
+  function decodeLetter(l,ch,max){ if(l._b) return; l._b=1; var n=0; (function f(){ n++; l.textContent=n<max?SC[Math.random()*SC.length|0]:ch; if(n<max) setTimeout(f,45); else l._b=0; })(); }
+  function decodeName(){ if(reduce) return; nameSpans.forEach(function(x,wi){ [].forEach.call(x.children,function(l,li){ decodeLetter(l,NAME[wi][li],5+wi*6+li*2) }) }) }
+  document.querySelector('h1').addEventListener('pointerover',function(e){
+    var l=e.target; if(!l.classList||!l.classList.contains('lt')||reduce) return;
+    var w=nameSpans.indexOf(l.parentNode), i=[].indexOf.call(l.parentNode.children,l); decodeLetter(l,NAME[w][i],6);
+  });
+  var logoBusy=false;
+  $('logo').addEventListener('click',function(e){
+    e.preventDefault(); scrollTo({top:0,behavior:reduce?'auto':'smooth'});
+    for(var i=0;i<cols;i++){ drops[i].y=-(Math.abs(i-cols/2)*.5|0); drops[i].acc=0; drops[i].sp=1; }
+    var r=$('logo').getBoundingClientRect(); ripple(r.left+r.width/2,r.top+r.height/2,true);
+    setTimeout(decodeName,reduce?0:350);
+    if(logoBusy) return; logoBusy=true;
+    var full='selman jir can', lt=$('logot'), n=3;
+    (function type(){ n++; lt.textContent=full.slice(0,n); if(n<full.length) setTimeout(type,45); else setTimeout(function del(){ n--; lt.textContent=n>3?full.slice(0,n):'sjc'; if(n>3) setTimeout(del,25); else logoBusy=false; },1500); })();
+  });
+
+  /* ================= terminal ================= */
+  var tout=$('tout'), tin=$('tin'), hist=[], hi=0;
+  var CMDS=['help','whoami','about','exp','skills','edu','contact','neofetch','lang','chaos','balance','game','status','dog','ls','cat','clear','sudo','vim','exit','date','echo'];
+  function out(html,cls){var d=document.createElement('div'); if(cls) d.className=cls; d.innerHTML=html; tout.appendChild(d); tout.scrollTop=tout.scrollHeight}
+  function contactTxt(){return 'mail      '+MAIL+'\nlinkedin  <a href="'+LI+'" target="_blank" rel="noopener">linkedin.com/in/selmanjir</a>'+(SOCIAL.github?'\ngithub    github.com/'+esc(SOCIAL.github):'')+(SOCIAL.instagram?'\ninsta     @'+esc(SOCIAL.instagram):'')}
+  function neofetch(){
+    var a=['  ███ █ ███','  █   █ █  ','  ███ █ █  ','    █ █ █  ','  ███ █ ███'], b=['<span class="c">selman@jir-can</span>','--------------'].concat(L().nf,[' stack     Node.js · Nest.js · GraphQL',' infra     Docker · Kubernetes (GKE)']);
+    var s=''; if(W<640) return b.join('\n')+'\n';
+    for(var i=0;i<Math.max(a.length,b.length);i++) s+='<span class="c">'+(a[i]||'           ')+'</span>   '+(b[i]||'')+'\n';
+    return s;
+  }
+  function run(raw){
+    var line=raw.trim(); out('<span class="c">~$</span> '+esc(line));
+    if(!line) return;
+    hist.push(line); hi=hist.length;
+    var parts=line.split(/\s+/), c=parts[0].toLowerCase(), arg=(parts[1]||'').toLowerCase(), T=L();
+    switch(c){
+      case 'help': out(T.help); break;
+      case 'whoami': out(T.whoami); break;
+      case 'about': out(T.about); break;
+      case 'exp': case 'experience': out(T.exp); break;
+      case 'skills': out(SKILLS); break;
+      case 'edu': out(T.edu); break;
+      case 'contact': out(contactTxt()); break;
+      case 'neofetch': out(neofetch()); break;
+      case 'lang': if(arg==='tr'||arg==='en'){ setLang(arg,true); out(L().langok); } else out(T.langbad); break;
+      case 'chaos': setOrder(false); out(T.t_chaos); break;
+      case 'balance': setOrder(true); out(T.t_balance); break;
+      case 'game': out(T.t_game); tin.blur(); startGame(); break;
+      case 'dog': case 'woof': case 'hav': out(DOG,'c'); out(T.dog); break;
+      case 'ls': out('about.txt  experience.log  skills.json  dog.png  game.exe'); break;
+      case 'cat':
+        if(arg==='about.txt') out(T.about); else if(arg==='experience.log') out(T.exp+'\n'+T.edu); else if(arg==='skills.json') out(SKILLS);
+        else if(arg==='dog.png'){ out(DOG,'c'); out(T.dog); } else if(arg==='game.exe') out('→ game'); else out(T.nofile); break;
+      case 'clear': tout.innerHTML=''; break;
+      case 'status': out(T.status(Math.round(ent),Math.round(balS))); break;
+      case 'sudo': out(T.sudo); break;
+      case 'vim': case 'vi': case 'nano': out(T.vim); break;
+      case 'exit': case 'quit': out(T.exit); break;
+      case 'date': out(esc(new Date().toLocaleString(lang==='tr'?'tr-TR':'en-GB'))); break;
+      case 'echo': out(esc(parts.slice(1).join(' '))); break;
+      default: out(esc(T.nf404(c)),'m');
+    }
+  }
+  tin.addEventListener('keydown',function(e){
+    if(e.key==='Enter'){ run(tin.value); tin.value=''; }
+    else if(e.key==='ArrowUp'){ if(hi>0){ hi--; tin.value=hist[hi]; } e.preventDefault(); }
+    else if(e.key==='ArrowDown'){ if(hi<hist.length){ hi++; tin.value=hist[hi]||''; } e.preventDefault(); }
+    else if(e.key==='Tab'){ var v=tin.value.toLowerCase(); if(v){ var m=CMDS.filter(function(c){return c.indexOf(v)===0}); if(m.length===1) tin.value=m[0]+' '; else if(m.length>1) out(m.join('  '),'m'); } e.preventDefault(); }
+  });
+  $('term').addEventListener('click',function(e){ if(!e.target.closest('a')&&!String(getSelection())) tin.focus({preventScroll:true}); });
+
+  /* ================= kopyala ================= */
+  function copyMail(){
+    var b=$('copy'), done=function(){ b.textContent=L().copied; setTimeout(function(){b.textContent=L().copy},1600) };
+    var sel=function(){ var r=document.createRange(); r.selectNodeContents($('mail')); var s=getSelection(); s.removeAllRanges(); s.addRange(r); };
+    try{ navigator.clipboard.writeText(MAIL).then(done,sel); }catch(err){ sel(); }
+  }
+  $('copy').addEventListener('click',copyMail);
+
+  /* ================= komut paleti ================= */
+  var pal=$('pal'), pin=$('pin'), plist=$('plist'), psel=0, pshown=[];
+  function go(id){ $(id).scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'}) }
+  var PACT=[function(){go('about')},function(){go('journey')},function(){go('system')},function(){go('terminal'); tin.focus({preventScroll:true})},function(){go('contact')},
+    function(){setLang(lang==='tr'?'en':'tr',true)},function(){setOrder(!order)},startGame,copyMail];
+  function renderPal(){
+    var q=pin.value.toLowerCase(); pshown=[];
+    L().p.forEach(function(lbl,i){ if(lbl.toLowerCase().indexOf(q)>=0) pshown.push(i) });
+    if(psel>=pshown.length) psel=0;
+    plist.innerHTML=pshown.map(function(i,n){return '<li data-i="'+i+'"'+(n===psel?' class="sel"':'')+'>'+esc(L().p[i])+'</li>'}).join('');
+  }
+  function openPal(){ pal.hidden=false; pin.value=''; psel=0; renderPal(); pin.focus(); }
+  function closePal(){ pal.hidden=true; }
+  function execPal(i){ closePal(); if(i!=null) PACT[i](); }
+  $('palbtn').addEventListener('click',openPal);
+  pin.addEventListener('input',function(){psel=0; renderPal()});
+  pin.addEventListener('keydown',function(e){
+    if(e.key==='ArrowDown'){ psel=(psel+1)%Math.max(pshown.length,1); renderPal(); e.preventDefault(); }
+    else if(e.key==='ArrowUp'){ psel=(psel-1+pshown.length)%Math.max(pshown.length,1); renderPal(); e.preventDefault(); }
+    else if(e.key==='Enter'){ execPal(pshown[psel]); }
+  });
+  plist.addEventListener('click',function(e){ var li=e.target.closest('li'); if(li) execPal(+li.dataset.i); });
+  pal.addEventListener('click',function(e){ if(e.target===pal) closePal(); });
+  addEventListener('keydown',function(e){
+    if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){ e.preventDefault(); pal.hidden?openPal():closePal(); }
+    else if(e.key==='Escape'&&!pal.hidden) closePal();
+    else if(e.key===' '&&game){ e.preventDefault(); blast(); }
+  });
+
+  /* ================= başlat ================= */
+  var saved=store('sjc_lang');
+  setLang(saved==='tr'||saved==='en'?saved:((navigator.language||'tr').toLowerCase().indexOf('tr')===0?'tr':'en'),false);
+  out(neofetch()); out(L().welcome);
+  try{ console.log('%csjc_ %cMerhaba, meraklı insan. Terminalde "dog" yazmayı dene.','color:#4fe08a;font-weight:bold','color:inherit'); }catch(e){}
+  initRain();
+
+  function frame(t){
+    var gap=reduce?400:(order?95:60);
+    if(t-last>gap){ last=t; stepRain(); }
+    stepPk(t); stepChaos();
+    var play=game||pre;
+    if(play) stepGame(game);
+    if(game){
+      var hs=L().hud(G.lives,G.kills,G.target,G.score); if(hs!==G.hs){ G.hs=hs; hud.textContent=hs; }
+    }
+    var n=curs.length; rot+=.005;
+    for(var i=0;i<n&&!play;i++){
+      var o=curs[i], a=rot+i*6.2832/n;
+      if(order){ o.tx=fc.x+Math.cos(a)*fc.R; o.ty=fc.y+Math.sin(a)*fc.R; }
+      var k=order?.05:o.k*(1+ent/40), damp=order?.8:.92;
+      var dx=o.tx-o.x, dy=o.ty-o.y;
+      o.vx=(o.vx+dx*k)*damp; o.vy=(o.vy+dy*k)*damp;
+      if(!order){
+        var mx=o.x-mouse.x, my=o.y-mouse.y, md=mx*mx+my*my;
+        if(md<10000&&md>1){ var m=Math.sqrt(md), f=(100-m)/100*1.6; o.vx+=mx/m*f; o.vy+=my/m*f; }
+        if(o.wait>0){ o.wait--; if(o.wait<=0) pick(o); }
+        else if(dx*dx+dy*dy<30){ click(o.x,o.y,o.t,.35); o.wait=rnd(70,220)/(1+ent/100); }
+      }
+      o.x+=o.vx; o.y+=o.vy;
+      var ta=order?a-.7854:0, d=((ta-o.r+3.1416)%6.2832+6.2832)%6.2832-3.1416; o.r+=d*.18;
+      o.el.style.transform='translate('+(o.x-4).toFixed(1)+'px,'+(o.y-2).toFixed(1)+'px) rotate('+o.r.toFixed(3)+'rad)'+(order&&fc.s<1?' scale('+fc.s+')':'');
+    }
+    if(order){ bv=0; bx*=.9; } else { bv+=-bx*.03+rnd(-.3,.3)*(1+ent/60); bv*=.94; bx+=bv; if(bx>29){bx=29;bv=0} if(bx<-29){bx=-29;bv=0} }
+    bubble.style.transform='translateX('+bx.toFixed(1)+'px)';
+    var tgt=order?100:Math.max(3,75-ent*.7-Math.abs(bx)/29*8);
+    balS+=(tgt-balS)*.035; balEl.textContent=Math.round(balS);
+    requestAnimationFrame(frame);
+  }
+  form(); mstat(); decodeName();
+  var TITLE=document.title;
+  document.addEventListener('visibilitychange',function(){ document.title=document.hidden&&!order&&!game?L().away:TITLE; });
+  /* ilk ziyaret: sakin mi kaos mu? selmanjircan.com/#cv doğrudan sakin açılır */
+  var mode=location.hash==='#cv'?'calm':store('sjc_mode');
+  if(mode!=='chaos') setOrder(true,true);
+  if(mode!=='chaos'&&mode!=='calm') govShow(L().htitle,L().htext,null,L().hcalm,function(){store('sjc_mode','calm')},L().hchaos,function(){store('sjc_mode','chaos'); setOrder(false)});
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
