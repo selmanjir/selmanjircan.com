@@ -1,4 +1,20 @@
 <!DOCTYPE html>
+<!--
+  sjc_
+
+  Merhaba, kaynağa bakan meraklı insan.
+  Hello, curious human reading the source.
+
+  Buraya kadar geldiysen küçük bir bulmacayı hak ettin:
+  You made it this far, so you have earned a small puzzle:
+
+      ZGVuZ2UuZXhl
+
+  Çöz ve sayfadaki terminale yaz. Gizli bir komut açılır.
+  Decode it and type it into the terminal on the page. It unlocks a hidden command.
+
+  İpucu / Hint: 64
+-->
 <html lang="tr">
 <head>
 <meta charset="utf-8">
@@ -365,6 +381,28 @@ body.lock{overflow:hidden}
   #tout{font-size:12.5px; height:250px} .hr{grid-template-columns:minmax(74px,max-content) minmax(0,1fr)} .hr b{white-space:nowrap} #hud{font-size:12px; padding:8px 12px} #core svg{transform:scale(.56)} #core .bk{left:-66px; top:-66px; width:132px; height:132px} #core .hit{left:-62px; top:-62px; width:124px; height:124px}
   .gbox{padding:22px 18px 20px} .gbox h3{font-size:1.4rem} .gbox p{font-size:.93rem}
 }
+#sndbtn{display:inline-flex; align-items:center; justify-content:center; width:34px; padding:6px 0; color:var(--muted)}
+#sndbtn svg{width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
+#sndbtn .on{display:none}
+#sndbtn[aria-pressed="true"]{color:var(--green); border-color:var(--green)}
+#sndbtn[aria-pressed="true"] .on{display:inline} #sndbtn[aria-pressed="true"] .off{display:none}
+body:not(.game) #hud{white-space:normal; text-align:center; line-height:1.4; width:max-content}
+.doghost{position:relative}
+.dog{position:absolute; z-index:2; width:46px; height:28px; padding:0; border:0; background:none; color:var(--muted); opacity:.5; cursor:pointer; transition:opacity .3s,color .3s}
+.dog.up{bottom:100%} .dog.in{bottom:0}
+.dog svg{display:block; width:100%; height:100%; overflow:visible}
+.dog:hover,.dog:focus-visible{opacity:1; color:var(--green)}
+.dog .tg,.dog .wag{opacity:0}
+.dog.found{opacity:1; color:var(--gold); cursor:default}
+.dog.found .tg{opacity:1}
+.dog.found .wag{opacity:1; transform-box:view-box; transform-origin:37px 27px; animation:wag .22s ease-in-out infinite alternate}
+.dog.found .hd{transform-box:view-box; transform-origin:20px 28px; animation:dbob .44s ease-in-out infinite alternate}
+@keyframes wag{from{transform:rotate(-22deg)} to{transform:rotate(24deg)}}
+@keyframes dbob{from{transform:translateY(0)} to{transform:translateY(-2px)}}
+.dog::after{content:attr(data-b); position:absolute; left:50%; bottom:calc(100% + 6px); transform:translate(-50%,6px); font:600 12px var(--mono); color:var(--bg); background:var(--gold); padding:4px 8px; border-radius:6px; white-space:nowrap; opacity:0; pointer-events:none; transition:opacity .3s,transform .3s}
+.dog.bark::after{opacity:1; transform:translate(-50%,0)}
+.dog.side::after{left:auto; right:calc(100% + 6px); bottom:5px; transform:translate(6px,0)} .dog.side.bark::after{transform:none}
+@media (prefers-reduced-motion:reduce){.dog.found .wag,.dog.found .hd{animation:none}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 html,body{margin:0}
 </style>
@@ -381,6 +419,7 @@ html,body{margin:0}
     </div>
     <div class="tools">
       <div class="seg" role="group" aria-label="Dil / Language"><button type="button" id="ltr" aria-pressed="true">TR</button><button type="button" id="len" aria-pressed="false">EN</button></div>
+      <button type="button" class="btn sm" id="sndbtn" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5v5h3.5l4.5 4v-13l-4.5 4z"/><path class="on" d="M15.5 9a4.5 4.5 0 0 1 0 6M18 6.5a8 8 0 0 1 0 11"/><path class="off" d="M16 9.5l5 5M21 9.5l-5 5"/></svg></button>
       <button type="button" class="btn sm" id="palbtn" aria-label="Komut paleti">⌘K</button>
     </div>
   </nav>
@@ -502,6 +541,22 @@ html,body{margin:0}
   });
   var YEARS=new Date().getFullYear()-2021;
 
+  /* ================= hafıza: site ziyaretçiyi hatırlar (yalnızca bu tarayıcıda, localStorage) ================= */
+  var MEM={}; try{ MEM=JSON.parse(store('sjc_mem')||'{}')||{} }catch(e){ MEM={} }
+  if(typeof MEM!=='object'||Array.isArray(MEM)) MEM={};
+  function memSave(){ store('sjc_mem',JSON.stringify(MEM)) }
+  var VISIT=MEM.v|0, PREV={win:MEM.win|0,name:MEM.name?String(MEM.name):''}, chaosT0=0;
+  if(!MEM.last||Date.now()-MEM.last>12e5) VISIT++;
+  MEM.v=VISIT=Math.max(1,VISIT); MEM.last=Date.now(); memSave();
+  function memLine(){ if(VISIT<2) return ''; var m=L().mem, n=VISIT>=3?PREV.name:''; return PREV.win?m.again(PREV.win,n):m.again0(n); }
+  function memGreet(){ if(VISIT>=3) out(esc(PREV.name?L().mem.term(PREV.name,VISIT):L().mem.noname(VISIT)),'c'); }
+  function memName(t){ MEM.name=cap(t).slice(0,40); memSave(); tbarSync(); }
+  function tbarSync(){ var sp=document.querySelector('#term .tbar span'); if(sp) sp.textContent=(MEM.name?norm(MEM.name).replace(/[^a-z]/g,''):'visitor')+'@sjc: ~'; }
+  /* gizli komutla açılan yağmur renkleri: [iz, baş] */
+  var RAINS={green:['#1f7a4a','#4fe08a'],cyan:['#17616b','#4fd8e0'],gold:['#7a6220','#ffd166'],purple:['#55357f','#c77dff'],pink:['#7a2f4a','#ff8fab'],white:['#56655e','#e8fff2']};
+  var RAINTR={yesil:'green',mavi:'cyan',altin:'gold',sari:'gold',mor:'purple',pembe:'pink',beyaz:'white'};
+  var RAINC=(MEM.dev&&RAINS[MEM.rain])||RAINS.green;
+
   /* ================= dil ================= */
   var EN={
     nav1:'About',nav2:'Journey',nav3:'System',nav5:'Contact',
@@ -532,28 +587,46 @@ html,body{margin:0}
       n:{c:'İstemciler: web, mobil ve dış sistemler. Her şey buradan başlar.',k:'Kong: API gateway. İstekleri karşılar, yönlendirir, sınırlar.',g:'GraphQL: istemcinin tam ihtiyacı kadar veri istediği API katmanı.',n:'Nest.js: düzenli, modüler servisler için ana çatım.',e:'Express.js: hafif ve hızlı servisler için.',r:'Redis: önbellek. Aynı soruyu veritabanına iki kez sormamak için.',q:'RabbitMQ: mesaj kuyruğu. Servisler birbirini beklemeden konuşur.',w:'Node.js worker: kuyruktaki işleri arka planda tüketir.',m:'MySQL: ilişkisel veri.',o:'MongoDB: doküman tabanlı veri.'},
       p:['Hakkımda','Yolculuk','Sistem haritası','Terminal','İletişim','Dili değiştir: English','Kaos / denge','E-postayı kopyala'],ph:'Komut ara…',
       welcome:'Hoş geldin. Komutlar için <span class="c">help</span> yaz, ya da ismini dene.',tph:'ismini yaz…',hello:function(n){return 'Merhaba '+n+'. Sana özel bir şey henüz yok ama bu selam senin. (Komutlar için help)'},hello2:'Bu selam sana.',elif2:'Bu sitenin en güzel satırı sensin.',own:'Sitenin sahibi teşrif etti.',
-      help:[['whoami','ben kimim'],['about','kısaca ben'],['exp','deneyim'],['skills','kullandığım araçlar'],['edu','eğitim'],['contact','bana ulaş'],['neofetch','sistem bilgisi'],['lang en','dili değiştir (tr | en)'],['chaos','kaosu serbest bırak'],['balance','dengele'],['status','kaos seviyesi'],['dog','hav'],['ls, cat','dosyalara bak'],['clear','ekranı temizle']],
+      help:[['whoami','ben kimim'],['about','kısaca ben'],['exp','deneyim'],['skills','kullandığım araçlar'],['edu','eğitim'],['contact','bana ulaş'],['neofetch','sistem bilgisi'],['lang en','dili değiştir (tr | en)'],['chaos','kaosu serbest bırak'],['balance','dengele'],['status','kaos seviyesi'],['dog','hav'],['badges','topladığın rozetler'],['forget','beni unut (site hafızasını siler)'],['ls, cat','dosyalara bak'],['clear','ekranı temizle']],
       whoami:'Selman Jir Can. Backend developer, yazılım mühendisi.\nYazılım benim için soyut bir varlıkla konuşmanın yolu.',
       about:"Her gün biraz daha iyi olmaya çalışan bir yazılım mühendisiyim.\nOyun oynarım, oyun sektörünü takip ederim.\nArkadaşlarımla teknolojiyi felsefi bir derinlikte tartışırım.\nBir de köpeğim var.",
       exp:[['2022 — bugün','Backend Developer · Pixa Software, İstanbul'],['2021 — 2022','Full Stack Developer · Noda Bilişim, Ankara']],
       edu:[['2018 — 2022','Fırat Üniversitesi · Yazılım Mühendisliği, Lisans']],
       nf:[['rol','Backend Developer'],['uptime',YEARS+' yıldır profesyonel kod'],['evcil','1 köpek']],
       langok:'Dil: Türkçe',langbad:'Kullanım: lang tr | lang en',t_chaos:'Kaos serbest.',t_balance:'Denge sağlandı.',t_game:'Kaos ile savaş başlıyor.',
-      dog:'Hav! Sahibim şu an kod yazıyor.',sudo:'Yetki reddedildi. Ama işe almak istersen: contact',vim:'Vim açıldı. Çıkmak için… şaka, kapattım bile.',exit:'Buradan çıkış yok. Sekmeyi kapatabilirsin ama kalmanı tercih ederim.',
+      dog:'Hav! Sahibim şu an kod yazıyor. Ben de sayfada bir yerde saklanıyorum; bulana rozet var.',dog2:function(n){return 'Hav! Beni '+n+' kez buldun. Her gelişinde başka yere saklanırım.'},
+      snd:['Sesi aç','Sesi kapat'],
+      mem:{again:function(s,n){return 'Yine sen'+(n?', '+n:'')+'. Geçen sefer kaosu '+s+' saniyede yenmiştin.'},again0:function(n){return 'Yine sen'+(n?', '+n:'')+'. Kaos seni bekliyordu.'},
+        term:function(n,v){return 'Tekrar hoş geldin, '+n+'. Bu '+v+'. gelişin.'},noname:function(v){return 'Bu '+v+'. gelişin ve hâlâ ismini yazmadın. Merak ediyorum.'}},
+      forgot:'Unuttum. Hiç tanışmadık.',
+      dogf:function(n){return 'Köpeği buldun! Rozet: Köpek Dostu'+(n>1?' ×'+n:'')},dogt:'◆ Rozet açıldı: Köpek Dostu. Hepsini görmek için: badges',dogl:'Saklanan köpek',
+      dev1:'Erişim verildi. Geliştirici modu açık.\n◆ Rozet açıldı: Kaynak Okuyucu',devhud:'Bulmaca çözüldü. Gizli komut açıldı ✓',
+      devhelp:[['rain &lt;renk&gt;','yağmurun rengi: green, cyan, gold, purple, pink, white']],
+      locked:'Bu komut kilitli. Anahtar sayfanın kaynağında saklı.',rainok:function(c){return 'Yağmur artık '+c+'. Kalıcı; geri almak için: rain green'},rainbad:'Kullanım: rain green | cyan | gold | purple | pink | white',
+      bd:{dog:['Köpek Dostu',function(n){return 'köpeği '+n+' kez buldun'},'sayfada biri saklanıyor'],dev:['Kaynak Okuyucu','bulmacayı çözdün','kaynağa bakan bulur'],win:['Kaos Avcısı',function(n){return 'oyunu '+n+' kez kazandın'},'kaosla savaş ve kazan'],reg:['Müdavim',function(n){return n+'. ziyaret'},'birkaç kez daha uğra']},sudo:'Yetki reddedildi. Ama işe almak istersen: contact',vim:'Vim açıldı. Çıkmak için… şaka, kapattım bile.',exit:'Buradan çıkış yok. Sekmeyi kapatabilirsin ama kalmanı tercih ederim.',
       nofile:'Böyle bir dosya yok. ls ile bak.',nf404:function(c){return 'komut bulunamadı: '+c+'. help yazabilirsin.'}},
     en:{bal:'Balance',chaos:'Chaos',copy:'Copy',copied:'Copied',pick:'Pick a box.',done:'Balance restored ✓',morder:'BALANCE',mchaos:'CHAOS',gtitle:'Mini game: Fight the chaos',ghow:function(T){return 'The cursors on this site are now your enemies, and they multiply. A touch costs a life. When they get close, click or tap: a shockwave destroys the ones around you. Collect the diamonds: red is a bomb, yellow slows, blue freezes. Destroy '+T+' clones and the chaos collapses.'},again:'Play again',close:'Close',fight:'Fight the chaos',w1:'Chaos is rising…',w2:'The site is starting to fall apart. Want to balance it?',w3:'Critical! Balance or fight.',ptitle:'Chaos has taken over',ptext:'Balance it with one button, or fight the chaos.',wtitle:'Balance restored!',win:function(s,b){return 'Every clone collapsed and the site is balanced. Score '+s+' · best '+b},ltitle:'Chaos won',lose:function(k,T,s,b){return 'You destroyed '+k+' clones, the goal is '+T+'. Score '+s+' · best '+b+'. Play again if you like, or balance the site to look around.'},frz:'FROZEN',hint2:'Hold still, let it settle',broke:'You broke the balance. Chaos begins.',enes:'Coffee is ready, the route is set. Safe travels, Enes.',samet:'Target destroyed. At your command, sir.',lock:'TARGET LOCKED',hint:'The site is falling apart, balance it ↓',atitle:'A little chaos?',atext:'Cursors multiply and the page slowly falls apart. Balancing it is up to you.',ayes:'Start the chaos',ano:'Keep it calm',hit:'HIT',pw:['BOMB','SLOW','FREEZE','LIFE +1'],gname:'Fight the chaos',how:[['Dodge','A touch from a clone costs a life'],['Hit','Click: the ones around you explode'],['Collect','Diamonds give you powers']],howT:[['Dodge','Move with the left pad'],['Hit','HIT: the ones around you explode'],['Collect','Diamonds give you powers']],goal:function(T){return 'Goal: '+T+' clones'},wave:'WAVE ',rec:'NEW RECORD',top:'Your best scores',kl:'clones',ghowT:function(T){return 'The cursors on this site are now your enemies, and they multiply. A touch costs a life. Move with the round pad at the bottom left; when they get close, press HIT on the right to destroy the ones around you. Collect the diamonds: red is a bomb, yellow slows, blue freezes. Destroy '+T+' clones and the chaos collapses.'},memo:'This is what I do with real systems too: take the chaos and turn it into balance.',reach:'Write to me',browse:'Browse the site',balgo:'Balance and browse',htitle:'Welcome',htext:'There are two ways to visit this site. In calm mode everything stays in place. In chaos mode the site slowly falls apart; balancing it or fighting back is up to you. You can switch any time with the button below.',hcalm:'Calm: just the career',hchaos:'Release the chaos',away:'⚠ Chaos is growing… come back',ranks:['Order apprentice','Balance master','Chaos tamer','Enemy of entropy'],status:function(e,b){return 'chaos '+e+'% · balance '+b+'%'},clients:'Clients',
       hud:function(k,T,s){return 'clones '+k+'/'+T+' · score '+s},
       n:{c:'Clients: web, mobile and external systems. Everything starts here.',k:'Kong: API gateway. It receives, routes and rate-limits requests.',g:'GraphQL: an API layer where the client asks for exactly the data it needs.',n:'Nest.js: my main framework for tidy, modular services.',e:'Express.js: for light, fast services.',r:'Redis: cache. So the database is not asked the same question twice.',q:'RabbitMQ: message queue. Services talk without waiting on each other.',w:'Node.js worker: consumes queued jobs in the background.',m:'MySQL: relational data.',o:'MongoDB: document data.'},
       p:['About','Journey','System map','Terminal','Contact','Switch language: Türkçe','Chaos / balance','Copy email'],ph:'Search commands…',
       welcome:'Welcome. Type <span class="c">help</span> for commands, or try your name.',tph:'type your name…',hello:function(n){return 'Hi '+n+'. Nothing custom for you yet, but this hello is yours. (Type help for commands)'},hello2:'This hello is for you.',elif2:'You are the most beautiful line on this site.',own:'The owner of this site has entered.',
-      help:[['whoami','who I am'],['about','me, briefly'],['exp','experience'],['skills','tools I use'],['edu','education'],['contact','reach me'],['neofetch','system info'],['lang tr','switch language (tr | en)'],['chaos','release the chaos'],['balance','restore balance'],['status','chaos level'],['dog','woof'],['ls, cat','look at files'],['clear','clear the screen']],
+      help:[['whoami','who I am'],['about','me, briefly'],['exp','experience'],['skills','tools I use'],['edu','education'],['contact','reach me'],['neofetch','system info'],['lang tr','switch language (tr | en)'],['chaos','release the chaos'],['balance','restore balance'],['status','chaos level'],['dog','woof'],['badges','badges you collected'],['forget','forget me (clears the site memory)'],['ls, cat','look at files'],['clear','clear the screen']],
       whoami:'Selman Jir Can. Backend developer, software engineer.\nTo me, software is a way of talking with an abstract existence.',
       about:'A software engineer trying to be a little better every day.\nI play games and follow the game industry.\nMy friends and I discuss technology with some philosophical depth.\nAlso, I have a dog.',
       exp:[['2022 — present','Backend Developer · Pixa Software, Istanbul'],['2021 — 2022','Full Stack Developer · Noda Bilişim, Ankara']],
       edu:[['2018 — 2022','Fırat University · BSc, Software Engineering']],
       nf:[['role','Backend Developer'],['uptime',YEARS+' years of professional code'],['pets','1 dog']],
       langok:'Language: English',langbad:'Usage: lang tr | lang en',t_chaos:'Chaos released.',t_balance:'Balance restored.',t_game:'Fight the chaos is starting.',
-      dog:'Woof! My owner is writing code right now.',sudo:'Permission denied. But if you want to hire me: contact',vim:'Vim opened. To quit… just kidding, already closed it.',exit:'There is no exit. You can close the tab, but I would rather you stayed.',
+      dog:'Woof! My owner is writing code right now. I am hiding somewhere on this page; find me for a badge.',dog2:function(n){return 'Woof! You found me '+n+(n>1?' times':' time')+'. I hide somewhere new on every visit.'},
+      snd:['Turn sound on','Turn sound off'],
+      mem:{again:function(s,n){return 'You again'+(n?', '+n:'')+'. Last time you beat the chaos in '+s+' seconds.'},again0:function(n){return 'You again'+(n?', '+n:'')+'. The chaos was waiting for you.'},
+        term:function(n,v){return 'Welcome back, '+n+'. This is visit number '+v+'.'},noname:function(v){return 'Visit number '+v+' and you still have not typed your name. I am curious.'}},
+      forgot:'Forgotten. We have never met.',
+      dogf:function(n){return 'You found the dog! Badge: Dog Friend'+(n>1?' ×'+n:'')},dogt:'◆ Badge unlocked: Dog Friend. See them all with: badges',dogl:'A hiding dog',
+      dev1:'Access granted. Developer mode is on.\n◆ Badge unlocked: Source Reader',devhud:'Puzzle solved. Hidden command unlocked ✓',
+      devhelp:[['rain &lt;color&gt;','rain color: green, cyan, gold, purple, pink, white']],
+      locked:'This command is locked. The key is hidden in the page source.',rainok:function(c){return 'The rain is now '+c+'. It sticks; undo with: rain green'},rainbad:'Usage: rain green | cyan | gold | purple | pink | white',
+      bd:{dog:['Dog Friend',function(n){return 'found the dog '+n+(n>1?' times':' time')},'someone is hiding on the page'],dev:['Source Reader','you solved the puzzle','those who read the source find it'],win:['Chaos Hunter',function(n){return 'won the game '+n+(n>1?' times':' time')},'fight the chaos and win'],reg:['Regular',function(n){return 'visit number '+n},'drop by a few more times']},sudo:'Permission denied. But if you want to hire me: contact',vim:'Vim opened. To quit… just kidding, already closed it.',exit:'There is no exit. You can close the tab, but I would rather you stayed.',
       nofile:'No such file. Try ls.',nf404:function(c){return 'command not found: '+c+'. Try help.'}}
   };
   var SKILLS=[['lang','JavaScript, TypeScript, C#'],['backend','Node.js, Nest.js, Express.js, GraphQL'],['messaging','RabbitMQ, Redis, Kong'],['data','MySQL, MongoDB'],['ops','Docker, Kubernetes, GKE, Bitbucket CI/CD']];
@@ -583,7 +656,8 @@ html,body{margin:0}
     syncBtn(); $('copy').textContent=L().copy; $('pin').placeholder=L().ph; $('tin').placeholder=L().tph;
     if(clientLabel) clientLabel.textContent=L().clients;
     $('ninfo').textContent=curNode?L().n[curNode]:L().pick;
-    if(typeof tout!=='undefined'&&tout){ tout.innerHTML=''; out(neofetch()); out(L().welcome); }
+    if(typeof tout!=='undefined'&&tout){ tout.innerHTML=''; out(neofetch()); out(L().welcome); memGreet(); }
+    sndLabel();
   }
   $('ltr').onclick=function(){setLang('tr',true)}; $('len').onclick=function(){setLang('en',true)};
 
@@ -609,11 +683,11 @@ html,body{margin:0}
       var x=i*CW;
       g.fillStyle='#060b09'; g.fillRect(x,d.y*RH,CW,RH);
       var rc=!order&&!game&&!pre&&(stage>=3||(stage===2&&i%3===0));
-      g.fillStyle=rc?'#7a2a25':'#1f7a4a'; g.fillText(d.ch,x+3,d.y*RH+2);
+      g.fillStyle=rc?'#7a2a25':RAINC[0]; g.fillText(d.ch,x+3,d.y*RH+2);
       d.y++; d.ch=glyph();
       if(order){ if(d.y>rows+10) d.y=0; }
       else if(d.y>rows && Math.random()>.96){ d.y=0; d.sp=rnd(.25,1); }
-      g.fillStyle=order?'#4fe08a':(rc?'#ff6b5e':'#d9ffe9'); g.fillText(d.ch,x+3,d.y*RH+2);
+      g.fillStyle=order?RAINC[1]:(rc?'#ff6b5e':'#d9ffe9'); g.fillText(d.ch,x+3,d.y*RH+2);
     }
   }
 
@@ -699,10 +773,10 @@ html,body{margin:0}
     var r=document.createElement('div'); r.className=big?'rip big':'rip'; r.style.left=x+'px'; r.style.top=y+'px';
     r.addEventListener('animationend',function(){r.remove(); if(!big) rips--;}); layer.appendChild(r);
   }
-  function flashHud(txt){
+  function flashHud(txt,ms){
     if(game||pre) return;
     hud.textContent=txt; hud.hidden=false; clearTimeout(hudTimer);
-    hudTimer=setTimeout(function(){ if(!game) hud.hidden=true },2600);
+    hudTimer=setTimeout(function(){ if(!game) hud.hidden=true },ms||2600);
   }
   var strain=0, idle=0, sStep=0, crackP=0, fallen=[];
   function click(x,y,target,w,soft){
@@ -777,11 +851,14 @@ html,body{margin:0}
     order=v; document.body.classList.toggle('order',order); syncBtn(); mok=mlost=0; mstat();
     ent=0; strain=0; idle=0; prompted=false; setStage(0); cv.style.opacity=''; crackTo(0);
     if(order){
+      if(chaosT0&&!quiet){ MEM.win=Math.max(1,Math.round((performance.now()-chaosT0)/1000)); memSave(); }
+      chaosT0=0; if(!quiet){ sndCalm(); note(523.25,2.6,.16); }
       settle();
       while(curs.length<RING) addCursor();
       form(); alignRain(); pks.forEach(function(k){k.bad=false; k.sp=.012; k.el.classList.remove('bad')});
       if(!quiet) setTimeout(function(){ if(order){ ripple(fc.x,fc.y,true); flashHud(L().done); } },800);
     } else {
+      chaosT0=performance.now();
       while(curs.length>BASE){ curs.pop().el.remove(); }
       curs.forEach(function(o){pick(o); o.wait=rnd(0,80)}); drops.forEach(function(d){d.sp=rnd(.25,1); d.y=rnd(-rows,rows)|0});
     }
@@ -1030,7 +1107,7 @@ html,body{margin:0}
   function fmt(n){ return n.toLocaleString(lang==='tr'?'tr-TR':'en-US') }
   function endGame(win){
     game=false; tch=null; document.body.classList.remove('game'); hud.hidden=true; gcv.hidden=true; $('gbtn').hidden=$('gjoy').hidden=true; joyEnd();
-    var g=G; if(win) g.score+=g.lives*100;
+    var g=G; if(win){ g.score+=g.lives*100; MEM.gw=(MEM.gw|0)+1; memSave(); }
     /* aynı kullanıcının en iyi 5 skoru tarayıcıda saklanır */
     var list=[]; try{ list=JSON.parse(store('sjc_scores')||'[]') }catch(e){} if(!Array.isArray(list)) list=[];
     var me={s:g.score,k:g.kills,w:win?1:0,d:Date.now()}; list.push(me); list.sort(function(a,b){return b.s-a.s}); list=list.slice(0,5); store('sjc_scores',JSON.stringify(list));
@@ -1117,7 +1194,7 @@ html,body{margin:0}
 
   /* ================= terminal ================= */
   var tout=$('tout'), tin=$('tin'), hist=[], hi=0;
-  var CMDS=['help','whoami','about','exp','skills','edu','contact','neofetch','lang','chaos','balance','status','dog','ls','cat','clear','sudo','vim','exit','date','echo'];
+  var CMDS=['help','whoami','about','exp','skills','edu','contact','neofetch','lang','chaos','balance','status','dog','badges','forget','ls','cat','clear','sudo','vim','exit','date','echo'];
   function out(html,cls){var d=document.createElement('div'); if(cls) d.className=cls; d.innerHTML=html; tout.appendChild(d); tout.scrollTop=tout.scrollHeight}
   function trows(a){ return a.map(function(r){return '<div class="hr"><b>'+r[0]+'</b><span>'+r[1]+'</span></div>'}).join('') }
   function contactTxt(){
@@ -1393,6 +1470,45 @@ html,body{margin:0}
       order.forEach(function(k,i){ wn[k].animate([{opacity:0},{opacity:.95}],{duration:160,delay:3200+i*120,fill:'forwards'}) });
       nameCard('ZİLAN',sub,'#4fd8e0',4500,1900); return sub;
     },
+    yunus:function(){
+      var sub=T2('Önce yemek, sonra uyku. Rozerin çarşıda, o rüyada.','Food first, sleep second. Rozerin is out shopping, he is dreaming.');
+      dimFx(7400);
+      var FB='style="transform-box:fill-box;transform-origin:center"';
+      var s=stg('<text x="40" y="50" fill="#8fa89b" font-family="JetBrains Mono,monospace" font-size="15" letter-spacing="3">'+T2('TOKLUK','FULLNESS')+'</text>'+
+        '<rect x="40" y="62" width="300" height="18" rx="9" fill="none" stroke="#1f7a4a" stroke-width="2"/><rect id="ybar" x="43" y="65" width="294" height="12" rx="6" fill="#4fe08a" style="transform-box:fill-box;transform-origin:left center;transform:scaleX(0)"/>'+
+        '<path d="M30 302H530" stroke="#1b2c25" stroke-width="8" stroke-linecap="round"/><ellipse cx="180" cy="292" rx="122" ry="13" fill="#0c1512" stroke="#d9ffe9" stroke-width="3"/>'+
+        '<g class="yf" '+FB+'><ellipse cx="94" cy="272" rx="24" ry="14" fill="#8b5a2b"/><path d="M80 268l10 6M92 264l10 7" stroke="#5e3b1a" stroke-width="2" stroke-linecap="round"/></g>'+
+        '<g class="yf" '+FB+'><path d="M118 285a35 32 0 0 1 70 0z" fill="#f4f1e6"/></g>'+
+        '<g class="yf" '+FB+'><circle cx="207" cy="271" r="13" fill="#ff6b5e"/><path d="M207 259v-7M202 256l5 3 5-3" fill="none" stroke="#4fe08a" stroke-width="3" stroke-linecap="round"/></g>'+
+        '<g class="yf" '+FB+'><rect x="228" y="262" width="44" height="23" rx="11" fill="#e0a85a"/><path d="M240 267l4 8M250 267l4 8M260 267l4 8" stroke="#a8743a" stroke-width="2" stroke-linecap="round"/></g>'+
+        '<g class="yf" '+FB+'><path d="M153 222l24 15-24 15-24-15z" fill="#ffd166" stroke="#8b5a2b" stroke-width="2"/><circle cx="153" cy="237" r="3" fill="#4fe08a"/></g>'+
+        '<g id="yface" '+FB+'><circle cx="420" cy="212" r="64" fill="#0c1512" stroke="#ffd166" stroke-width="4"/>'+
+        '<g id="yeo"><circle cx="398" cy="200" r="6" fill="#ffd166"/><circle cx="442" cy="200" r="6" fill="#ffd166"/></g>'+
+        '<path id="yec" opacity="0" d="M387 201q11 9 22 0M431 201q11 9 22 0" fill="none" stroke="#ffd166" stroke-width="4" stroke-linecap="round"/>'+
+        '<ellipse id="ymo" cx="420" cy="238" rx="15" ry="9" fill="#ffd166" '+FB+'/></g>'+
+        '<g fill="#4fd8e0" font-family="Syne,sans-serif" font-weight="800"><text class="yz" x="474" y="150" font-size="26" opacity="0">Z</text><text class="yz" x="494" y="116" font-size="34" opacity="0">Z</text><text class="yz" x="518" y="78" font-size="44" opacity="0">Z</text></g>'+
+        '<g id="ybub" opacity="0" '+FB+'><rect x="40" y="112" width="296" height="50" rx="14" fill="#140d1c" stroke="#c77dff" stroke-width="2"/><path d="M300 162l18 18-2-18z" fill="#140d1c" stroke="#c77dff" stroke-width="2" stroke-linejoin="round"/><path d="M300 161h16" stroke="#140d1c" stroke-width="3"/>'+
+        '<text x="58" y="143" fill="#c77dff" font-family="Instrument Sans,sans-serif" font-weight="600" font-size="17">'+T2('Rozerin: Yunus, hadi çarşıya!','Rozerin: Yunus, let us go shopping!')+'</text></g>'+
+        '<text id="yrep" x="420" y="334" text-anchor="middle" fill="#4fd8e0" font-family="JetBrains Mono,monospace" font-size="16" opacity="0">'+T2('“5 dakika daha…”','“5 more minutes…”')+'</text>',7200);
+      var fs=s.querySelectorAll('.yf'), bar=Q(s,'#ybar'), cx=[94,153,207,250,153], cy=[272,270,271,273,237];
+      Q(s,'#ymo').animate([{transform:'scaleY(1)'},{transform:'scaleY(.25)'}],{duration:210,delay:500,iterations:10,direction:'alternate'});
+      [0,1,2,3,4].forEach(function(i){
+        var d=450+i*420;
+        fs[i].animate([{transform:'translate(0,0) scale(1)',opacity:1},{transform:'translate('+(420-cx[i])*.5+'px,'+(-70)+'px) scale(.8)',opacity:1,offset:.5},{transform:'translate('+(420-cx[i])+'px,'+(238-cy[i])+'px) scale(.1)',opacity:0}],{duration:400,delay:d,fill:'forwards',easing:'ease-in'});
+        bar.animate([{transform:'scaleX('+i/5+')'},{transform:'scaleX('+(i+1)/5+')'}],{duration:300,delay:d+380,fill:'forwards',easing:'ease-out'});
+        after(d+400,function(){ note(330+i*55,.16,.08) });
+      });
+      after(2900,function(){ bar.setAttribute('fill','#ffd166'); popText(T2('DOYDU','FULL'),'#ffd166',0,'31%'); quake(180); });
+      after(3600,function(){ Q(s,'#yeo').setAttribute('opacity',0); Q(s,'#yec').setAttribute('opacity',1); });
+      Q(s,'#ymo').animate([{transform:'scale(1)'},{transform:'scale(.42)'}],{duration:400,delay:3600,fill:'forwards'});
+      Q(s,'#yface').animate([{transform:'rotate(0deg)'},{transform:'rotate(13deg)'}],{duration:700,delay:3600,fill:'forwards',easing:'ease-in-out'});
+      [].forEach.call(s.querySelectorAll('.yz'),function(z,i){ z.animate([{opacity:0,transform:'translate(-8px,12px)'},{opacity:1,offset:.35},{opacity:0,transform:'translate(10px,-18px)'}],{duration:1500,delay:3900+i*380,iterations:Infinity}); });
+      Q(s,'#ybub').animate([{opacity:0,transform:'scale(.6)'},{opacity:1,transform:'scale(1.06)',offset:.7},{opacity:1,transform:'scale(1)'}],{duration:320,delay:4500,fill:'forwards'});
+      after(4500,function(){ iconRain(['bag'],['#c77dff','#ff8fab'],10,1600) });
+      Q(s,'#ybub').animate([{transform:'translateX(0)'},{transform:'translateX(-5px)'},{transform:'translateX(5px)'},{transform:'translateX(0)'}],{duration:260,delay:5300,iterations:2});
+      Q(s,'#yrep').animate([{opacity:0},{opacity:1}],{duration:400,delay:5700,fill:'forwards'});
+      nameCard('YUNUS',sub,'#ffd166',4300,2900); return sub;
+    },
     bunyamin:function(){
       var sub=T2('Okyanusun ötesine cesaretle. Yolun açık olsun, yüzük taşıyıcı.','Across the ocean with courage. Safe roads, ring-bearer.');
       dimFx(7200);
@@ -1627,14 +1743,32 @@ html,body{margin:0}
       ripple(W/2,H/2,true);
     },1400);
   }
+  function devUnlock(){
+    var first=!MEM.dev, T=L(); MEM.dev=1; memSave();
+    out(T.dev1,'c'); out(trows(T.devhelp));
+    if(first){ confetti(W/2,H*.4,40,['#4fe08a','#d9ffe9','#ffd166'],260); flashHud(T.devhud,4200); note(659.25,.5,.12); setTimeout(function(){ note(880,.9,.12) },140); }
+  }
+  function badgeTxt(){
+    var b=L().bd, a=[['dog',MEM.dog|0],['dev',MEM.dev?1:0],['win',MEM.gw|0],['reg',VISIT>=3?VISIT:0]];
+    return trows(a.map(function(x){ var d=b[x[0]]; return x[1]?['◆ '+d[0],typeof d[1]==='function'?d[1](x[1]):d[1]]:['◇ ???',d[2]]; }));
+  }
   function run(raw){
     var line=raw.trim(); out('<span class="c">~$</span> '+esc(line));
     if(!line) return;
     hist.push(line); hi=hist.length;
-    var nk=norm(line); if(NAMEFX[nk]){ out(esc(NAMEFX[nk]()),'c'); return; }
+    var dk=''; try{ dk=btoa(line.toLowerCase()) }catch(e){}
+    if(dk==='ZGVuZ2UuZXhl'){ devUnlock(); return; }
+    var nk=norm(line); if(NAMEFX[nk]){ memName(line); out(esc(NAMEFX[nk]()),'c'); return; }
     var parts=line.split(/\s+/), c=parts[0].toLowerCase(), arg=(parts[1]||'').toLowerCase(), T=L();
     switch(c){
-      case 'help': out(trows(T.help)); break;
+      case 'help': out(trows(MEM.dev?T.help.concat(T.devhelp):T.help)); break;
+      case 'badges': case 'badge': case 'rozetler': case 'rozet': out(badgeTxt()); break;
+      case 'forget': case 'unut': try{ localStorage.removeItem('sjc_mem') }catch(e){} MEM={}; RAINC=RAINS.green; tbarSync(); out(T.forgot); break;
+      case 'rain': case 'yağmur': case 'yagmur':
+        if(!MEM.dev){ out(T.locked,'m'); break; }
+        var rk=RAINTR[norm(arg)]||arg;
+        if(RAINS[rk]){ RAINC=RAINS[rk]; MEM.rain=rk; memSave(); out(esc(T.rainok(rk)),'c'); } else out(T.rainbad);
+        break;
       case 'whoami': out(T.whoami); break;
       case 'about': out(T.about); break;
       case 'exp': case 'experience': out(trows(T.exp)); break;
@@ -1646,11 +1780,11 @@ html,body{margin:0}
       case 'chaos': setOrder(false); out(T.t_chaos); break;
       case 'balance': setOrder(true); out(T.t_balance); break;
       case 'game': out(T.t_game); tin.blur(); startGame(); break;
-      case 'dog': case 'woof': case 'hav': out(DOG,'c'); out(T.dog); break;
+      case 'dog': case 'woof': case 'hav': out(DOG,'c'); out(MEM.dog?T.dog2(MEM.dog):T.dog); break;
       case 'ls': out('about.txt  experience.log  skills.json  dog.png  game.exe'); break;
       case 'cat':
         if(arg==='about.txt') out(T.about); else if(arg==='experience.log') out(trows(T.exp.concat(T.edu))); else if(arg==='skills.json') out(trows(SKILLS));
-        else if(arg==='dog.png'){ out(DOG,'c'); out(T.dog); } else if(arg==='game.exe') out('→ game'); else out(T.nofile); break;
+        else if(arg==='dog.png'){ out(DOG,'c'); out(MEM.dog?T.dog2(MEM.dog):T.dog); } else if(arg==='game.exe') out('→ game'); else out(T.nofile); break;
       case 'clear': tout.innerHTML=''; break;
       case 'status': out(T.status(Math.round(ent),Math.round(balS))); break;
       case 'sudo': out(T.sudo); break;
@@ -1659,7 +1793,7 @@ html,body{margin:0}
       case 'date': out(esc(new Date().toLocaleString(lang==='tr'?'tr-TR':'en-GB'))); break;
       case 'echo': out(esc(parts.slice(1).join(' '))); break;
       default:
-        if(/^[a-zçğıöşüâîû]{2,20}( [a-zçğıöşüâîû]{2,20}){0,2}$/i.test(line)){ var nm=cap(line); helloFx(nm); out(esc(T.hello(nm)),'c'); }
+        if(/^[a-zçğıöşüâîû]{2,20}( [a-zçğıöşüâîû]{2,20}){0,2}$/i.test(line)){ var nm=cap(line); memName(line); helloFx(nm); out(esc(T.hello(nm)),'c'); }
         else out(esc(T.nf404(c)),'m');
     }
   }
@@ -1717,13 +1851,79 @@ html,body{margin:0}
   /* ================= başlat ================= */
   var saved=store('sjc_lang');
   setLang(saved==='tr'||saved==='en'?saved:((navigator.language||'tr').toLowerCase().indexOf('tr')===0?'tr':'en'),false);
-  try{ console.log('%csjc_ %cMerhaba, meraklı insan. Terminalde "dog" yazmayı dene.','color:#4fe08a;font-weight:bold','color:inherit'); }catch(e){}
+  try{
+    console.log('%csjc_ %c'+T2('Konsolu açan meraklı insan, hoş geldin.','Welcome, curious human who opened the console.'),'color:#4fe08a;font:700 18px monospace','color:inherit;font-size:13px');
+    console.log('%c'+T2('Küçük bir bulmaca:  ZGVuZ2UuZXhl\nÇöz ve sayfadaki terminale yaz. Gizli bir komut açılır. İpucu için: sjc.hint()','A small puzzle:  ZGVuZ2UuZXhl\nDecode it and type it into the terminal on the page. It unlocks a hidden command. For a hint: sjc.hint()'),'color:#8fa89b;font-size:12px');
+    window.sjc={hint:function(){ return T2('64 tabanında düşün. Tarayıcının bunun için hazır bir fonksiyonu var.','Think in base 64. Your browser already ships a function for it.') }};
+  }catch(e){}
+
+  /* ================= ses: varsayılan kapalı, sağ üstteki tuşla açılır ================= */
+  var AC=null, humG=null, humF=null, sndOn=false, sndTick=0;
+  function sndInit(){
+    if(AC) return true;
+    var Ctx=window.AudioContext||window.webkitAudioContext; if(!Ctx) return false;
+    try{
+      AC=new Ctx(); humG=AC.createGain(); humG.gain.value=0;
+      humF=AC.createBiquadFilter(); humF.type='lowpass'; humF.frequency.value=200; humF.Q.value=3;
+      humF.connect(humG); humG.connect(AC.destination);
+      [[55,'sawtooth',.5],[82.6,'sawtooth',.34],[110.4,'triangle',.5],[164.2,'sine',.3]].forEach(function(o){
+        var osc=AC.createOscillator(), og=AC.createGain(); osc.type=o[1]; osc.frequency.value=o[0]; og.gain.value=o[2]; osc.connect(og); og.connect(humF); osc.start();
+      });
+      var lfo=AC.createOscillator(), lg=AC.createGain(); lfo.frequency.value=.23; lg.gain.value=50; lfo.connect(lg); lg.connect(humF.frequency); lfo.start();
+    }catch(e){ AC=null; return false; }
+    return true;
+  }
+  /* tek, temiz bir nota */
+  function note(f,dur,vol){
+    if(!sndOn||!AC) return;
+    var t=AC.currentTime, gn=AC.createGain();
+    gn.gain.setValueAtTime(.0001,t); gn.gain.exponentialRampToValueAtTime(vol,t+.03); gn.gain.exponentialRampToValueAtTime(.0001,t+dur); gn.connect(AC.destination);
+    [[1,1],[2,.22],[3,.06]].forEach(function(h){ var o=AC.createOscillator(), hg=AC.createGain(); o.type='sine'; o.frequency.value=f*h[0]; hg.gain.value=h[1]; o.connect(hg); hg.connect(gn); o.start(t); o.stop(t+dur+.05); });
+  }
+  function sndCalm(){ if(AC&&humG) humG.gain.setTargetAtTime(0,AC.currentTime,.06); }
+  function sndLabel(){ var b=$('sndbtn'), tx=L().snd[sndOn?1:0]; b.setAttribute('aria-pressed',sndOn?'true':'false'); b.setAttribute('aria-label',tx); b.title=tx; }
+  function setSnd(v){
+    if(v&&!sndInit()) v=false;
+    sndOn=!!v; sndLabel();
+    if(AC){ if(sndOn){ if(AC.state==='suspended') AC.resume(); } else sndCalm(); }
+  }
+  /* uğultu kaosla birlikte büyür; dengede susar */
+  function sndStep(){
+    if(!sndOn||!AC) return;
+    var lv=(game||pre)?.55:(order?strain/100*.45:.12+ent/100*.88);
+    humG.gain.setTargetAtTime(lv*.09,AC.currentTime,.25); humF.frequency.setTargetAtTime(170+lv*lv*900,AC.currentTime,.3);
+  }
+  $('sndbtn').onclick=function(){ setSnd(!sndOn); if(sndOn) note(659.25,.6,.12); };
+  sndLabel();
+
+  /* ================= saklı köpek: her ziyarette başka yerde ================= */
+  var DOGSVG='<svg viewBox="0 0 46 28" aria-hidden="true"><path class="wag" d="M37 27c5-2 7-8 5-14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><g class="hd"><path d="M7 13c-5-1-7 4-6 11 3 1 6-2 7-6zM33 13c5-1 7 4 6 11-3 1-6-2-7-6z" fill="currentColor" opacity=".75"/><path d="M6 28V17a14 13 0 0 1 28 0v11z" fill="currentColor"/><circle cx="14.5" cy="17" r="2" fill="#060b09"/><circle cx="25.5" cy="17" r="2" fill="#060b09"/><ellipse cx="20" cy="23" rx="3" ry="2" fill="#060b09"/><path class="tg" d="M18.5 25.2h3v1.3a1.5 1.5 0 0 1-3 0z" fill="#ff8fab"/></g></svg>';
+  (function(){
+    var spots=[], its=document.querySelectorAll('.bento .item'), i;
+    for(i=0;i<its.length;i++) spots.push([its[i],'in']);
+    [['.bento',12],['.bento',58],['.bento',86],['.clist',66]].forEach(function(x){ var h=document.querySelector(x[0]); if(h) spots.push([h,'up',x[1]]); });
+    var tb=document.querySelector('#term .tbar'); if(tb) spots.push([tb,'in side']);
+    if(!spots.length) return;
+    var k=Math.random()*spots.length|0; if(k===MEM.dp) k=(k+1)%spots.length; MEM.dp=k; memSave();
+    var sp=spots[k], d=document.createElement('button'); d.type='button'; d.className='dog '+sp[1]; d.innerHTML=DOGSVG; d.setAttribute('aria-label',L().dogl);
+    if(sp[1]==='up') d.style.left=sp[2]+'%'; else d.style.right='16px';
+    sp[0].classList.add('doghost'); sp[0].appendChild(d);
+    function bark(){ d.dataset.b=T2('Hav!','Woof!'); d.classList.add('bark'); clearTimeout(d._bt); d._bt=setTimeout(function(){ d.classList.remove('bark') },1800); note(392,.14,.1); setTimeout(function(){ note(523.25,.22,.1) },120); }
+    d.addEventListener('click',function(e){
+      e.preventDefault(); e.stopPropagation();
+      if(d.classList.contains('found')){ bark(); return; }
+      d.classList.add('found'); bark();
+      MEM.dog=(MEM.dog|0)+1; memSave();
+      var c=mid(d); confetti(c[0],c[1],26,['#ffd166','#4fe08a','#ffffff'],170); ripple(c[0],c[1]);
+      flashHud(L().dogf(MEM.dog),4200); out(esc(L().dogt),'c');
+    });
+  })();
   initRain();
 
   function frame(t){
     var gap=reduce?400:(order?95:60);
     if(t-last>gap){ last=t; stepRain(); }
-    stepPk(t); stepChaos();
+    stepPk(t); stepChaos(); if(++sndTick%10===0) sndStep();
     var play=game||pre;
     if(play) stepGame(game);
     if(game){
@@ -1763,7 +1963,12 @@ html,body{margin:0}
   }
   form(); mstat(); decodeName();
   var TITLE=document.title;
-  document.addEventListener('visibilitychange',function(){ document.title=document.hidden&&!order&&!game?L().away:TITLE; });
+  document.addEventListener('visibilitychange',function(){
+    document.title=document.hidden&&!order&&!game?L().away:TITLE;
+    if(AC&&sndOn){ if(document.hidden) AC.suspend(); else AC.resume(); }
+  });
+  tbarSync();
+  if(VISIT>=2) setTimeout(function(){ if(order&&!game&&!pre&&gov.hidden) flashHud(memLine(),5600); },1800);
   /* ilk ziyaret: sakin mi kaos mu? selmanjircan.com/#cv doğrudan sakin açılır */
   /* site dengede açılır; 35 sn sonra kaosu sorar. selmanjircan.com/#cv hiç sormaz */
   setOrder(true,true);
