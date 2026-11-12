@@ -121,7 +121,8 @@ body.order .badge{border-color:var(--green); color:var(--green)}
 .crow{display:grid; grid-template-columns:120px minmax(0,1fr) auto; gap:16px; align-items:center; padding:16px 4px; border-bottom:1px solid var(--line); color:var(--ink); text-decoration:none}
 .ck{font-family:var(--mono); font-size:13px; color:var(--green)}
 .cv{font-family:var(--display); font-weight:600; font-size:clamp(1.05rem,2.6vw,1.4rem); overflow-wrap:anywhere; transition:color .3s}
-#mail{user-select:all}
+#mail{color:inherit; text-decoration:none}
+#mail:hover{color:var(--green)}
 .ca{font-family:var(--mono); color:var(--muted)}
 a.crow:hover .cv,a.crow:hover .ca{color:var(--green)}
 @media (max-width:640px){.crow{grid-template-columns:78px minmax(0,1fr) auto; gap:10px}}
@@ -183,12 +184,19 @@ body.game #dock{opacity:.3; pointer-events:none}
 #core{position:fixed; z-index:19; width:0; height:0; pointer-events:none; opacity:0; transition:opacity .5s}
 body.order #core{opacity:1; transition:opacity .9s .5s}
 #core span{position:absolute; border-radius:50%}
+#core .hit{left:-78px; top:-78px; width:156px; height:156px; pointer-events:none; cursor:grab; touch-action:none}
+body.order #core .hit{pointer-events:auto}
+#core .hit:active{cursor:grabbing}
 #core .bk{left:-84px; top:-84px; width:168px; height:168px; background:radial-gradient(circle,color-mix(in srgb,var(--bg) 94%,transparent) 52%,transparent 70%)}
 #core .dot{left:-8px; top:-8px; width:16px; height:16px; background:var(--green); box-shadow:0 0 26px 7px color-mix(in srgb,var(--green) 55%,transparent); animation:pulse 2.4s ease-in-out infinite}
 #core .r1{left:-24px; top:-24px; width:48px; height:48px; border:1px dashed var(--green); animation:spin 12s linear infinite}
 #core .r2{left:-70px; top:-70px; width:140px; height:140px; border:1px solid var(--line)}
 @keyframes pulse{50%{transform:scale(1.35)}}
 @keyframes spin{to{transform:rotate(360deg)}}
+.heart{position:fixed; z-index:60; left:50%; top:50%; color:var(--bug); font-size:220px; line-height:1; pointer-events:none; text-shadow:0 0 50px color-mix(in srgb,var(--bug) 70%,transparent); transform:translate(-50%,-50%); animation:hbeat 1.4s ease-in-out forwards}
+.heart.sm{text-shadow:none; animation:hfly 1.5s cubic-bezier(.1,.7,.3,1) forwards}
+@keyframes hbeat{0%{transform:translate(-50%,-50%) scale(0)} 30%{transform:translate(-50%,-50%) scale(1)} 45%{transform:translate(-50%,-50%) scale(.86)} 60%{transform:translate(-50%,-50%) scale(1.1)} 75%{transform:translate(-50%,-50%) scale(.92)} 100%{transform:translate(-50%,-50%) scale(1.45)}}
+@keyframes hfly{from{transform:translate(-50%,-50%) scale(.4); opacity:1} to{transform:translate(calc(-50% + var(--tx)),calc(-50% + var(--ty))) rotate(35deg) scale(1); opacity:0}}
 #gov{position:fixed; inset:0; z-index:45; display:grid; place-items:center; padding:16px; pointer-events:none}
 .gbox{pointer-events:auto; background:var(--surface); border:1px solid var(--green); border-radius:10px; padding:28px 28px 26px; max-width:430px; text-align:center}
 .gbox h3{font-family:var(--display); font-weight:800; font-size:1.7rem; margin:0 0 10px; text-wrap:balance}
@@ -254,7 +262,6 @@ html,body{margin:0}
     <p class="lede" data-hit data-i18n="lede">Yazılım, benim için soyut bir varlıkla konuşmanın yolu. <b>Birlikte problem çözüyoruz, ortaya işe yarar bir şey çıkıyor ve bu bana keyif veriyor.</b></p>
     <div class="cta">
       <a class="btn solid" href="#terminal" data-i18n="cta1">Terminali dene</a>
-      <button type="button" class="btn" id="gamebtn" data-i18n="cta2">▶ Kaos ile savaş · mini oyun</button>
       <small data-i18n="cta3">ya da Ctrl / ⌘ + K</small>
     </div>
   </header>
@@ -306,7 +313,7 @@ html,body{margin:0}
     <div class="term" id="term">
       <div class="tbar"><i></i><i></i><i></i><span>visitor@sjc: ~</span></div>
       <div id="tout" role="log"></div>
-      <div class="tline"><label for="tin">~$</label><input id="tin" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Terminal"></div>
+      <div class="tline"><label for="tin">~$</label><input id="tin" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Terminal"><button type="button" class="btn sm" id="tgo">Enter</button></div>
     </div>
   </section>
 
@@ -314,7 +321,7 @@ html,body{margin:0}
     <h2 data-hit data-i18n="h_contact">İletişim</h2>
     <p class="sub" data-i18n="c_sub">Bir fikir, bir iş ya da iyi bir oyun önerisi için yaz.</p>
     <div class="clist">
-      <div class="crow"><span class="ck">Mail</span><span class="cv" id="mail" data-hit>cselmanjir@gmail.com</span><button type="button" class="btn sm" id="copy">Kopyala</button></div>
+      <div class="crow"><span class="ck">Mail</span><a class="cv" id="mail" href="mailto:cselmanjir@gmail.com" data-hit>cselmanjir@gmail.com</a><button type="button" class="btn sm" id="copy">Kopyala</button></div>
       <a class="crow" href="https://www.linkedin.com/in/selmanjir" target="_blank" rel="noopener"><span class="ck">LinkedIn</span><span class="cv" data-hit>/in/selmanjir</span><span class="ca">↗</span></a>
       <a class="crow" id="c_gh" target="_blank" rel="noopener" hidden><span class="ck">GitHub</span><span class="cv" data-hit></span><span class="ca">↗</span></a>
       <a class="crow" id="c_ig" target="_blank" rel="noopener" hidden><span class="ck">Instagram</span><span class="cv" data-hit></span><span class="ca">↗</span></a>
@@ -325,7 +332,7 @@ html,body{margin:0}
 </main>
 
 <div id="chaos" aria-hidden="true"></div>
-<div id="core" aria-hidden="true"><span class="bk"></span><span class="r2"></span><span class="r1"></span><span class="dot"></span></div>
+<div id="core" aria-hidden="true"><span class="bk"></span><span class="r2"></span><span class="r1"></span><span class="dot"></span><span class="hit"></span></div>
 <div id="hud" hidden></div>
 <canvas id="gcv" hidden></canvas>
 <div id="gjoy" hidden><span id="gknob"></span></div>
@@ -390,9 +397,9 @@ html,body{margin:0}
     tr:{bal:'Dengele',chaos:'Kaos',copy:'Kopyala',copied:'Kopyalandı',pick:'Bir kutu seç.',done:'Denge sağlandı ✓',morder:'DENGE',mchaos:'KAOS',gtitle:'Mini oyun: Kaos ile savaş',ghow:function(T){return 'Sitedeki imleçler artık düşmanın ve çoğalıyorlar. Dokunurlarsa can gider. Yaklaştıklarında tıkla ya da dokun: darbe dalgası çevrendekileri yok eder. Elmasları topla: kırmızı bomba, sarı yavaşlatır, mavi dondurur. '+T+' klonu yok et, kaos çöksün.'},again:'Tekrar oyna',close:'Kapat',fight:'Kaos ile savaş',w1:'Kaos artıyor…',w2:'Site dağılmaya başladı. Dengelemek ister misin?',w3:'Kritik seviye! Dengele ya da savaş.',ptitle:'Kaos kontrolü ele geçirdi',ptext:'Site dağıldı. Ya tek tuşla dengele ya da kaosla kendin savaş.',wtitle:'Denge sağlandı!',win:function(s,b){return 'Bütün klonlar çöktü, site artık dengede. Skor '+s+' · en iyi '+b},ltitle:'Kaos kazandı',lose:function(k,T,s,b){return k+' klon yok ettin, hedef '+T+'. Skor '+s+' · en iyi '+b+'. Oynamak istersen tekrar dene, siteyi gezmek istersen dengele.'},frz:'DONDU',hit:'DARBE',pw:['BOMBA','YAVAŞ','DONDU'],ghowT:function(T){return 'Sitedeki imleçler artık düşmanın ve çoğalıyorlar. Dokunurlarsa can gider. Sol alttaki yuvarlakla hareket et; yaklaştıklarında sağdaki DARBE tuşuna bas, çevrendekiler yok olsun. Elmasları topla: kırmızı bomba, sarı yavaşlatır, mavi dondurur. '+T+' klonu yok et, kaos çöksün.'},memo:'Gerçek sistemlerde de işim bu: kaosu alıp dengeye çevirmek.',reach:'Bana yaz',browse:'Siteyi gez',balgo:'Dengele ve gez',htitle:'Hoş geldin',htext:'Bu site iki şekilde gezilir. Sakin modda her şey yerinde durur. Kaos modunda site yavaş yavaş dağılır; dengelemek ya da savaşmak sana kalır. Alttaki tuşla istediğin an değiştirebilirsin.',hcalm:'Sakin: kariyerimi incele',hchaos:'Kaosu serbest bırak',away:'⚠ Kaos büyüyor… geri dön',ranks:['Düzen çırağı','Denge ustası','Kaos terbiyecisi','Entropi düşmanı'],status:function(e,b){return 'kaos %'+e+' · denge %'+b},clients:'İstemciler',
       hud:function(k,T,s){return 'klon '+k+'/'+T+' · skor '+s},
       n:{c:'İstemciler: web, mobil ve dış sistemler. Her şey buradan başlar.',k:'Kong: API gateway. İstekleri karşılar, yönlendirir, sınırlar.',g:'GraphQL: istemcinin tam ihtiyacı kadar veri istediği API katmanı.',n:'Nest.js: düzenli, modüler servisler için ana çatım.',e:'Express.js: hafif ve hızlı servisler için.',r:'Redis: önbellek. Aynı soruyu veritabanına iki kez sormamak için.',q:'RabbitMQ: mesaj kuyruğu. Servisler birbirini beklemeden konuşur.',w:'Node.js worker: kuyruktaki işleri arka planda tüketir.',m:'MySQL: ilişkisel veri.',o:'MongoDB: doküman tabanlı veri.'},
-      p:['Hakkımda','Yolculuk','Sistem haritası','Terminal','İletişim','Dili değiştir: English','Kaos / denge','Mini oyun: kaos ile savaş','E-postayı kopyala'],ph:'Komut ara…',
+      p:['Hakkımda','Yolculuk','Sistem haritası','Terminal','İletişim','Dili değiştir: English','Kaos / denge','E-postayı kopyala'],ph:'Komut ara…',
       welcome:'Hoş geldin. Komutlar için <span class="c">help</span> yaz.',
-      help:'Komutlar:\n  whoami     ben kimim\n  about      kısaca ben\n  exp        deneyim\n  skills     kullandığım araçlar\n  edu        eğitim\n  contact    bana ulaş\n  neofetch   sistem bilgisi\n  lang en    dili değiştir (tr | en)\n  chaos      kaosu serbest bırak\n  balance    dengele\n  game       kaos ile savaş: klon imleçleri yok et\n  status     kaos seviyesi\n  dog        hav\n  ls, cat    dosyalara bak\n  clear      ekranı temizle',
+      help:'Komutlar:\n  whoami     ben kimim\n  about      kısaca ben\n  exp        deneyim\n  skills     kullandığım araçlar\n  edu        eğitim\n  contact    bana ulaş\n  neofetch   sistem bilgisi\n  lang en    dili değiştir (tr | en)\n  chaos      kaosu serbest bırak\n  balance    dengele\n  status     kaos seviyesi\n  dog        hav\n  ls, cat    dosyalara bak\n  clear      ekranı temizle',
       whoami:'Selman Jir Can. Backend developer, yazılım mühendisi.\nYazılım benim için soyut bir varlıkla konuşmanın yolu.',
       about:"Her gün biraz daha iyi olmaya çalışan bir yazılım mühendisiyim.\nOyun oynarım, oyun sektörünü takip ederim.\nArkadaşlarımla teknolojiyi felsefi bir derinlikte tartışırım.\nBir de köpeğim var.",
       exp:'2022 — bugün   Backend Developer · Pixa Software, İstanbul\n2021 — 2022    Full Stack Developer · Noda Bilişim, Ankara',
@@ -404,9 +411,9 @@ html,body{margin:0}
     en:{bal:'Balance',chaos:'Chaos',copy:'Copy',copied:'Copied',pick:'Pick a box.',done:'Balance restored ✓',morder:'BALANCE',mchaos:'CHAOS',gtitle:'Mini game: Fight the chaos',ghow:function(T){return 'The cursors on this site are now your enemies, and they multiply. A touch costs a life. When they get close, click or tap: a shockwave destroys the ones around you. Collect the diamonds: red is a bomb, yellow slows, blue freezes. Destroy '+T+' clones and the chaos collapses.'},again:'Play again',close:'Close',fight:'Fight the chaos',w1:'Chaos is rising…',w2:'The site is starting to fall apart. Want to balance it?',w3:'Critical! Balance or fight.',ptitle:'Chaos has taken over',ptext:'The site fell apart. Balance it with one button, or fight the chaos yourself.',wtitle:'Balance restored!',win:function(s,b){return 'Every clone collapsed and the site is balanced. Score '+s+' · best '+b},ltitle:'Chaos won',lose:function(k,T,s,b){return 'You destroyed '+k+' clones, the goal is '+T+'. Score '+s+' · best '+b+'. Play again if you like, or balance the site to look around.'},frz:'FROZEN',hit:'HIT',pw:['BOMB','SLOW','FREEZE'],ghowT:function(T){return 'The cursors on this site are now your enemies, and they multiply. A touch costs a life. Move with the round pad at the bottom left; when they get close, press HIT on the right to destroy the ones around you. Collect the diamonds: red is a bomb, yellow slows, blue freezes. Destroy '+T+' clones and the chaos collapses.'},memo:'This is what I do with real systems too: take the chaos and turn it into balance.',reach:'Write to me',browse:'Browse the site',balgo:'Balance and browse',htitle:'Welcome',htext:'There are two ways to visit this site. In calm mode everything stays in place. In chaos mode the site slowly falls apart; balancing it or fighting back is up to you. You can switch any time with the button below.',hcalm:'Calm: just the career',hchaos:'Release the chaos',away:'⚠ Chaos is growing… come back',ranks:['Order apprentice','Balance master','Chaos tamer','Enemy of entropy'],status:function(e,b){return 'chaos '+e+'% · balance '+b+'%'},clients:'Clients',
       hud:function(k,T,s){return 'clones '+k+'/'+T+' · score '+s},
       n:{c:'Clients: web, mobile and external systems. Everything starts here.',k:'Kong: API gateway. It receives, routes and rate-limits requests.',g:'GraphQL: an API layer where the client asks for exactly the data it needs.',n:'Nest.js: my main framework for tidy, modular services.',e:'Express.js: for light, fast services.',r:'Redis: cache. So the database is not asked the same question twice.',q:'RabbitMQ: message queue. Services talk without waiting on each other.',w:'Node.js worker: consumes queued jobs in the background.',m:'MySQL: relational data.',o:'MongoDB: document data.'},
-      p:['About','Journey','System map','Terminal','Contact','Switch language: Türkçe','Chaos / balance','Mini game: fight the chaos','Copy email'],ph:'Search commands…',
+      p:['About','Journey','System map','Terminal','Contact','Switch language: Türkçe','Chaos / balance','Copy email'],ph:'Search commands…',
       welcome:'Welcome. Type <span class="c">help</span> for commands.',
-      help:'Commands:\n  whoami     who I am\n  about      me, briefly\n  exp        experience\n  skills     tools I use\n  edu        education\n  contact    reach me\n  neofetch   system info\n  lang tr    switch language (tr | en)\n  chaos      release the chaos\n  balance    restore balance\n  game       fight the chaos: destroy the clone cursors\n  status     chaos level\n  dog        woof\n  ls, cat    look at files\n  clear      clear the screen',
+      help:'Commands:\n  whoami     who I am\n  about      me, briefly\n  exp        experience\n  skills     tools I use\n  edu        education\n  contact    reach me\n  neofetch   system info\n  lang tr    switch language (tr | en)\n  chaos      release the chaos\n  balance    restore balance\n  status     chaos level\n  dog        woof\n  ls, cat    look at files\n  clear      clear the screen',
       whoami:'Selman Jir Can. Backend developer, software engineer.\nTo me, software is a way of talking with an abstract existence.',
       about:'A software engineer trying to be a little better every day.\nI play games and follow the game industry.\nMy friends and I discuss technology with some philosophical depth.\nAlso, I have a dog.',
       exp:'2022 — present  Backend Developer · Pixa Software, Istanbul\n2021 — 2022     Full Stack Developer · Noda Bilişim, Ankara',
@@ -523,7 +530,7 @@ html,body{margin:0}
 
   /* ================= imleçler ve kaos seviyesi ================= */
   var labels=['order','sync','retry','queue','ack'];
-  var BASE=reduce?3:(W<640?5:10);
+  var BASE=2, RING=W<640?6:10;
   var hits=[].slice.call(document.querySelectorAll('[data-hit]'));
   var curs=[], count=0, mouse={x:-999,y:-999}, bx=0, bv=0, rips=0, balS=100, rot=0, core=$('core'), gov=$('gov'), fc={x:0,y:0,R:46};
   var game=false, pre=false, gameEnd=0, lastSec=-1, hudTimer=0, ent=0, stage=0, prompted=false, tickN=0;
@@ -551,7 +558,7 @@ html,body{margin:0}
     var m=(W-940)/2;
     if(m>=170){ fc.x=W-m/2; fc.y=H*.42; fc.R=curs.length>12?58:46; } else { fc.x=W/2; fc.y=H-124; fc.R=W<640?26:40; }
     fc.s=W<640?.7:1;
-    core.style.left=fc.x+'px'; core.style.top=fc.y+'px';
+    fc.vx=fc.vy=0; core.style.left=fc.x+'px'; core.style.top=fc.y+'px';
   }
   function ripple(x,y,big){
     if(!big){ if(rips>=30) return; rips++; }
@@ -607,6 +614,7 @@ html,body{margin:0}
     ent=0; prompted=false; setStage(0); cv.style.opacity='';
     if(order){
       hits.forEach(function(h){ if(h._d){ h._d=null; h.style.transform=''; } }); restoreText(true);
+      while(curs.length<RING) addCursor();
       form(); alignRain(); pks.forEach(function(k){k.bad=false; k.sp=.012; k.el.classList.remove('bad')});
       if(!quiet) setTimeout(function(){ if(order){ ripple(fc.x,fc.y,true); flashHud(L().done); } },800);
     } else {
@@ -617,15 +625,39 @@ html,body{margin:0}
   btn.addEventListener('click',function(){setOrder(!order)});
   $('mtoggle').addEventListener('click',function(){setOrder(!order)});
   for(var i=0;i<BASE;i++) addCursor();
+  /* denge halkası: tutup fırlatılabilir, tıklayınca darbe atar ve dönüş yönü değişir */
+  var cdrag=null, spin=1, chit=core.querySelector('.hit');
+  chit.addEventListener('pointerdown',function(e){
+    cdrag={id:e.pointerId,ox:e.clientX-fc.x,oy:e.clientY-fc.y,sx:e.clientX,sy:e.clientY,lx:e.clientX,ly:e.clientY,lt:performance.now(),vx:0,vy:0,moved:false};
+    fc.vx=fc.vy=0; try{ chit.setPointerCapture(e.pointerId) }catch(err){} e.preventDefault();
+  });
+  chit.addEventListener('pointermove',function(e){
+    if(!cdrag||e.pointerId!==cdrag.id) return;
+    if(Math.abs(e.clientX-cdrag.sx)+Math.abs(e.clientY-cdrag.sy)>6) cdrag.moved=true;
+    cdrag.vx=cdrag.vx*.5+(e.clientX-cdrag.lx)*.5; cdrag.vy=cdrag.vy*.5+(e.clientY-cdrag.ly)*.5;
+    cdrag.lx=e.clientX; cdrag.ly=e.clientY; cdrag.lt=performance.now();
+    fc.x=e.clientX-cdrag.ox; fc.y=e.clientY-cdrag.oy; core.style.left=fc.x+'px'; core.style.top=fc.y+'px';
+  });
+  function cend(e){
+    if(!cdrag||e.pointerId!==cdrag.id) return;
+    if(cdrag.moved){
+      if(performance.now()-cdrag.lt<90){ fc.vx=Math.max(-45,Math.min(45,cdrag.vx*1.5)); fc.vy=Math.max(-45,Math.min(45,cdrag.vy*1.5)); }
+    } else {
+      spin=-spin; ripple(fc.x,fc.y,true); alignRain();
+      curs.forEach(function(o){ var dx=o.x-fc.x, dy=o.y-fc.y, d=Math.sqrt(dx*dx+dy*dy)||1; o.vx+=dx/d*40; o.vy+=dy/d*40; });
+    }
+    cdrag=null;
+  }
+  chit.addEventListener('pointerup',cend); chit.addEventListener('pointercancel',cend);
   function stepChaos(){
     tickN++;
     if(order||game||pre) return;
-    ent=Math.min(100,ent+.012);
+    ent=Math.min(100,ent+.018);
     setStage(ent>=70?3:ent>=45?2:ent>=22?1:0);
     if(!reduce&&stage>=2&&tickN%(stage>=3?7:24)===0){ if(Math.random()<.5) corrupt(); else shove(hits[Math.random()*hits.length|0]); }
     if(tickN%30===0){
       cv.style.opacity=(.5+ent*.0045).toFixed(2);
-      if(curs.length<BASE+Math.floor(ent/8)) addCursor();
+      if(curs.length<BASE+Math.floor(ent/5)) addCursor();
     }
     if(ent>=100&&!prompted&&gov.hidden){ prompted=true; govShow(L().ptitle,L().ptext,null,L().fight,startGame,L().bal,function(){setOrder(true)}); }
   }
@@ -808,7 +840,6 @@ html,body{margin:0}
       govShow(L().ltitle,L().lose(g.kills,g.target,g.score,best),null,L().again,startGame,L().balgo,function(){setOrder(true)},true);
     }
   }
-  $('gamebtn').addEventListener('click',startGame);
 
   /* dokunmatik: parmak imleci kapatmasın diye göreli sürükleme; darbe için tuş, kısa dokunuş ya da ikinci parmak */
   var tch=null, joy=null, isTouch=matchMedia('(pointer:coarse)').matches;
@@ -846,7 +877,7 @@ html,body{margin:0}
       return;
     }
     track(e);
-    if(pre||e.target.closest('#dock,#pal,#hud,.gbox')) return;
+    if(pre||e.target.closest('#dock,#pal,#hud,.gbox,#core')) return;
     if(game){ blast(); return; }
     click(e.clientX,e.clientY,e.target.closest('[data-hit]'),1.5);
   });
@@ -881,7 +912,7 @@ html,body{margin:0}
 
   /* ================= terminal ================= */
   var tout=$('tout'), tin=$('tin'), hist=[], hi=0;
-  var CMDS=['help','whoami','about','exp','skills','edu','contact','neofetch','lang','chaos','balance','game','status','dog','ls','cat','clear','sudo','vim','exit','date','echo'];
+  var CMDS=['help','whoami','about','exp','skills','edu','contact','neofetch','lang','chaos','balance','status','dog','ls','cat','clear','sudo','vim','exit','date','echo'];
   function out(html,cls){var d=document.createElement('div'); if(cls) d.className=cls; d.innerHTML=html; tout.appendChild(d); tout.scrollTop=tout.scrollHeight}
   function contactTxt(){return 'mail      '+MAIL+'\nlinkedin  <a href="'+LI+'" target="_blank" rel="noopener">linkedin.com/in/selmanjir</a>'+(SOCIAL.github?'\ngithub    github.com/'+esc(SOCIAL.github):'')+(SOCIAL.instagram?'\ninsta     @'+esc(SOCIAL.instagram):'')}
   function neofetch(){
@@ -889,6 +920,18 @@ html,body{margin:0}
     var s=''; if(W<640) return b.join('\n')+'\n';
     for(var i=0;i<Math.max(a.length,b.length);i++) s+='<span class="c">'+(a[i]||'           ')+'</span>   '+(b[i]||'')+'\n';
     return s;
+  }
+  function heart(){
+    var h=document.createElement('div'); h.className='heart'; h.textContent='♥'; document.body.appendChild(h);
+    setTimeout(function(){
+      h.remove();
+      for(var i=0;i<28;i++){
+        var q=document.createElement('div'), a=rnd(0,6.28), d=rnd(140,Math.max(W,H)*.55); q.className='heart sm'; q.textContent='♥';
+        q.style.setProperty('--tx',(Math.cos(a)*d).toFixed(0)+'px'); q.style.setProperty('--ty',(Math.sin(a)*d).toFixed(0)+'px'); q.style.fontSize=rnd(18,52).toFixed(0)+'px';
+        q.addEventListener('animationend',function(){this.remove()}); document.body.appendChild(q);
+      }
+      ripple(W/2,H/2,true);
+    },1400);
   }
   function run(raw){
     var line=raw.trim(); out('<span class="c">~$</span> '+esc(line));
@@ -914,6 +957,7 @@ html,body{margin:0}
         if(arg==='about.txt') out(T.about); else if(arg==='experience.log') out(T.exp+'\n'+T.edu); else if(arg==='skills.json') out(SKILLS);
         else if(arg==='dog.png'){ out(DOG,'c'); out(T.dog); } else if(arg==='game.exe') out('→ game'); else out(T.nofile); break;
       case 'clear': tout.innerHTML=''; break;
+      case 'elif': heart(); out('♥','c'); break;
       case 'status': out(T.status(Math.round(ent),Math.round(balS))); break;
       case 'sudo': out(T.sudo); break;
       case 'vim': case 'vi': case 'nano': out(T.vim); break;
@@ -929,7 +973,8 @@ html,body{margin:0}
     else if(e.key==='ArrowDown'){ if(hi<hist.length){ hi++; tin.value=hist[hi]||''; } e.preventDefault(); }
     else if(e.key==='Tab'){ var v=tin.value.toLowerCase(); if(v){ var m=CMDS.filter(function(c){return c.indexOf(v)===0}); if(m.length===1) tin.value=m[0]+' '; else if(m.length>1) out(m.join('  '),'m'); } e.preventDefault(); }
   });
-  $('term').addEventListener('click',function(e){ if(!e.target.closest('a')&&!String(getSelection())) tin.focus({preventScroll:true}); });
+  $('tgo').addEventListener('click',function(){ run(tin.value); tin.value=''; tin.focus({preventScroll:true}); });
+  $('term').addEventListener('click',function(e){ if(e.target.closest('#tgo')) return; if(!e.target.closest('a')&&!String(getSelection())) tin.focus({preventScroll:true}); });
 
   /* ================= kopyala ================= */
   function copyMail(){
@@ -943,7 +988,7 @@ html,body{margin:0}
   var pal=$('pal'), pin=$('pin'), plist=$('plist'), psel=0, pshown=[];
   function go(id){ $(id).scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'}) }
   var PACT=[function(){go('about')},function(){go('journey')},function(){go('system')},function(){go('terminal'); tin.focus({preventScroll:true})},function(){go('contact')},
-    function(){setLang(lang==='tr'?'en':'tr',true)},function(){setOrder(!order)},startGame,copyMail];
+    function(){setLang(lang==='tr'?'en':'tr',true)},function(){setOrder(!order)},copyMail];
   function renderPal(){
     var q=pin.value.toLowerCase(); pshown=[];
     L().p.forEach(function(lbl,i){ if(lbl.toLowerCase().indexOf(q)>=0) pshown.push(i) });
@@ -984,7 +1029,16 @@ html,body{margin:0}
     if(game){
       var hs=G.lives+'|'+L().hud(G.kills,G.target,G.score); if(hs!==G.hs){ G.hs=hs; hud.innerHTML='<b class="hp">'+'♥'.repeat(G.lives)+'<i>'+'♥'.repeat(3-G.lives)+'</i></b><span>'+L().hud(G.kills,G.target,G.score)+'</span>'; }
     }
-    var n=curs.length; rot+=.005;
+    var n=curs.length; rot+=.005*spin;
+    if(order&&!cdrag&&(fc.vx||fc.vy)){
+      fc.x+=fc.vx; fc.y+=fc.vy; fc.vx*=.985; fc.vy*=.985;
+      var mg=fc.R+26, hitw=false;
+      if(fc.x<mg){ fc.x=mg; fc.vx=Math.abs(fc.vx)*.85; hitw=true; } if(fc.x>W-mg){ fc.x=W-mg; fc.vx=-Math.abs(fc.vx)*.85; hitw=true; }
+      if(fc.y<mg){ fc.y=mg; fc.vy=Math.abs(fc.vy)*.85; hitw=true; } if(fc.y>H-mg){ fc.y=H-mg; fc.vy=-Math.abs(fc.vy)*.85; hitw=true; }
+      if(hitw) ripple(fc.x,fc.y);
+      if(Math.abs(fc.vx)+Math.abs(fc.vy)<.15) fc.vx=fc.vy=0;
+      core.style.left=fc.x+'px'; core.style.top=fc.y+'px';
+    }
     for(var i=0;i<n&&!play;i++){
       var o=curs[i], a=rot+i*6.2832/n;
       if(order){ o.tx=fc.x+Math.cos(a)*fc.R; o.ty=fc.y+Math.sin(a)*fc.R; }
@@ -995,7 +1049,7 @@ html,body{margin:0}
         var mx=o.x-mouse.x, my=o.y-mouse.y, md=mx*mx+my*my;
         if(md<10000&&md>1){ var m=Math.sqrt(md), f=(100-m)/100*1.6; o.vx+=mx/m*f; o.vy+=my/m*f; }
         if(o.wait>0){ o.wait--; if(o.wait<=0) pick(o); }
-        else if(dx*dx+dy*dy<30){ click(o.x,o.y,o.t,.22); o.wait=rnd(70,220)/(1+ent/100); }
+        else if(dx*dx+dy*dy<30){ click(o.x,o.y,o.t,.12); o.wait=rnd(70,220)/(1+ent/100); }
       }
       o.x+=o.vx; o.y+=o.vy;
       var ta=order?a-.7854:0, d=((ta-o.r+3.1416)%6.2832+6.2832)%6.2832-3.1416; o.r+=d*.18;
@@ -1011,9 +1065,8 @@ html,body{margin:0}
   var TITLE=document.title;
   document.addEventListener('visibilitychange',function(){ document.title=document.hidden&&!order&&!game?L().away:TITLE; });
   /* ilk ziyaret: sakin mi kaos mu? selmanjircan.com/#cv doğrudan sakin açılır */
-  var mode=location.hash==='#cv'?'calm':store('sjc_mode');
-  if(mode!=='chaos') setOrder(true,true);
-  if(mode!=='chaos'&&mode!=='calm') govShow(L().htitle,L().htext,null,L().hcalm,function(){store('sjc_mode','calm')},L().hchaos,function(){store('sjc_mode','chaos'); setOrder(false)});
+  /* site kaosla açılır; selmanjircan.com/#cv doğrudan sakin (dengeli) açılır */
+  if(location.hash==='#cv') setOrder(true,true);
   requestAnimationFrame(frame);
 })();
 </script>
