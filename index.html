@@ -220,7 +220,28 @@ body.order #core .hit{pointer-events:auto}
 @keyframes ping{from{transform:scale(.3); opacity:.9} to{transform:scale(3.2); opacity:0}}
 @keyframes pulse{50%{transform:scale(1.35)}}
 @keyframes spin{to{transform:rotate(360deg)}}
-.fx{position:fixed; z-index:60; pointer-events:none; left:0; top:0}
+.dim{inset:0; z-index:59!important; background:color-mix(in srgb,var(--bg) 80%,transparent)}
+.ntitle{left:50%; top:44%; text-align:center; width:max-content; max-width:92vw; text-shadow:0 0 44px currentColor}
+.ntitle b{display:block; font:800 clamp(3rem,13vw,9rem)/1 var(--display); letter-spacing:-.03em}
+.ntitle span{display:block; margin-top:14px; font:500 clamp(.95rem,2.4vw,1.4rem)/1.3 var(--body); color:var(--ink); text-shadow:0 2px 14px #000}
+.ico svg,.bigico svg{fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; filter:drop-shadow(0 0 8px currentColor)}
+.pop2{left:50%; top:70%; font:800 clamp(2rem,8vw,5rem)/1 var(--display); white-space:nowrap; text-shadow:0 0 30px currentColor}
+.ecg{left:0; top:62%; width:100%; height:150px}
+.ecg path,.bp path{fill:none; stroke-width:4; stroke-dasharray:1; stroke-dashoffset:1; stroke-linejoin:round}
+.bp{left:50%; top:58%; width:min(76vw,520px); height:min(57vw,390px)}
+.bp path{stroke:var(--cyan); stroke-width:2.5}
+.beam{left:50%; top:0; width:160px; height:100%; margin-left:-80px; background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--gold) 55%,transparent),transparent)}
+.star{width:4px; height:4px; border-radius:50%; background:#fff; box-shadow:0 0 8px 2px #fff}
+.petal{width:14px; height:20px; border-radius:80% 0 80% 0; background:linear-gradient(135deg,#ff8fab,#ff3b6b)}
+.hrt{color:#ff5c8a; line-height:1; text-shadow:0 0 14px currentColor}
+.bheart{left:50%; top:46%; width:min(56vw,340px); height:min(56vw,340px); color:#ff3b6b}
+.bheart svg{filter:drop-shadow(0 0 40px #ff3b6b)}
+.omark{left:50%; top:36%; width:min(40vw,230px); height:min(40vw,230px); filter:drop-shadow(0 0 30px var(--green))}
+body.love .cur .ar,body.love .cur i{display:none}
+body.love .cur::after{content:"♥"; position:absolute; left:-8px; top:-10px; font-size:24px; color:#ff5c8a; text-shadow:0 0 12px #ff5c8a}
+body.love .cur{opacity:1!important}
+.fx{position:fixed; z-index:60; pointer-events:none}
+.plane,.shell,.bigico{left:0; top:0}
 .fx svg{display:block; width:100%; height:100%; overflow:visible}
 .cup{left:50%; top:50%; width:230px; height:230px}
 .cup .st{fill:none; stroke:#d9ffe9; stroke-width:5; stroke-linecap:round; animation:steam 1.4s ease-in-out infinite}
@@ -378,7 +399,7 @@ html,body{margin:0}
 
   <section id="terminal">
     <h2 data-hit>Terminal</h2>
-    <p class="sub" data-i18n="t_sub">Sitenin diğer yüzü. <code>help</code> yazarak başla; Tab tamamlar, yukarı ok geçmişi getirir.</p>
+    <p class="sub" data-i18n="t_sub">Sitenin diğer yüzü. <code>help</code> yazarak başla, ya da ismini yaz: belki sana özel bir şey vardır.</p>
     <div class="term" id="term">
       <div class="tbar"><i></i><i></i><i></i><span>visitor@sjc: ~</span></div>
       <div id="tout" role="log"></div>
@@ -461,7 +482,7 @@ html,body{margin:0}
     e3:'<li>Applied theory to practice in academic projects and research.</li>',
     h_system:'The system in my head',
     s_sub:'A live, illustrative map of the tools I work with. In chaos, requests flow unevenly and the red ones get lost on the way. Press Balance: they fall in line and losses drop to zero. Tap a box to see what it does.',m_ok:'delivered',m_lost:'lost',m_lat:'latency',
-    t_sub:'The other face of this site. Start with <code>help</code>; Tab completes, arrow up recalls history.',
+    t_sub:'The other face of this site. Start with <code>help</code>, or type your name: there might be something just for you.',
     h_contact:'Contact',c_sub:'Write to me about an idea, a job or a good game recommendation.',
     foot:'© 2026 Selman Jir Can · Chaos flows behind, balance stands in front.',
     d_bal:'BALANCE',d_clk:' clicks'
@@ -471,7 +492,7 @@ html,body{margin:0}
       hud:function(k,T,s){return 'klon '+k+'/'+T+' · skor '+s},
       n:{c:'İstemciler: web, mobil ve dış sistemler. Her şey buradan başlar.',k:'Kong: API gateway. İstekleri karşılar, yönlendirir, sınırlar.',g:'GraphQL: istemcinin tam ihtiyacı kadar veri istediği API katmanı.',n:'Nest.js: düzenli, modüler servisler için ana çatım.',e:'Express.js: hafif ve hızlı servisler için.',r:'Redis: önbellek. Aynı soruyu veritabanına iki kez sormamak için.',q:'RabbitMQ: mesaj kuyruğu. Servisler birbirini beklemeden konuşur.',w:'Node.js worker: kuyruktaki işleri arka planda tüketir.',m:'MySQL: ilişkisel veri.',o:'MongoDB: doküman tabanlı veri.'},
       p:['Hakkımda','Yolculuk','Sistem haritası','Terminal','İletişim','Dili değiştir: English','Kaos / denge','E-postayı kopyala'],ph:'Komut ara…',
-      welcome:'Hoş geldin. Komutlar için <span class="c">help</span> yaz.',
+      welcome:'Hoş geldin. Komutlar için <span class="c">help</span> yaz, ya da ismini dene.',tph:'ismini yaz…',hello:function(n){return 'Merhaba '+n+'. Sana özel bir şey henüz yok ama bu selam senin. (Komutlar için help)'},hello2:'Bu selam sana.',elif2:'Bu sitenin en güzel satırı sensin.',own:'Sitenin sahibi teşrif etti.',
       help:[['whoami','ben kimim'],['about','kısaca ben'],['exp','deneyim'],['skills','kullandığım araçlar'],['edu','eğitim'],['contact','bana ulaş'],['neofetch','sistem bilgisi'],['lang en','dili değiştir (tr | en)'],['chaos','kaosu serbest bırak'],['balance','dengele'],['status','kaos seviyesi'],['dog','hav'],['ls, cat','dosyalara bak'],['clear','ekranı temizle']],
       whoami:'Selman Jir Can. Backend developer, yazılım mühendisi.\nYazılım benim için soyut bir varlıkla konuşmanın yolu.',
       about:"Her gün biraz daha iyi olmaya çalışan bir yazılım mühendisiyim.\nOyun oynarım, oyun sektörünü takip ederim.\nArkadaşlarımla teknolojiyi felsefi bir derinlikte tartışırım.\nBir de köpeğim var.",
@@ -485,7 +506,7 @@ html,body{margin:0}
       hud:function(k,T,s){return 'clones '+k+'/'+T+' · score '+s},
       n:{c:'Clients: web, mobile and external systems. Everything starts here.',k:'Kong: API gateway. It receives, routes and rate-limits requests.',g:'GraphQL: an API layer where the client asks for exactly the data it needs.',n:'Nest.js: my main framework for tidy, modular services.',e:'Express.js: for light, fast services.',r:'Redis: cache. So the database is not asked the same question twice.',q:'RabbitMQ: message queue. Services talk without waiting on each other.',w:'Node.js worker: consumes queued jobs in the background.',m:'MySQL: relational data.',o:'MongoDB: document data.'},
       p:['About','Journey','System map','Terminal','Contact','Switch language: Türkçe','Chaos / balance','Copy email'],ph:'Search commands…',
-      welcome:'Welcome. Type <span class="c">help</span> for commands.',
+      welcome:'Welcome. Type <span class="c">help</span> for commands, or try your name.',tph:'type your name…',hello:function(n){return 'Hi '+n+'. Nothing custom for you yet, but this hello is yours. (Type help for commands)'},hello2:'This hello is for you.',elif2:'You are the most beautiful line on this site.',own:'The owner of this site has entered.',
       help:[['whoami','who I am'],['about','me, briefly'],['exp','experience'],['skills','tools I use'],['edu','education'],['contact','reach me'],['neofetch','system info'],['lang tr','switch language (tr | en)'],['chaos','release the chaos'],['balance','restore balance'],['status','chaos level'],['dog','woof'],['ls, cat','look at files'],['clear','clear the screen']],
       whoami:'Selman Jir Can. Backend developer, software engineer.\nTo me, software is a way of talking with an abstract existence.',
       about:'A software engineer trying to be a little better every day.\nI play games and follow the game industry.\nMy friends and I discuss technology with some philosophical depth.\nAlso, I have a dog.',
@@ -520,7 +541,7 @@ html,body{margin:0}
       if(anim&&!reduce&&!/[<&]/.test(v)&&v.length<60) scramble(e,v); else e.innerHTML=v;
     });
     $('ltr').setAttribute('aria-pressed',l==='tr'); $('len').setAttribute('aria-pressed',l==='en');
-    syncBtn(); $('copy').textContent=L().copy; $('pin').placeholder=L().ph;
+    syncBtn(); $('copy').textContent=L().copy; $('pin').placeholder=L().ph; $('tin').placeholder=L().tph;
     if(clientLabel) clientLabel.textContent=L().clients;
     $('ninfo').textContent=curNode?L().n[curNode]:L().pick;
     if(typeof tout!=='undefined'&&tout){ tout.innerHTML=''; out(neofetch()); out(L().welcome); }
@@ -1073,6 +1094,151 @@ html,body{margin:0}
     for(var i=0;i<Math.max(a.length,b.length);i++) s+='<span class="c">'+(a[i]||'           ')+'</span>   '+(b[i]||'')+'\n';
     return s;
   }
+  /* ================= isme özel sahneler ================= */
+  function norm(t){ return t.toLocaleLowerCase('tr').replace(/ı/g,'i').replace(/ğ/g,'g').replace(/ü/g,'u').replace(/ş/g,'s').replace(/ö/g,'o').replace(/ç/g,'c').replace(/â/g,'a').replace(/\s+/g,' ').trim() }
+  function cap(t){ return t.trim().split(/\s+/).map(function(w){return w.charAt(0).toLocaleUpperCase('tr')+w.slice(1).toLocaleLowerCase('tr')}).join(' ') }
+  function sv2(inner){ return '<svg viewBox="0 0 24 24">'+inner+'</svg>' }
+  var ICON={
+    heart:sv2('<path fill="currentColor" stroke="none" d="M12 21C5 15.5 2 12.2 2 8.5 2 5.4 4.4 3 7.5 3c1.7 0 3.4.8 4.5 2.1C13.1 3.8 14.8 3 16.5 3 19.6 3 22 5.4 22 8.5c0 3.7-3 7-10 12.5z"/>'),
+    ball:sv2('<circle cx="12" cy="12" r="9.5"/><path d="M12 7.5l4.3 3.1-1.6 5H9.3l-1.6-5zM12 2.5v5M21 9.5l-4.7 1.1M17.5 20l-2.8-4.4M6.500 20l2.8-4.4M3 9.5l4.7 1.1"/>'),
+    car:sv2('<path d="M2.5 16.500v-4l3-1.2 2.8-4.3h7.2l3.5 4.3 2.5 1.2v4z"/><circle cx="7" cy="17" r="2.2" fill="currentColor"/><circle cx="17" cy="17" r="2.2" fill="currentColor"/><path d="M8.8 11.3h7.7"/>'),
+    pill:sv2('<path d="M4.5 13.500l9-9a4.240 4.240 0 0 1 6 6l-9 9a4.240 4.240 0 0 1-6-6zM9 9l6 6"/>'),
+    dumbbell:sv2('<path d="M2 9.500v5M5 6.500v11M19 6.500v11M22 9.500v5M5 12h14" stroke-width="2.6"/>'),
+    sword:sv2('<path d="M20.5 3.500l-11 11M20.5 3.500H16l-9.5 9.500 3 3L19 6.500zM6 14l4 4M7.5 16.500l-4 4"/>'),
+    cart:sv2('<path d="M2.5 4h3l2.4 10.500h10.200l2-7.500H6.800"/><circle cx="9" cy="19" r="1.6" fill="currentColor"/><circle cx="17" cy="19" r="1.6" fill="currentColor"/>'),
+    gavel:sv2('<path d="M13.5 3.500l7 7M9 8l7 7M11.3 5.800l-5.5 5.500 3.400 3.400 5.500-5.500M8 13.500L2.500 19M12 21h9"/>'),
+    building:sv2('<path d="M4 21V8l8-5 8 5v13M2 21h20M9.5 21v-5h5v5M8 10.500h2M14 10.500h2M8 13.500h2M14 13.500h2"/>'),
+    cross:sv2('<path d="M9 3h6v6h6v6h-6v6H9v-6H3V9h6z"/>'),
+    star:sv2('<path fill="currentColor" stroke="none" d="M12 2l2.9 6.900 7.100.6-5.400 4.700 1.700 7.300L12 17.600l-6.300 3.900 1.700-7.300L2 9.500l7.100-.6z"/>'),
+    coin:sv2('<circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.500H13a1.750 1.750 0 0 1 0 3.500h-2a1.750 1.750 0 0 0 0 3.500h3.500"/>'),
+    pad:sv2('<path d="M6.5 8h11a4.500 4.500 0 0 1 4.300 5.800l-.8 2.700a2.300 2.300 0 0 1-4.100.5L16 15.500H8L7.100 17a2.300 2.300 0 0 1-4.100-.5l-.8-2.700A4.500 4.500 0 0 1 6.500 8zM7.500 10.500v3M6 12h3"/><circle cx="16" cy="11" r=".9" fill="currentColor"/><circle cx="17.8" cy="13" r=".9" fill="currentColor"/>'),
+    crown:sv2('<path fill="currentColor" stroke="none" d="M3 18.500L1.800 7.500l5.700 4.500L12 4l4.500 8 5.700-4.500L21 18.500z"/>')
+  };
+  function gone(el){ return function(){ el.remove() } }
+  function dimFx(dur){ var d=fxEl('dim'); d.animate([{opacity:0},{opacity:1,offset:.1},{opacity:1,offset:.85},{opacity:0}],{duration:dur}).onfinish=gone(d); }
+  function popText(txt,col,delay,top){
+    setTimeout(function(){
+      var e=fxEl('pop2'); e.textContent=txt; e.style.color=col; if(top) e.style.top=top;
+      e.animate([{transform:'translate(-50%,-50%) scale(.2)',opacity:0},{transform:'translate(-50%,-50%) scale(1.15)',opacity:1,offset:.25},{transform:'translate(-50%,-50%) scale(1)',opacity:1,offset:.7},{transform:'translate(-50%,-90%) scale(1.1)',opacity:0}],{duration:1500,easing:'ease-out'}).onfinish=gone(e);
+    },delay||0);
+  }
+  function iconRain(names,cols,n,span){
+    for(var i=0;i<n;i++) (function(i){ setTimeout(function(){
+      var sz=rnd(26,56), e=fxEl('ico',ICON[names[i%names.length]]);
+      e.style.cssText='width:'+sz+'px;height:'+sz+'px;color:'+cols[i%cols.length]+';left:'+rnd(2,94)+'vw;top:-70px';
+      e.animate([{transform:'translateY(0) rotate(0deg)'},{transform:'translateY('+(H+150)+'px) rotate('+rnd(-360,360).toFixed(0)+'deg)'}],{duration:rnd(1900,3400),easing:'cubic-bezier(.3,0,.8,.6)'}).onfinish=gone(e);
+    },i*span/n) })(i);
+  }
+  function bigIcon(name,col,size){ var e=fxEl('bigico',ICON[name]); e.style.cssText='width:'+size+'px;height:'+size+'px;color:'+col; return e; }
+  function scene(o){
+    var cols=o.cols||['#4fe08a','#d9ffe9'], dur=o.dur||3800;
+    dimFx(dur+300);
+    var t=fxEl('ntitle','<b></b><span></span>'); t.style.color=cols[0]; if(o.top) t.style.top=o.top;
+    t.lastChild.textContent=o.sub||''; scramble(t.firstChild,o.title);
+    t.animate([{opacity:0,transform:'translate(-50%,-50%) scale(.6)'},{opacity:1,transform:'translate(-50%,-50%) scale(1)',offset:.1},{opacity:1,transform:'translate(-50%,-50%) scale(1.04)',offset:.86},{opacity:0,transform:'translate(-50%,-50%) scale(1.2)'}],{duration:dur,easing:'ease-out'}).onfinish=gone(t);
+    if(o.icons) iconRain(o.icons,cols,o.n||26,dur*.6);
+    if(o.extra) o.extra(cols);
+    setTimeout(function(){ confetti(W/2,H*.44,o.burst||46,cols); ripple(W/2,H*.44,true); },o.burstAt||700);
+  }
+  function quake(ms){ document.body.classList.add('quake'); setTimeout(function(){document.body.classList.remove('quake')},ms||400); }
+  function ecg(col){
+    var e=fxEl('ecg','<svg viewBox="0 0 1000 200" preserveAspectRatio="none"><path pathLength="1" stroke="'+col+'" d="M0 110H250l18-12 16 12h40l14-70 22 150 24-170 22 130 16-40h60l20-16 20 16H1000"/></svg>');
+    e.firstChild.firstChild.animate([{strokeDashoffset:1},{strokeDashoffset:0}],{duration:1500,fill:'forwards',easing:'ease-in-out'});
+    e.animate([{opacity:1},{opacity:1,offset:.8},{opacity:0}],{duration:3200}).onfinish=gone(e);
+  }
+  function flyIcon(name,col,size,frames,dur,delay,done){
+    setTimeout(function(){ var e=bigIcon(name,col,size); var an=e.animate(frames,{duration:dur,easing:'cubic-bezier(.3,.1,.5,1)'}); an.onfinish=function(){ e.remove(); if(done) done(); }; },delay||0);
+  }
+  function tf(x,y,r,sc){ return 'translate('+x.toFixed(0)+'px,'+y.toFixed(0)+'px) rotate('+(r||0)+'deg) scale('+(sc||1)+')' }
+  var SCN={
+    ardil:{title:'ARDIL',sub:{tr:'Doktor bey teşrif etti. Yakışıklılık: klinik düzeyde.',en:'The doctor is in. Handsomeness: clinical grade.'},cols:['#ff6b5e','#ffffff','#4fd8e0'],icons:['cross','heart'],extra:function(c){ ecg(c[0]); setTimeout(function(){ecg('#ffffff')},1400); }},
+    baran:{title:'BARAN',sub:{tr:'Mesaide arabalar, mesai sonrası top.',en:'Cars at work, football after hours.'},cols:['#4fe08a','#ffffff','#ffd166'],icons:['ball','car'],extra:function(c){
+      flyIcon('ball','#ffffff',90,[{transform:tf(-100,H*.8)},{transform:tf(W*.45,H*.2,360),offset:.5},{transform:tf(W*.86,H*.62,720)}],1300,500,function(){ popText('GOOOL!',c[2]); confetti(W*.86,H*.62,40,c,260); quake(350); }); }},
+    emre:{title:'EMRE',sub:{tr:'Duruşmada itiraz, yolda tam gaz.',en:'Objection in court, full throttle on the road.'},cols:['#ffd166','#ffffff','#ff6b5e'],icons:['gavel','car'],extra:function(c){
+      flyIcon('gavel',c[0],150,[{transform:tf(W/2-75,H*.5,-60)},{transform:tf(W/2-75,H*.62,10),offset:.5},{transform:tf(W/2-75,H*.5,-60)}],600,300,function(){ quake(250); ripple(W/2,H*.7,true); });
+      [900,1700].forEach(function(d,i){ flyIcon('car',c[i?2:0],150,[{transform:tf(-200,H*(.74-i*.1),0)+' skewX(-14deg)'},{transform:tf(W+200,H*(.74-i*.1),0)+' skewX(-14deg)'}],650,d); }); }},
+    selahattin:{title:'SELAHATTİN',sub:{tr:'Gündüz ders, akşam ağırlık. İkisinde de rekor.',en:'Lessons by day, weights by night. Records in both.'},cols:['#4fd8e0','#ffffff','#ffd166'],icons:['dumbbell','star'],extra:function(c){
+      var e=bigIcon('dumbbell',c[0],Math.min(260,W*.5)), x=W/2-Math.min(130,W*.25);
+      e.animate([{transform:tf(x,H*.78)},{transform:tf(x,H*.56),offset:.14},{transform:tf(x,H*.78),offset:.3},{transform:tf(x,H*.56),offset:.46},{transform:tf(x,H*.78),offset:.62},{transform:tf(x,H*.5),offset:.8},{transform:tf(x,H*1.1)}],{duration:3200}).onfinish=gone(e);
+      [450,1470,2560].forEach(function(d,i){ popText(String(i+1),c[2],d,'34%'); setTimeout(function(){quake(180)},d); }); }},
+    ugur:{title:'UĞUR',sub:{tr:'Sepet dolu, keyif yerinde, neşe bedava.',en:'Cart full, spirits high, laughs for free.'},cols:['#ffd166','#4fe08a','#c77dff','#ffffff'],icons:['cart','coin','pad'],extra:function(c){ popText('GG WP',c[2],1200); }},
+    melisa:{title:'MELİSA',sub:{tr:'Duo hazır. Koridor senin.',en:'Duo ready. The lane is yours.'},cols:['#c77dff','#ff8fab','#ffffff','#4fd8e0'],icons:['pad','heart','star'],extra:function(c){ popText('GG WP',c[1],1200); }},
+    anil:{title:'ANIL',sub:{tr:'Kaos mu dediniz? Savaş başlasın.',en:'Did someone say chaos? Let the battle begin.'},cols:['#ff6b5e','#ffd166','#ffffff'],icons:['sword'],extra:function(c){
+      [500,1500].forEach(function(d){
+        flyIcon('sword',c[2],170,[{transform:tf(-200,H*.5,45)},{transform:tf(W/2-150,H*.5-85,45)}],360,d);
+        flyIcon('sword',c[1],170,[{transform:tf(W+30,H*.5,-135)},{transform:tf(W/2-20,H*.5-85,-135)}],360,d,function(){ confetti(W/2,H*.5,36,c,240); ripple(W/2,H*.5,true); quake(300); });
+      }); }},
+    recep:{title:'RECEP',sub:{tr:'Seviye atladın hocam. Kervan yolda.',en:'Level up, teacher. The caravan is on its way.'},cols:['#ffd166','#ffffff','#4fe08a'],icons:['coin','sword','pad'],extra:function(c){
+      var b=fxEl('beam'); b.animate([{opacity:0,transform:'scaleX(.2)'},{opacity:1,transform:'scaleX(1)',offset:.3},{opacity:0,transform:'scaleX(1.6)'}],{duration:2200,delay:700}).onfinish=gone(b); b.style.opacity=0;
+      popText('LEVEL UP',c[0],900); }},
+    ezgi:{title:'EZGİ',sub:{tr:'Reçete: günde üç doz gülümseme.',en:'Prescription: three doses of smile a day.'},cols:['#4fd8e0','#ffffff','#ff8fab'],icons:['pill','cross','heart'],extra:function(c){ setTimeout(function(){ecg(c[2])},700); }},
+    zilan:{title:'ZİLAN',top:'22%',sub:{tr:'Onun elinde çizgiler binaya dönüşür.',en:'In her hands, lines turn into buildings.'},cols:['#4fd8e0','#ffffff','#ffd166'],icons:['building'],n:14,extra:function(){
+      var e=fxEl('bp','<svg viewBox="0 0 400 300"><path pathLength="1" d="M20 282H380M70 282V112L200 44l130 68v170M70 152h260M70 196h260M70 240h260M135 112v170M200 44v238M265 112v170M170 282v-34h60v34M200 44V16M188 16h24"/></svg>');
+      e.style.transform='translate(-50%,-50%)';
+      e.firstChild.firstChild.animate([{strokeDashoffset:1},{strokeDashoffset:0}],{duration:2600,fill:'forwards',easing:'ease-in-out'});
+      e.animate([{opacity:1},{opacity:1,offset:.85},{opacity:0}],{duration:3900}).onfinish=gone(e); }}
+  };
+  SCN.selehattin=SCN.selahattin;
+  function runScene(k){ var o=SCN[k]; scene({title:o.title,sub:o.sub[lang],cols:o.cols,icons:o.icons,n:o.n,top:o.top,extra:o.extra}); return o.sub[lang]; }
+  function helloFx(name){
+    var pal=[['#4fe08a','#d9ffe9','#ffd166'],['#4fd8e0','#ffffff','#c77dff'],['#ffd166','#ff9f1c','#ffffff'],['#c77dff','#ff8fab','#ffffff']], h=0;
+    for(var i=0;i<name.length;i++) h=(h*31+name.charCodeAt(i))>>>0;
+    scene({title:name,sub:L().hello2,cols:pal[h%pal.length],icons:['star'],n:16,dur:3000});
+  }
+  /* elif: sitedeki en büyük sahne */
+  function elifFx(){
+    var cols=['#ff5c8a','#ff8fab','#ffd166','#ffffff','#ff3b6b'], i;
+    document.body.classList.add('love'); setTimeout(function(){document.body.classList.remove('love')},11500);
+    dimFx(11200);
+    for(i=0;i<44;i++){ var st=fxEl('star'); st.style.left=rnd(2,98)+'vw'; st.style.top=rnd(2,96)+'vh'; st.animate([{opacity:0,transform:'scale(.3)'},{opacity:1,transform:'scale(1.4)'},{opacity:.2,transform:'scale(.6)'},{opacity:1,transform:'scale(1.2)'},{opacity:0,transform:'scale(.3)'}],{duration:rnd(4000,9500),delay:rnd(0,2500)}).onfinish=gone(st); st.style.opacity=0; }
+    var bh=fxEl('bheart',ICON.heart);
+    bh.animate([{transform:'translate(-50%,-50%) scale(0)'},{transform:'translate(-50%,-50%) scale(1)',offset:.3},{transform:'translate(-50%,-50%) scale(.86)',offset:.42},{transform:'translate(-50%,-50%) scale(1.08)',offset:.54},{transform:'translate(-50%,-50%) scale(.9)',offset:.68},{transform:'translate(-50%,-50%) scale(1.12)',offset:.82},{transform:'translate(-50%,-50%) scale(1.5)'}],{duration:2600,easing:'ease-in-out'}).onfinish=function(){
+      bh.remove(); ripple(W/2,H*.46,true); setTimeout(function(){ripple(W/2,H*.46,true)},180); setTimeout(function(){ripple(W/2,H*.46,true)},380);
+      for(var j=0;j<70;j++){ var q=fxEl('hrt'), a=rnd(0,360), d=rnd(120,Math.max(W,H)*.6); q.textContent='♥'; q.style.cssText='left:'+W/2+'px;top:'+H*.46+'px;font-size:'+rnd(14,48).toFixed(0)+'px;color:'+cols[j%cols.length];
+        q.animate([{transform:'translate(-50%,-50%) rotate('+a+'deg) translateX(0) rotate('+(-a)+'deg) scale(.3)',opacity:1},{transform:'translate(-50%,-50%) rotate('+(a+140)+'deg) translateX('+d.toFixed(0)+'px) rotate('+(-a-140)+'deg) scale(1)',opacity:0}],{duration:rnd(2200,3600),easing:'cubic-bezier(.1,.6,.3,1)'}).onfinish=gone(q); }
+      /* isim ve cümle */
+      var t=fxEl('ntitle','<b>Elif</b><span></span>'); t.style.color='#ff5c8a'; t.lastChild.textContent=L().elif2;
+      t.animate([{opacity:0,transform:'translate(-50%,-50%) scale(.5)'},{opacity:1,transform:'translate(-50%,-50%) scale(1)',offset:.12},{opacity:1,transform:'translate(-50%,-50%) scale(1.05)',offset:.9},{opacity:0,transform:'translate(-50%,-50%) scale(1.25)'}],{duration:8000,easing:'ease-out'}).onfinish=gone(t);
+    };
+    /* gül yaprakları */
+    for(i=0;i<56;i++) (function(i){ setTimeout(function(){
+      var p2=fxEl('petal'), x=rnd(0,100), sw=rnd(-120,120); p2.style.left=x+'vw'; p2.style.top='-30px';
+      p2.animate([{transform:'translate(0,0) rotate(0deg)'},{transform:'translate('+(sw*.6).toFixed(0)+'px,'+(H*.5).toFixed(0)+'px) rotate('+rnd(120,300).toFixed(0)+'deg)'},{transform:'translate('+sw.toFixed(0)+'px,'+(H+60)+'px) rotate('+rnd(300,700).toFixed(0)+'deg)'}],{duration:rnd(3800,6500),easing:'linear'}).onfinish=gone(p2);
+    },2400+i*110) })(i);
+    /* havai fişekler */
+    [3300,4200,5000,5900,6700,7500].forEach(function(d){ setTimeout(function(){ var x=rnd(W*.12,W*.88), y=rnd(H*.12,H*.5); confetti(x,y,34,cols,Math.min(W,H)*.34); ripple(x,y,true); },d) });
+    /* final: kalplerden bir kalp */
+    setTimeout(function(){
+      var n=34, sc=Math.min(W,H)/40;
+      for(var j=0;j<n;j++) (function(j){ var tt=j/n*6.2832, hx=16*Math.pow(Math.sin(tt),3), hy=-(13*Math.cos(tt)-5*Math.cos(2*tt)-2*Math.cos(3*tt)-Math.cos(4*tt));
+        var q=fxEl('hrt'); q.textContent='♥'; q.style.cssText='left:'+(W/2+hx*sc)+'px;top:'+(H*.44+hy*sc)+'px;font-size:'+(W<640?18:26)+'px;color:'+cols[j%2];
+        q.animate([{transform:'translate(-50%,-50%) scale(0)',opacity:0},{transform:'translate(-50%,-50%) scale(1.5)',opacity:1,offset:.12},{transform:'translate(-50%,-50%) scale(1)',opacity:1,offset:.2},{transform:'translate(-50%,-50%) scale(1.15)',opacity:1,offset:.8},{transform:'translate('+(hx*sc*1.6-0).toFixed(0)+'px,'+(hy*sc*1.6).toFixed(0)+'px) scale(.2)',opacity:0}],{duration:3200,delay:j*38,fill:'both',easing:'ease-out'}).onfinish=gone(q);
+      })(j);
+    },7400);
+    return '♥ Elif · '+L().elif2;
+  }
+  /* selman / jir: sitenin sahibi */
+  function ownerFx(){
+    var cols=['#4fe08a','#d9ffe9','#ffd166'];
+    for(var i=0;i<cols.length&&i<1;i++){} 
+    for(i=0;i<drops.length;i++){ drops[i].y=-(Math.abs(i-drops.length/2)*.5|0); drops[i].acc=0; drops[i].sp=1; }
+    decodeName();
+    var m=fxEl('omark','<svg viewBox="8 8 48 48">'+document.querySelector('.mark').innerHTML+'</svg>');
+    m.animate([{transform:'translate(-50%,-50%) scale(0) rotate(-180deg)',opacity:0},{transform:'translate(-50%,-50%) scale(1.15) rotate(0deg)',opacity:1,offset:.2},{transform:'translate(-50%,-50%) scale(1) rotate(0deg)',opacity:1,offset:.3},{transform:'translate(-50%,-50%) scale(1.06) rotate(0deg)',opacity:1,offset:.88},{transform:'translate(-50%,-50%) scale(2.2) rotate(0deg)',opacity:0}],{duration:5400,easing:'ease-out'}).onfinish=gone(m);
+    var cw=Math.min(110,W*.24);
+    flyIcon('crown',cols[2],cw,[{transform:tf(W/2-cw/2,-140,-20)},{transform:tf(W/2-cw/2,H*.36-Math.min(W*.2,115)-cw*.9,6),offset:.5},{transform:tf(W/2-cw/2,H*.36-Math.min(W*.2,115)-cw*.72,0),offset:.62},{transform:tf(W/2-cw/2,H*.36-Math.min(W*.2,115)-cw*.72,0),offset:.92},{transform:tf(W/2-cw/2,-160,20)}],4300,700);
+    scene({title:'SELMAN JİR CAN',sub:L().own,cols:cols,icons:['star','crown'],n:30,dur:5400,burst:80,burstAt:1100,top:'66%'});
+    [1100,1500,1900].forEach(function(d){ setTimeout(function(){ripple(W/2,H*.36,true)},d) });
+    setTimeout(function(){ confetti(W/2,H*.36,70,cols); quake(300); },2900);
+    return L().own;
+  }
+  var NAMEFX={
+    elif:elifFx,
+    enes:function(){ enesFx(); return L().enes },
+    abdulsamet:function(){ sametFx(); return L().samet }, samet:function(){ sametFx(); return L().samet },
+    selman:ownerFx, jir:ownerFx, 'selman jir':ownerFx, 'selman jir can':ownerFx, 'jir can':ownerFx, 'selman can':ownerFx, selmanjir:ownerFx, selmanjircan:ownerFx
+  };
+  Object.keys(SCN).forEach(function(k){ NAMEFX[k]=function(){ return runScene(k) } });
   /* gizli komutlar: enes (kahve, gezi, renk) ve abdulsamet (tank) */
   function fxEl(cls,html){ var d=document.createElement('div'); d.className='fx '+cls; d.innerHTML=html||''; document.body.appendChild(d); return d; }
   function confetti(x,y,n,cols,spread){
@@ -1141,6 +1307,7 @@ html,body{margin:0}
     var line=raw.trim(); out('<span class="c">~$</span> '+esc(line));
     if(!line) return;
     hist.push(line); hi=hist.length;
+    var nk=norm(line); if(NAMEFX[nk]){ out(esc(NAMEFX[nk]()),'c'); return; }
     var parts=line.split(/\s+/), c=parts[0].toLowerCase(), arg=(parts[1]||'').toLowerCase(), T=L();
     switch(c){
       case 'help': out(trows(T.help)); break;
@@ -1161,16 +1328,15 @@ html,body{margin:0}
         if(arg==='about.txt') out(T.about); else if(arg==='experience.log') out(trows(T.exp.concat(T.edu))); else if(arg==='skills.json') out(trows(SKILLS));
         else if(arg==='dog.png'){ out(DOG,'c'); out(T.dog); } else if(arg==='game.exe') out('→ game'); else out(T.nofile); break;
       case 'clear': tout.innerHTML=''; break;
-      case 'enes': enesFx(); out(T.enes,'c'); break;
-      case 'abdulsamet': case 'samet': sametFx(); out(T.samet,'c'); break;
-      case 'elif': heart(); out('♥','c'); break;
       case 'status': out(T.status(Math.round(ent),Math.round(balS))); break;
       case 'sudo': out(T.sudo); break;
       case 'vim': case 'vi': case 'nano': out(T.vim); break;
       case 'exit': case 'quit': out(T.exit); break;
       case 'date': out(esc(new Date().toLocaleString(lang==='tr'?'tr-TR':'en-GB'))); break;
       case 'echo': out(esc(parts.slice(1).join(' '))); break;
-      default: out(esc(T.nf404(c)),'m');
+      default:
+        if(/^[a-zçğıöşüâîû]{2,20}( [a-zçğıöşüâîû]{2,20}){0,2}$/i.test(line)){ var nm=cap(line); helloFx(nm); out(esc(T.hello(nm)),'c'); }
+        else out(esc(T.nf404(c)),'m');
     }
   }
   tin.addEventListener('keydown',function(e){
@@ -1275,12 +1441,12 @@ html,body{margin:0}
   var TITLE=document.title;
   document.addEventListener('visibilitychange',function(){ document.title=document.hidden&&!order&&!game?L().away:TITLE; });
   /* ilk ziyaret: sakin mi kaos mu? selmanjircan.com/#cv doğrudan sakin açılır */
-  /* site dengede açılır; 20 sn sonra kaosu sorar. selmanjircan.com/#cv hiç sormaz */
+  /* site dengede açılır; 35 sn sonra kaosu sorar. selmanjircan.com/#cv hiç sormaz */
   setOrder(true,true);
   if(location.hash!=='#cv') setTimeout(function(){
     if(!order||game||pre||!gov.hidden) return;
     govShow(L().atitle,L().atext,null,L().ayes,function(){setOrder(false)},L().ano,null,false,true);
-  },20000);
+  },35000);
   requestAnimationFrame(frame);
 })();
 </script>
