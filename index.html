@@ -235,7 +235,9 @@ body.order #core .hit{pointer-events:auto}
 .petal{width:14px; height:20px; border-radius:80% 0 80% 0; background:linear-gradient(135deg,#ff8fab,#ff3b6b)}
 .hrt{color:#ff5c8a; line-height:1; text-shadow:0 0 14px currentColor}
 .bheart{left:50%; top:46%; width:min(56vw,340px); height:min(56vw,340px); color:#ff3b6b}
-.bheart svg{filter:drop-shadow(0 0 40px #ff3b6b)}
+.bheart svg{filter:drop-shadow(0 0 40px currentColor); fill:none; stroke:currentColor; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round}
+.ring3d{left:50%; top:74%; width:120px; height:120px; margin:-60px 0 0 -60px; color:var(--gold)}
+.ring3d svg{fill:none; stroke:currentColor; stroke-width:3; filter:drop-shadow(0 0 16px currentColor)}
 .omark{left:50%; top:36%; width:min(40vw,230px); height:min(40vw,230px); filter:drop-shadow(0 0 30px var(--green))}
 body.love .cur .ar,body.love .cur i{display:none}
 body.love .cur::after{content:"♥"; position:absolute; left:-8px; top:-10px; font-size:24px; color:#ff5c8a; text-shadow:0 0 12px #ff5c8a}
@@ -1232,7 +1234,75 @@ html,body{margin:0}
     setTimeout(function(){ confetti(W/2,H*.36,70,cols); quake(300); },2900);
     return L().own;
   }
+  /* ek ikonlar */
+  ICON.flower=sv2('<circle cx="12" cy="6.8" r="3.1"/><circle cx="16.950" cy="10.4" r="3.1"/><circle cx="15.060" cy="16.2" r="3.1"/><circle cx="8.940" cy="16.2" r="3.1"/><circle cx="7.050" cy="10.4" r="3.1"/><circle cx="12" cy="12" r="2.4" fill="currentColor"/>');
+  ICON.stitch=sv2('<path stroke-dasharray="1.500 1.100" d="M12 21C5 15.5 2 12.2 2 8.5 2 5.4 4.4 3 7.5 3c1.7 0 3.4.8 4.5 2.1C13.1 3.8 14.8 3 16.5 3 19.6 3 22 5.400 22 8.500c0 3.700-3 7-10 12.500z"/><path d="M15.500 14.500l5-5M20.500 9.500l-1.500.300M20.500 9.500l-.300 1.500"/>');
+  ICON.bag=sv2('<path d="M5 8h14l-1.200 13H6.200zM9 8V6.500a3 3 0 0 1 6 0V8"/>');
+  ICON.gear=sv2('<circle cx="12" cy="12" r="3.2"/><circle cx="12" cy="12" r="6.7"/><path d="M12 2.500v2.800M12 18.700v2.800M2.500 12h2.800M18.700 12h2.800M5.300 5.300l2 2M16.700 16.700l2 2M5.300 18.700l2-2M16.700 7.300l2-2"/>');
+  ICON.book=sv2('<path d="M12 6.500C10 4.800 7 4.300 3 4.500v14c4-.2 7 .3 9 2 2-1.700 5-2.200 9-2v-14c-4-.2-7 .3-9 2zM12 6.500v14"/>');
+  ICON.bball=sv2('<circle cx="12" cy="12" r="9.5"/><path d="M2.500 12h19M12 2.500v19M5.200 5.400c3 2.700 3 10.500 0 13.200M18.800 5.400c-3 2.700-3 10.500 0 13.200"/>');
+  ICON.steth=sv2('<path d="M6 3v6a4 4 0 0 0 8 0V3M10 13v3a4 4 0 0 0 8 0v-1"/><circle cx="18" cy="13" r="2"/>');
+  ICON.ring=sv2('<circle cx="12" cy="12" r="8" stroke-width="3"/>');
+  ICON.plane=sv2('<path d="M2.500 12.500l19-8-7 17-3-7z"/>');
+  SCN.serhat={title:'SERHAT',sub:{tr:'Nöbet biter, maç başlar. Skoru o tutar.',en:'The shift ends, the match begins. He keeps the score.'},cols:['#4fe08a','#ffffff','#ffd166'],icons:['steth','ball','dumbbell'],extra:function(c){
+    popText(lang==='tr'?'MAÇ SAATİ':'MATCH TIME',c[1],700,'68%');
+    flyIcon('ball','#ffffff',80,[{transform:tf(W+60,H*.75)},{transform:tf(W*.5,H*.25,-360),offset:.5},{transform:tf(W*.1,H*.6,-720)}],1300,1300,function(){ popText('GOOOL!',c[2]); confetti(W*.1,H*.6,36,c,240); quake(300); }); }};
+  SCN.bunyamin={title:'BÜNYAMİN',sub:{tr:'Okyanusu aştı, cesareti cebinde. Yolun açık olsun.',en:'Crossed the ocean with courage in his pocket. Safe roads, my friend.'},cols:['#ffd166','#ffffff','#4fd8e0'],icons:['plane','star','ring'],extra:function(c){
+    var r=fxEl('ring3d',ICON.ring);
+    r.animate([{transform:'perspective(500px) rotateY(0deg) scale(.3)',opacity:0},{transform:'perspective(500px) rotateY(360deg) scale(1.1)',opacity:1,offset:.3},{transform:'perspective(500px) rotateY(1080deg) scale(1)',opacity:1,offset:.85},{transform:'perspective(500px) rotateY(1260deg) scale(1.6)',opacity:0}],{duration:3600}).onfinish=gone(r);
+    flyIcon('plane',c[1],90,[{transform:tf(-120,H*.7,10)},{transform:tf(W*.5,H*.3,-8),offset:.55},{transform:tf(W+120,H*.12,-14)}],1900,500); }};
+  /* aile: elif kadar büyük sahneler */
+  function shapePt(shape,t){
+    var a=t*6.2832;
+    if(shape==='heart') return [16*Math.pow(Math.sin(a),3),-(13*Math.cos(a)-5*Math.cos(2*a)-2*Math.cos(3*a)-Math.cos(4*a))];
+    if(shape==='star'){ var k=t*10, n=Math.floor(k), f=k-n, r1=n%2?7:17, r2=(n+1)%2?7:17, a1=n*.62832-1.5708, a2=(n+1)*.62832-1.5708; return [Math.cos(a1)*r1*(1-f)+Math.cos(a2)*r2*f,Math.sin(a1)*r1*(1-f)+Math.sin(a2)*r2*f]; }
+    return [Math.cos(a)*15,Math.sin(a)*15];
+  }
+  function piece(kind,col,size){
+    var e;
+    if(kind==='petal') e=fxEl('petal');
+    else { e=fxEl('ico',ICON[kind]); e.style.width=e.style.height=size+'px'; e.style.color=col; }
+    return e;
+  }
+  function grand(o){
+    var cols=o.cols, i, cx=W/2, cy=H*.46;
+    document.body.classList.add('love'); setTimeout(function(){document.body.classList.remove('love')},11500);
+    dimFx(11200);
+    for(i=0;i<44;i++){ var st=fxEl('star'); st.style.left=rnd(2,98)+'vw'; st.style.top=rnd(2,96)+'vh'; st.style.opacity=0; st.animate([{opacity:0,transform:'scale(.3)'},{opacity:1,transform:'scale(1.4)'},{opacity:.2,transform:'scale(.6)'},{opacity:1,transform:'scale(1.2)'},{opacity:0,transform:'scale(.3)'}],{duration:rnd(4000,9500),delay:rnd(0,2500)}).onfinish=gone(st); }
+    var bh=fxEl('bheart',ICON[o.icon]); bh.style.color=cols[0];
+    bh.animate([{transform:'translate(-50%,-50%) scale(0) rotate(-20deg)'},{transform:'translate(-50%,-50%) scale(1) rotate(0deg)',offset:.3},{transform:'translate(-50%,-50%) scale(.86)',offset:.42},{transform:'translate(-50%,-50%) scale(1.08)',offset:.54},{transform:'translate(-50%,-50%) scale(.9)',offset:.68},{transform:'translate(-50%,-50%) scale(1.12)',offset:.82},{transform:'translate(-50%,-50%) scale(1.5) rotate(8deg)'}],{duration:2600,easing:'ease-in-out'}).onfinish=function(){
+      bh.remove(); ripple(cx,cy,true); setTimeout(function(){ripple(cx,cy,true)},180); setTimeout(function(){ripple(cx,cy,true)},380);
+      for(var j=0;j<60;j++){ var q=piece(o.burst[j%o.burst.length],cols[j%cols.length],rnd(18,46)), a=rnd(0,360), d=rnd(120,Math.max(W,H)*.6);
+        q.style.left=cx+'px'; q.style.top=cy+'px';
+        q.animate([{transform:'translate(-50%,-50%) rotate('+a+'deg) translateX(0) rotate('+(-a)+'deg) scale(.3)',opacity:1},{transform:'translate(-50%,-50%) rotate('+(a+140)+'deg) translateX('+d.toFixed(0)+'px) rotate('+(-a-140)+'deg) scale(1)',opacity:0}],{duration:rnd(2200,3600),easing:'cubic-bezier(.1,.6,.3,1)'}).onfinish=gone(q); }
+      var t=fxEl('ntitle','<b></b><span></span>'); t.style.color=cols[0]; t.firstChild.textContent=o.title; t.lastChild.textContent=o.line;
+      t.animate([{opacity:0,transform:'translate(-50%,-50%) scale(.5)'},{opacity:1,transform:'translate(-50%,-50%) scale(1)',offset:.12},{opacity:1,transform:'translate(-50%,-50%) scale(1.05)',offset:.9},{opacity:0,transform:'translate(-50%,-50%) scale(1.25)'}],{duration:8000,easing:'ease-out'}).onfinish=gone(t);
+      if(o.extra) o.extra(cols);
+    };
+    for(i=0;i<52;i++) (function(i){ setTimeout(function(){
+      var p2=piece(o.fall[i%o.fall.length],cols[i%cols.length],rnd(20,34)), sw=rnd(-120,120); p2.style.left=rnd(0,100)+'vw'; p2.style.top='-40px';
+      p2.animate([{transform:'translate(0,0) rotate(0deg)'},{transform:'translate('+(sw*.6).toFixed(0)+'px,'+(H*.5).toFixed(0)+'px) rotate('+rnd(120,300).toFixed(0)+'deg)'},{transform:'translate('+sw.toFixed(0)+'px,'+(H+80)+'px) rotate('+rnd(300,700).toFixed(0)+'deg)'}],{duration:rnd(3800,6500),easing:'linear'}).onfinish=gone(p2);
+    },2400+i*115) })(i);
+    [3300,4200,5000,5900,6700,7500].forEach(function(d){ setTimeout(function(){ var x=rnd(W*.12,W*.88), y=rnd(H*.12,H*.5); confetti(x,y,34,cols,Math.min(W,H)*.34); ripple(x,y,true); },d) });
+    setTimeout(function(){
+      var n=32, sc=Math.min(W,H)/40, sz=W<640?18:26;
+      for(var j=0;j<n;j++) (function(j){ var pt=shapePt(o.shape,j/n), q=piece(o.form,cols[j%2],sz);
+        q.style.left=(cx+pt[0]*sc)+'px'; q.style.top=(H*.44+pt[1]*sc)+'px';
+        q.animate([{transform:'translate(-50%,-50%) scale(0)',opacity:0},{transform:'translate(-50%,-50%) scale(1.5)',opacity:1,offset:.12},{transform:'translate(-50%,-50%) scale(1)',opacity:1,offset:.2},{transform:'translate(-50%,-50%) scale(1.15)',opacity:1,offset:.8},{transform:'translate('+(pt[0]*sc*1.6).toFixed(0)+'px,'+(pt[1]*sc*1.6).toFixed(0)+'px) scale(.2)',opacity:0}],{duration:3200,delay:j*38,fill:'both',easing:'ease-out'}).onfinish=gone(q);
+      })(j);
+    },7400);
+    return o.title+' · '+o.line;
+  }
+  var FAM={
+    mom:{icon:'stitch',burst:['flower','heart'],fall:['petal','flower'],form:'flower',shape:'heart',cols:['#ff8fab','#ffd166','#fff5e6','#ff5c8a'],line:{tr:'Her ilmeğe sevgi işleyen ellerinden öperim anne.',en:'A kiss to the hands that stitch love into everything, mom.'}},
+    rozerin:{title:'Rozerin',icon:'bag',burst:['bag','heart','star'],fall:['bag','coin','star'],form:'star',shape:'star',cols:['#c77dff','#ff8fab','#ffd166','#ffffff'],line:{tr:'Ablaların en iyisi. Sepet senden, sevgi benden.',en:'Best of sisters. You bring the cart, I bring the love.'}},
+    ali:{title:'Ali',icon:'gear',burst:['gear','book','star'],fall:['gear','book'],form:'gear',shape:'ring',cols:['#6fb6ff','#ffd166','#ffffff','#4fe08a'],line:{tr:'Emeğin de sözün de en sağlamı sende baba.',en:'The hardest work and the wisest words are yours, dad.'}},
+    bedirhan:{title:'Bedirhan',icon:'bball',burst:['bball','star'],fall:['bball','star'],form:'bball',shape:'ring',cols:['#ff9f1c','#ffffff','#ffd166','#ff6b5e'],line:{tr:'Kardeşim sahada, top çemberde.',en:'My brother on the court, the ball through the hoop.'},extra:function(c){ popText('BASKET!',c[2],900,'74%'); }}
+  };
+  function famFx(k,title){ var o=FAM[k]; return grand({title:title||o.title,line:o.line[lang],icon:o.icon,burst:o.burst,fall:o.fall,form:o.form,shape:o.shape,cols:o.cols,extra:o.extra}); }
   var NAMEFX={
+    leyla:function(){ return famFx('mom','Leyla') }, leyle:function(){ return famFx('mom','Leyle') }, melek:function(){ return famFx('mom','Melek') },
+    rozerin:function(){ return famFx('rozerin') }, ali:function(){ return famFx('ali') }, bedirhan:function(){ return famFx('bedirhan') },
     elif:elifFx,
     enes:function(){ enesFx(); return L().enes },
     abdulsamet:function(){ sametFx(); return L().samet }, samet:function(){ sametFx(); return L().samet },
