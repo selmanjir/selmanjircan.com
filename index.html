@@ -437,7 +437,14 @@ body.lock{overflow:hidden}
 body.won{--green:#ffd166; --dim:#8a6d2a; --head:#fff1c9}
 @media (prefers-reduced-motion:reduce){#qbtn.new{animation:none}}
 @media (max-width:640px){.qhd h3{font-size:1.15rem} .qbox{padding:18px 16px 16px}}
-#sndbtn{display:inline-flex; align-items:center; justify-content:center; width:34px; padding:6px 0; color:var(--muted)}
+#sndbtn{position:relative; display:inline-flex; align-items:center; justify-content:center; width:34px; padding:6px 0; color:var(--muted)}
+#sndbtn.wait{border-color:var(--gold); color:var(--gold); animation:qpulse 2s ease-in-out infinite}
+#sndbtn.wait::after{content:attr(data-tip); position:absolute; right:0; top:calc(100% + 8px); font:600 11px var(--mono); color:var(--bg); background:var(--gold); padding:5px 8px; border-radius:6px; white-space:nowrap; pointer-events:none}
+/* yağmurdaki şifre: bir sütun kısa süreliğine altına döner */
+#cipher{position:fixed; left:0; top:0; z-index:2; pointer-events:none; font:600 15px/20px var(--mono)}
+#cipher span{position:absolute; left:0; width:18px; text-align:center; color:#fffdf2; opacity:0; text-shadow:0 0 8px var(--gold), 0 0 20px color-mix(in srgb,var(--gold) 70%,transparent); transition:color .6s}
+#cipher span.on{opacity:1; color:var(--gold)}
+#cipher.out span{opacity:0; transition:opacity 1.3s}
 #sndbtn svg{width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
 #sndbtn .on{display:none}
 #sndbtn[aria-pressed="true"]{color:var(--green); border-color:var(--green)}
@@ -475,7 +482,7 @@ html,body{margin:0}
     </div>
     <div class="tools">
       <div class="seg" role="group" aria-label="Dil / Language"><button type="button" id="ltr" aria-pressed="true">TR</button><button type="button" id="len" aria-pressed="false">EN</button></div>
-      <button type="button" class="btn sm" id="qnav">◇ 0/5</button>
+      <button type="button" class="btn sm" id="qnav">◇ 0/6</button>
       <button type="button" class="btn sm" id="sndbtn" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5v5h3.5l4.5 4v-13l-4.5 4z"/><path class="on" d="M15.5 9a4.5 4.5 0 0 1 0 6M18 6.5a8 8 0 0 1 0 11"/><path class="off" d="M16 9.5l5 5M21 9.5l-5 5"/></svg></button>
       <button type="button" class="btn sm" id="palbtn" aria-label="Komut paleti">⌘K</button>
     </div>
@@ -487,7 +494,7 @@ html,body{margin:0}
     <p class="lede" data-hit data-i18n="lede">Yazılım, benim için soyut bir varlıkla konuşmanın yolu. <b>Birlikte problem çözüyoruz, ortaya işe yarar bir şey çıkıyor ve bu bana keyif veriyor.</b></p>
     <div class="cta">
       <a class="btn solid" href="#terminal" data-i18n="cta1">Terminali dene</a>
-      <button type="button" class="btn" id="qbtn"><span class="qd">◇</span><span id="qbl">Gizemi çöz</span><b id="qbn">0/5</b></button>
+      <button type="button" class="btn" id="qbtn"><span class="qd">◇</span><span id="qbl">Gizemi çöz</span><b id="qbn">0/6</b></button>
       <small data-i18n="cta3">ya da Ctrl / ⌘ + K</small>
     </div>
   </header>
@@ -535,7 +542,7 @@ html,body{margin:0}
 
   <section id="terminal">
     <h2 data-hit>Terminal</h2>
-    <p class="sub" data-i18n="t_sub">Sitenin diğer yüzü. <code>help</code> yazarak başla, ya da ismini yaz: belki sana özel bir şey vardır.</p>
+    <p class="sub" data-i18n="t_sub">Sitenin diğer yüzü. <code>help</code> yazarak başla, ya da bir isim yaz: belki ona özel bir şey vardır.</p>
     <div class="term" id="term">
       <div class="tbar"><i></i><i></i><i></i><span>visitor@sjc: ~</span></div>
       <div id="tout" role="log"></div>
@@ -576,9 +583,10 @@ html,body{margin:0}
   <button type="button" class="btn solid" id="toggle">Dengele</button>
 </div>
 
+<div id="cipher" aria-hidden="true"></div>
 <div id="qp" hidden><div class="qbox" role="dialog" aria-modal="true"></div></div>
 <div id="fin" hidden><canvas id="fcv"></canvas><div id="fgh"></div><div id="ftx" aria-live="polite"></div><div id="fcap"></div>
-  <div id="fcard" hidden><div class="fdm">◆ ◆ ◆ ◆ ◆</div><div class="fso" id="fso"></div><div class="fnm" id="fnm"></div><div class="fdt" id="fdt"></div><div class="fqt" id="fqt"></div><div class="fbt"><a class="btn solid" id="ftell"></a><button type="button" class="btn" id="fback"></button></div><div class="fpv" id="fpv"></div></div>
+  <div id="fcard" hidden><div class="fdm">◆ ◆ ◆ ◆ ◆ ◆</div><div class="fso" id="fso"></div><div class="fnm" id="fnm"></div><div class="fdt" id="fdt"></div><div class="fqt" id="fqt"></div><div class="fbt"><a class="btn solid" id="ftell"></a><button type="button" class="btn" id="fback"></button></div><div class="fpv" id="fpv"></div></div>
   <button type="button" class="btn sm" id="fskip"></button>
 </div>
 
@@ -617,9 +625,9 @@ html,body{margin:0}
   function tbarSync(){ var sp=document.querySelector('#term .tbar span'); if(sp) sp.textContent=((MEM.me&&norm(MEM.me).replace(/[^a-z]/g,''))||'visitor')+'@sjc: ~'; }
 
   /* ================= gizem: durum ve hareket kaydı (kayıt yalnızca bellekte durur, hiçbir yere gitmez) ================= */
-  var QK=['n','d','c','s','w'], qSeen={}, qSeenN=0, qEdit=false, finOn=false, finMus=false, finId=0;
+  var QK=['n','d','c','s','w','y'], QN=6, qSeen={}, qSeenN=0, qEdit=false, finOn=false, finMus=false, finId=0;
   var REC=[], recT=0, myClicks=0, chaosN=0, T0=Date.now(), lastAct=performance.now();
-  if(MEM.dog||MEM.win){ MEM.q=MEM.q||{}; if(MEM.dog) MEM.q.d=1; if(MEM.win) MEM.q.c=1; }
+  if(MEM.dog||MEM.win||MEM.fin){ MEM.q=MEM.q||{}; if(MEM.dog) MEM.q.d=1; if(MEM.win) MEM.q.c=1; if(MEM.fin) MEM.q.y=1; }
   function recPt(x,y,c){
     if(finOn) return;
     REC.push([Math.round(x),Math.round(y),c?1:0]);
@@ -655,7 +663,7 @@ html,body{margin:0}
     e3:'<li>Applied theory to practice in academic projects and research.</li>',
     h_system:'The system in my head',
     s_sub:'A live, illustrative map of the tools I work with. In chaos, requests flow unevenly and the red ones get lost on the way. Press Balance: they fall in line and losses drop to zero. Tap a box to see what it does.',m_ok:'delivered',m_lost:'lost',m_lat:'latency',
-    t_sub:'The other face of this site. Start with <code>help</code>, or type your name: there might be something just for you.',
+    t_sub:'The other face of this site. Start with <code>help</code>, or type a name: there might be something just for them.',
     h_contact:'Contact',c_sub:'Write to me about an idea, a job or a good game recommendation.',
     foot:'© 2026 Selman Jir Can · Chaos flows behind, balance stands in front.',
     d_bal:'BALANCE',d_clk:' clicks'
@@ -665,7 +673,7 @@ html,body{margin:0}
       hud:function(k,T,s){return 'klon '+k+'/'+T+' · skor '+s},
       n:{c:'İstemciler: web, mobil ve dış sistemler. Her şey buradan başlar.',k:'Kong: API gateway. İstekleri karşılar, yönlendirir, sınırlar.',g:'GraphQL: istemcinin tam ihtiyacı kadar veri istediği API katmanı.',n:'Nest.js: düzenli, modüler servisler için ana çatım.',e:'Express.js: hafif ve hızlı servisler için.',r:'Redis: önbellek. Aynı soruyu veritabanına iki kez sormamak için.',q:'RabbitMQ: mesaj kuyruğu. Servisler birbirini beklemeden konuşur.',w:'Node.js worker: kuyruktaki işleri arka planda tüketir.',m:'MySQL: ilişkisel veri.',o:'MongoDB: doküman tabanlı veri.'},
       p:['Hakkımda','Yolculuk','Sistem haritası','Terminal','İletişim','Dili değiştir: English','Kaos / denge','E-postayı kopyala','Sitenin gizemi'],ph:'Komut ara…',
-      welcome:'Hoş geldin. Komutlar için <span class="c">help</span> yaz, ya da ismini dene.',tph:'ismini yaz…',hello:function(n){return 'Merhaba '+n+'. Sana özel bir şey henüz yok ama bu selam senin. (Komutlar için help)'},hello2:'Bu selam sana.',elif2:'Bu sitenin en güzel satırı sensin.',own:'Sitenin sahibi teşrif etti.',
+      welcome:'Hoş geldin. Komutlar için <span class="c">help</span> yaz, ya da bir isim dene.',tph:'bir isim yaz…',hello:function(n){return 'Merhaba '+n+'. Sana özel bir şey henüz yok ama bu selam senin. (Komutlar için help)'},hello2:'Bu selam sana.',elif2:'Bu sitenin en güzel satırı sensin.',own:'Sitenin sahibi teşrif etti.',
       help:[['whoami','ben kimim'],['about','kısaca ben'],['exp','deneyim'],['skills','kullandığım araçlar'],['edu','eğitim'],['contact','bana ulaş'],['neofetch','sistem bilgisi'],['lang en','dili değiştir (tr | en)'],['chaos','kaosu serbest bırak'],['balance','dengele'],['status','kaos seviyesi'],['dog','hav'],['badges','topladığın rozetler'],['forget','beni unut (site hafızasını siler)'],['ls, cat','dosyalara bak'],['clear','ekranı temizle']],
       whoami:'Selman Jir Can. Backend developer, yazılım mühendisi.\nYazılım benim için soyut bir varlıkla konuşmanın yolu.',
       about:"Her gün biraz daha iyi olmaya çalışan bir yazılım mühendisiyim.\nOyun oynarım, oyun sektörünü takip ederim.\nArkadaşlarımla teknolojiyi felsefi bir derinlikte tartışırım.\nBir de köpeğim var.",
@@ -674,20 +682,22 @@ html,body{margin:0}
       nf:[['rol','Backend Developer'],['uptime',YEARS+' yıldır profesyonel kod'],['evcil','1 köpek']],
       langok:'Dil: Türkçe',langbad:'Kullanım: lang tr | lang en',t_chaos:'Kaos serbest.',t_balance:'Denge sağlandı.',t_game:'Kaos ile savaş başlıyor.',
       dog:'Hav! Sahibim şu an kod yazıyor. Ben de sayfada bir yerde saklanıyorum; bulana rozet var.',dog2:function(n){return 'Hav! Beni '+n+' kez buldun. Her gelişinde başka yere saklanırım.'},
-      snd:['Sesi aç','Sesi kapat'],
+      snd:['Sesi aç','Sesi kapat'],sndtip:function(t){return 'ses için bir yere '+(t?'dokun':'tıkla')},
       q:{btn:'Gizemi çöz',btnfin:'Finali başlat',btndone:'Gizem çözüldü',title:'Sitenin gizemi',
-        intro:'Bu sitede biri yaşıyor. Beş parçayı bul, kendini göstersin. Hepsi bu sayfada; özel bilgi gerekmez, takılırsan ipucu iste.',
+        intro:'Bu sitede biri yaşıyor. Altı parçayı bul, kendini göstersin. Hepsi bu sayfada; özel bilgi gerekmez, takılırsan ipucu iste.',
         who:'Gizemi kim çözüyor?',whoph:'ismin',save:'Benim',change:'ismi değiştir',hint:'İpucu ver',hint2:'Daha açık söyle',
-        t:{n:'Önce kim olduğunu bilmeliyim.',d:'Biri seni izliyor.',c:'Önce bozulması gerek.',s:'Hepsine dokunmadan anlayamazsın.',w:'Denge sabır ister.'},
+        t:{n:'Önce kim olduğunu bilmeliyim.',d:'Biri seni izliyor.',c:'Önce bozulması gerek.',s:'Hepsine dokunmadan anlayamazsın.',w:'Denge sabır ister.',y:'Yağmur bir şey söylüyor.'},
         h:{d:['Sayfada bir köpek saklanıyor. Kartların ve kutuların kenarlarına bak.','Hakkımda kartlarının, İletişim listesinin ya da terminal başlığının kenarında küçük, soluk bir köpek kafası var. Ona dokun.'],
           c:['Kaosu başlat, sonra dengeyi geri getir.','Alttaki panelde “Kaos” tuşuna bas, birkaç saniye bekle, sonra “Dengele” tuşuna bas.'],
           s:['“Kafamdaki sistem” haritasına git.','Sistem haritasındaki on kutunun hepsine tek tek dokun. Telefonda haritayı yana kaydırman gerekir.'],
-          w:['Bazen en doğru hamle hiçbir şey yapmamaktır.','Bu pencereyi kapat. Site dengedeyken 30 saniye hiçbir şeye dokunma, sayfayı kaydırma.']},
-        say:{n:function(n){return 'Demek adın '+n+'. Ben de buradayım.'},d:function(){return 'Köpeği buldun. Beni ilk o fark etmişti.'},c:function(){return 'Bozdun, sonra düzelttin. Not ettim.'},s:function(){return 'Artık nasıl çalıştığımı biliyorsun.'},w:function(){return 'Sessizlikte beni duydun.'}},
-        prog:function(k){return 'Dokunulan kutu: '+k+'/10'},left:function(k){return k+' parça kaldı.'},ready:'Beş parça tamam.',
-        rtitle:'Beş parça tamam',rtext:'Biri seninle konuşmak istiyor. Sesi açık tutarsan daha iyi.',rgo:'Dinle',rlater:'Sonra',replay:'Finali tekrar izle',
+          w:['Acele eden bunu göremez.','Site dengedeyken elini çek ve bir süre bekle.'],
+          y:['Arkada akan harfleri izle. Arada bir, bir sütun altın rengine döner.','Altın harfleri yukarıdan aşağı oku; çıkan kelimeyi buraya ya da terminale yaz.']},
+        cph:'şifre',ctry:'Dene',cbad:'olmadı, yağmuru izle',yagain:'Bunu zaten biliyorsun.',
+        say:{n:function(n){return 'Demek adın '+n+'. Ben de buradayım.'},d:function(){return 'Köpeği buldun. Beni ilk o fark etmişti.'},c:function(){return 'Bozdun, sonra düzelttin. Not ettim.'},s:function(){return 'Artık nasıl çalıştığımı biliyorsun.'},w:function(){return 'Sessizlikte beni duydun.'},y:function(){return 'Yin ve yang. Kaos da benim, denge de.'}},
+        prog:function(k){return 'Dokunulan kutu: '+k+'/10'},left:function(k){return k+' parça kaldı.'},ready:'Altı parça tamam.',
+        rtitle:'Altı parça tamam',rtext:'Biri seninle konuşmak istiyor. Sesi açık tutarsan daha iyi.',rgo:'Dinle',rlater:'Sonra',replay:'Finali tekrar izle',
         isyou:function(n){return n+' sen misin?'},yes:'Bu benim',no:'Sadece denedim',meok:function(n){return 'Tamam, '+n+'. Seni böyle hatırlayacağım.'},mebad:'İsim 2-40 harf olmalı. Örnek: ben Elif',
-        locked:function(k){return 'Henüz değil, '+k+' parça eksik. Bakmak için: gizem'},open:function(k){return 'Sitenin gizemi: '+k+'/5'},
+        locked:function(k){return 'Henüz değil, '+k+' parça eksik. Bakmak için: gizem'},open:function(k){return 'Sitenin gizemi: '+k+'/6'},
         f:{skip:'Geç',watch:'Geldiğinden beri seni izliyorum.',c1:'Bu imleçler rastgele değildi.',c2:'Hepsi sendin.',
           time:function(t){return 'Saat '+t+'.'},stat:function(c,k,m){return c+' dokunuş. '+k+' kez kaos. '+(m<1?'Bir dakikadan kısa süredir':m+' dakikadır')+' buradasın.'},
           vis:function(v){return v>1?'Bu '+v+'. gelişin.':'Bu ilk gelişin. Yine de buldun.'},
@@ -710,7 +720,7 @@ html,body{margin:0}
       hud:function(k,T,s){return 'clones '+k+'/'+T+' · score '+s},
       n:{c:'Clients: web, mobile and external systems. Everything starts here.',k:'Kong: API gateway. It receives, routes and rate-limits requests.',g:'GraphQL: an API layer where the client asks for exactly the data it needs.',n:'Nest.js: my main framework for tidy, modular services.',e:'Express.js: for light, fast services.',r:'Redis: cache. So the database is not asked the same question twice.',q:'RabbitMQ: message queue. Services talk without waiting on each other.',w:'Node.js worker: consumes queued jobs in the background.',m:'MySQL: relational data.',o:'MongoDB: document data.'},
       p:['About','Journey','System map','Terminal','Contact','Switch language: Türkçe','Chaos / balance','Copy email','The mystery of this site'],ph:'Search commands…',
-      welcome:'Welcome. Type <span class="c">help</span> for commands, or try your name.',tph:'type your name…',hello:function(n){return 'Hi '+n+'. Nothing custom for you yet, but this hello is yours. (Type help for commands)'},hello2:'This hello is for you.',elif2:'You are the most beautiful line on this site.',own:'The owner of this site has entered.',
+      welcome:'Welcome. Type <span class="c">help</span> for commands, or try a name.',tph:'type a name…',hello:function(n){return 'Hi '+n+'. Nothing custom for you yet, but this hello is yours. (Type help for commands)'},hello2:'This hello is for you.',elif2:'You are the most beautiful line on this site.',own:'The owner of this site has entered.',
       help:[['whoami','who I am'],['about','me, briefly'],['exp','experience'],['skills','tools I use'],['edu','education'],['contact','reach me'],['neofetch','system info'],['lang tr','switch language (tr | en)'],['chaos','release the chaos'],['balance','restore balance'],['status','chaos level'],['dog','woof'],['badges','badges you collected'],['forget','forget me (clears the site memory)'],['ls, cat','look at files'],['clear','clear the screen']],
       whoami:'Selman Jir Can. Backend developer, software engineer.\nTo me, software is a way of talking with an abstract existence.',
       about:'A software engineer trying to be a little better every day.\nI play games and follow the game industry.\nMy friends and I discuss technology with some philosophical depth.\nAlso, I have a dog.',
@@ -719,20 +729,22 @@ html,body{margin:0}
       nf:[['role','Backend Developer'],['uptime',YEARS+' years of professional code'],['pets','1 dog']],
       langok:'Language: English',langbad:'Usage: lang tr | lang en',t_chaos:'Chaos released.',t_balance:'Balance restored.',t_game:'Fight the chaos is starting.',
       dog:'Woof! My owner is writing code right now. I am hiding somewhere on this page; find me for a badge.',dog2:function(n){return 'Woof! You found me '+n+(n>1?' times':' time')+'. I hide somewhere new on every visit.'},
-      snd:['Turn sound on','Turn sound off'],
+      snd:['Turn sound on','Turn sound off'],sndtip:function(t){return (t?'tap':'click')+' anywhere for sound'},
       q:{btn:'Solve the mystery',btnfin:'Start the finale',btndone:'Mystery solved',title:'The mystery of this site',
-        intro:'Someone lives in this site. Find the five pieces and it will show itself. Everything is on this page; no special knowledge needed, and you can ask for a hint when stuck.',
+        intro:'Someone lives in this site. Find the six pieces and it will show itself. Everything is on this page; no special knowledge needed, and you can ask for a hint when stuck.',
         who:'Who is solving the mystery?',whoph:'your name',save:'That is me',change:'change name',hint:'Give me a hint',hint2:'Say it more plainly',
-        t:{n:'First I need to know who you are.',d:'Someone is watching you.',c:'It has to break first.',s:'You will not understand until you touch them all.',w:'Balance takes patience.'},
+        t:{n:'First I need to know who you are.',d:'Someone is watching you.',c:'It has to break first.',s:'You will not understand until you touch them all.',w:'Balance takes patience.',y:'The rain is saying something.'},
         h:{d:['A dog is hiding on the page. Look along the edges of cards and boxes.','There is a small, faint dog head on the edge of an About card, the Contact list or the terminal title bar. Tap it.'],
           c:['Start the chaos, then bring the balance back.','In the bottom panel press “Chaos”, wait a few seconds, then press “Balance”.'],
           s:['Go to the “system in my head” map.','Touch all ten boxes on the system map, one by one. On a phone you need to scroll the map sideways.'],
-          w:['Sometimes the right move is no move at all.','Close this window. While the site is in balance, touch nothing and do not scroll for 30 seconds.']},
-        say:{n:function(n){return 'So your name is '+n+'. I am here too.'},d:function(){return 'You found the dog. It noticed me first.'},c:function(){return 'You broke it, then you fixed it. Noted.'},s:function(){return 'Now you know how I work.'},w:function(){return 'You heard me in the silence.'}},
-        prog:function(k){return 'Boxes touched: '+k+'/10'},left:function(k){return k+(k>1?' pieces left.':' piece left.')},ready:'All five pieces found.',
-        rtitle:'All five pieces found',rtext:'Someone wants to talk to you. It is better with the sound on.',rgo:'Listen',rlater:'Later',replay:'Watch the finale again',
+          w:['Those in a hurry never see this one.','While the site is in balance, take your hands off and wait a while.'],
+          y:['Watch the letters flowing in the background. Now and then one column turns gold.','Read the gold letters from top to bottom, then type the word here or in the terminal.']},
+        cph:'password',ctry:'Try',cbad:'not it, watch the rain',yagain:'You already know this one.',
+        say:{n:function(n){return 'So your name is '+n+'. I am here too.'},d:function(){return 'You found the dog. It noticed me first.'},c:function(){return 'You broke it, then you fixed it. Noted.'},s:function(){return 'Now you know how I work.'},w:function(){return 'You heard me in the silence.'},y:function(){return 'Yin and yang. I am the chaos and the balance.'}},
+        prog:function(k){return 'Boxes touched: '+k+'/10'},left:function(k){return k+(k>1?' pieces left.':' piece left.')},ready:'All six pieces found.',
+        rtitle:'All six pieces found',rtext:'Someone wants to talk to you. It is better with the sound on.',rgo:'Listen',rlater:'Later',replay:'Watch the finale again',
         isyou:function(n){return 'Are you '+n+'?'},yes:'That is me',no:'Just trying',meok:function(n){return 'Okay, '+n+'. That is how I will remember you.'},mebad:'A name needs 2-40 letters. Example: iam Elif',
-        locked:function(k){return 'Not yet, '+k+(k>1?' pieces are':' piece is')+' missing. To look: mystery'},open:function(k){return 'The mystery of this site: '+k+'/5'},
+        locked:function(k){return 'Not yet, '+k+(k>1?' pieces are':' piece is')+' missing. To look: mystery'},open:function(k){return 'The mystery of this site: '+k+'/6'},
         f:{skip:'Skip',watch:'I have been watching you since you arrived.',c1:'These cursors were never random.',c2:'They were all you.',
           time:function(t){return 'It is '+t+'.'},stat:function(c,k,m){return c+' taps. Chaos '+k+(k===1?' time':' times')+'. You have been here for '+(m<1?'less than a minute':m+(m===1?' minute':' minutes'))+'.'},
           vis:function(v){return v>1?'This is visit number '+v+'.':'This is your first visit. You found it anyway.'},
@@ -1881,12 +1893,13 @@ html,body{margin:0}
     hist.push(line); hi=hist.length;
     var dk=''; try{ dk=btoa(line.toLowerCase()) }catch(e){}
     if(dk==='ZGVuZ2UuZXhl'){ devUnlock(); return; }
+    if(cipherOk(line)){ if(qHas('y')) out(esc(L().q.yagain),'c'); else qGot('y'); return; }
     var nk=norm(line); if(NAMEFX[nk]){ out(esc(NAMEFX[nk]()),'c'); askMe(line); return; }
     var parts=line.split(/\s+/), c=parts[0].toLowerCase(), arg=(parts[1]||'').toLowerCase(), T=L();
     switch(c){
       case 'help': var hp=T.help.concat([T.q.help]); if(MEM.fin) hp.push(T.q.thelp); if(MEM.dev) hp=hp.concat(T.devhelp); out(trows(hp)); break;
       case 'gizem': case 'mystery': out(esc(T.q.open(qCount())),'c'); tin.blur(); openQ(); break;
-      case 'finale': case 'final': if(qCount()>=5){ tin.blur(); startFinale(); } else out(esc(T.q.locked(5-qCount())),'m'); break;
+      case 'finale': case 'final': if(qCount()>=QN){ tin.blur(); startFinale(); } else out(esc(T.q.locked(QN-qCount())),'m'); break;
       case 'ben': case 'iam':
         var me1=parts.slice(1).join(' ');
         if(meOk(me1)){ setMe(me1); out(esc(T.q.meok(MEM.me)),'c'); } else out(T.q.mebad,'m');
@@ -1895,7 +1908,7 @@ html,body{margin:0}
         if(MEM.fin) out(esc('_ '+T.q.talk[Math.random()*T.q.talk.length|0]),'c'); else out(esc(T.nf404(c)),'m');
         break;
       case 'badges': case 'badge': case 'rozetler': case 'rozet': out(badgeTxt()); break;
-      case 'forget': case 'unut': try{ localStorage.removeItem('sjc_mem') }catch(e){} MEM={}; RAINC=RAINS.green; qSeen={}; qSeenN=0; tbarSync(); qSync(); out(T.forgot); break;
+      case 'forget': case 'unut': try{ localStorage.removeItem('sjc_mem') }catch(e){} MEM={}; RAINC=RAINS.green; qSeen={}; qSeenN=0; tbarSync(); qSync(); namePut(null); out(T.forgot); break;
       case 'rain': case 'yağmur': case 'yagmur':
         if(!MEM.dev){ out(T.locked,'m'); break; }
         var rk=RAINTR[norm(arg)]||arg;
@@ -1989,14 +2002,15 @@ html,body{margin:0}
     window.sjc={hint:function(){ return T2('64 tabanında düşün. Tarayıcının bunun için hazır bir fonksiyonu var.','Think in base 64. Your browser already ships a function for it.') }};
   }catch(e){}
 
-  /* ================= ses: açık başlar; tarayıcı izin verdiği anda (ilk dokunuşta) çalar, sağ üstteki tuş kapatır ================= */
-  var AC=null, SN=null, sndOn=store('sjc_snd')!=='0', sndTick=0, sfxT=0, typT=0, seqT=0, seqI=0, bellT=0, bellI=3;
+  /* ================= ses: açık başlar; tarayıcılar ilk tıklama/dokunuştan önce ses çalmaya izin vermez, o yüzden o ana kadar tuş "bekliyor" görünür ================= */
+  var AC=null, SN=null, sndOn=store('sjc_snd')!=='0', sndTick=0, wokeAt=0, sfxT=0, typT=0, seqT=0, seqI=0, bellT=0, bellI=3, dropT=0, chT=0, hbT=0;
   var SCALE=[220,261.63,293.66,329.63,392,440,523.25,587.33,659.25,783.99], SCALEX=[233.08,277.18,311.13,415.3,466.16];
   var BASS=[55,0,0,55,0,0,55,0,55,0,0,55,65.41,0,49,0], ARP=[220,261.63,329.63,440,329.63,261.63];
   function sndInit(){
     if(AC) return true;
     var Ctx=window.AudioContext||window.webkitAudioContext; if(!Ctx) return false;
     try{
+      try{ if(navigator.audioSession) navigator.audioSession.type='playback' }catch(e2){}
       AC=new Ctx(); var n={}, i, c, sr=AC.sampleRate;
       n.out=AC.createGain(); n.out.gain.value=0; n.cmp=AC.createDynamicsCompressor(); n.out.connect(n.cmp); n.cmp.connect(AC.destination);
       /* yankı: üretilmiş bir oda */
@@ -2006,11 +2020,19 @@ html,body{margin:0}
       n.mus=AC.createGain(); n.mus.connect(n.out); n.mus.connect(n.rev);
       n.fx=AC.createGain(); n.fx.connect(n.out); n.fxR=AC.createGain(); n.fxR.gain.value=.22; n.fx.connect(n.fxR); n.fxR.connect(n.rev);
       n.bassF=AC.createBiquadFilter(); n.bassF.type='lowpass'; n.bassF.frequency.value=380; n.bassF.connect(n.out);
-      /* yağmur ve alttan gelen uğultu: aynı gürültüden iki süzgeç */
+      /* efektler için beyaz gürültü */
       n.noise=AC.createBuffer(1,sr*2,sr); var nd=n.noise.getChannelData(0); for(i=0;i<nd.length;i++) nd[i]=Math.random()*2-1;
-      var rs=AC.createBufferSource(); rs.buffer=n.noise; rs.loop=true;
-      n.rainF=AC.createBiquadFilter(); n.rainF.type='bandpass'; n.rainF.frequency.value=2400; n.rainF.Q.value=.5;
-      n.rainG=AC.createGain(); n.rainG.gain.value=0; rs.connect(n.rainF); n.rainF.connect(n.rainG); n.rainG.connect(n.out);
+      /* yağmur: yumuşak (pembe) gürültüden uzak bir hışırtı + tek tek düşen damlalar; cızırtı yok */
+      n.pink=AC.createBuffer(2,sr*4,sr);
+      for(c=0;c<2;c++){ var pd=n.pink.getChannelData(c), b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0,wh;
+        for(i=0;i<pd.length;i++){ wh=Math.random()*2-1; b0=.99886*b0+wh*.0555179; b1=.99332*b1+wh*.0750759; b2=.969*b2+wh*.153852; b3=.8665*b3+wh*.3104856; b4=.55*b4+wh*.5329522; b5=-.7616*b5-wh*.016898; pd[i]=(b0+b1+b2+b3+b4+b5+b6+wh*.5362)*.11; b6=wh*.115926; } }
+      var rs=AC.createBufferSource(); rs.buffer=n.pink; rs.loop=true;
+      n.rainH=AC.createBiquadFilter(); n.rainH.type='highpass'; n.rainH.frequency.value=420; n.rainH.Q.value=.3;
+      n.rainF=AC.createBiquadFilter(); n.rainF.type='lowpass'; n.rainF.frequency.value=3200; n.rainF.Q.value=.3;
+      n.rainG=AC.createGain(); n.rainG.gain.value=0; rs.connect(n.rainH); n.rainH.connect(n.rainF); n.rainF.connect(n.rainG); n.rainG.connect(n.out);
+      var gl=AC.createOscillator(), gg=AC.createGain(); gl.frequency.value=.09; gg.gain.value=.02; gl.connect(gg); gg.connect(n.rainG.gain); gl.start();
+      n.drops=AC.createGain(); n.drops.gain.value=0; n.drops.connect(n.out); n.dropR=AC.createGain(); n.dropR.gain.value=.5; n.drops.connect(n.dropR); n.dropR.connect(n.rev);
+      /* alttan gelen derin uğultu */
       n.rumF=AC.createBiquadFilter(); n.rumF.type='lowpass'; n.rumF.frequency.value=110; n.rumG=AC.createGain(); n.rumG.gain.value=0; rs.connect(n.rumF); n.rumF.connect(n.rumG); n.rumG.connect(n.out);
       rs.start();
       /* ortam müziği: yavaşça nefes alan bir akor */
@@ -2026,12 +2048,13 @@ html,body{margin:0}
       [[55,'sawtooth',.5],[82.6,'sawtooth',.34],[116.5,'sawtooth',.22],[164.2,'sine',.3]].forEach(function(o){
         var osc=AC.createOscillator(), og=AC.createGain(); osc.type=o[1]; osc.frequency.value=o[0]; og.gain.value=o[2]; osc.connect(og); og.connect(n.humF); osc.start();
       });
-      var lfo=AC.createOscillator(), lg2=AC.createGain(); lfo.frequency.value=.23; lg2.gain.value=50; lfo.connect(lg2); lg2.connect(n.humF.frequency); lfo.start();
-      SN=n;
+      n.lfo=AC.createOscillator(); var lg2=AC.createGain(); n.lfo.frequency.value=.23; lg2.gain.value=60; n.lfo.connect(lg2); lg2.connect(n.humF.frequency); n.lfo.start();
+      SN=n; AC.onstatechange=function(){ sndLabel() };
     }catch(e){ AC=null; SN=null; return false; }
     return true;
   }
-  function sndReady(){ return sndOn&&AC&&SN&&AC.state==='running' }
+  function sndLive(){ return !!(AC&&SN&&AC.state==='running') }
+  function sndReady(){ return sndOn&&sndLive() }
   function setT(p,v,tc){ p.setTargetAtTime(v,AC.currentTime,tc||.4) }
   function tone(f,dur,vol,type,when,dest){
     if(!sndReady()) return;
@@ -2039,17 +2062,26 @@ html,body{margin:0}
     o.type=type||'sine'; o.frequency.value=f; gn.gain.setValueAtTime(.0001,t); gn.gain.exponentialRampToValueAtTime(vol,t+.012); gn.gain.exponentialRampToValueAtTime(.0001,t+dur);
     o.connect(gn); gn.connect(dest||SN.fx); o.start(t); o.stop(t+dur+.05);
   }
-  function sweep(f0,f1,dur,vol,type){
+  function sweep(f0,f1,dur,vol,type,when){
     if(!sndReady()) return;
-    var t=AC.currentTime, o=AC.createOscillator(), gn=AC.createGain();
+    var t=AC.currentTime+(when||0), o=AC.createOscillator(), gn=AC.createGain();
     o.type=type||'sine'; o.frequency.setValueAtTime(f0,t); o.frequency.exponentialRampToValueAtTime(f1,t+dur);
-    gn.gain.setValueAtTime(vol,t); gn.gain.exponentialRampToValueAtTime(.0001,t+dur); o.connect(gn); gn.connect(SN.fx); o.start(t); o.stop(t+dur+.05);
+    gn.gain.setValueAtTime(.0001,t); gn.gain.exponentialRampToValueAtTime(vol,t+.01); gn.gain.exponentialRampToValueAtTime(.0001,t+dur); o.connect(gn); gn.connect(SN.fx); o.start(t); o.stop(t+dur+.05);
   }
   function noiseHit(dur,vol,cutf,ftype,when){
     if(!sndReady()) return;
     var t=AC.currentTime+(when||0), b=AC.createBufferSource(), fl=AC.createBiquadFilter(), gn=AC.createGain();
     b.buffer=SN.noise; fl.type=ftype||'lowpass'; fl.frequency.value=cutf; gn.gain.setValueAtTime(vol,t); gn.gain.exponentialRampToValueAtTime(.0001,t+dur);
     b.connect(fl); fl.connect(gn); gn.connect(SN.fx); b.start(t,Math.random()*1.5); b.stop(t+dur+.05);
+  }
+  /* tek bir yağmur damlası: kısa, aşağı kayan bir "plik" */
+  function drop(when,lv){
+    var t=AC.currentTime+when, f=rnd(900,3200)*(1-lv*.35), d=rnd(.035,.09), v=rnd(.2,1), o=AC.createOscillator(), gn=AC.createGain();
+    o.type='sine'; o.frequency.setValueAtTime(f,t); o.frequency.exponentialRampToValueAtTime(f*rnd(.45,.7),t+d);
+    gn.gain.setValueAtTime(.0001,t); gn.gain.exponentialRampToValueAtTime(v,t+.004); gn.gain.exponentialRampToValueAtTime(.0001,t+d);
+    o.connect(gn);
+    if(AC.createStereoPanner){ var pn=AC.createStereoPanner(); pn.pan.value=rnd(-.9,.9); gn.connect(pn); pn.connect(SN.drops); } else gn.connect(SN.drops);
+    o.start(t); o.stop(t+d+.02);
   }
   /* tek, temiz bir nota (yankılı) */
   function note(f,dur,vol){ if(!sndReady()) return; tone(f,dur,vol,'sine',0,SN.mus); tone(f*2,dur*.7,vol*.22,'sine',0,SN.mus); }
@@ -2078,25 +2110,33 @@ html,body{margin:0}
     }
   }
   function sndCalm(){ if(AC&&SN) SN.humG.gain.setTargetAtTime(0,AC.currentTime,.06); }
-  function sndLabel(){ var b=$('sndbtn'), tx=L().snd[sndOn?1:0]; b.setAttribute('aria-pressed',sndOn?'true':'false'); b.setAttribute('aria-label',tx); b.title=tx; }
+  function sndLabel(){
+    var b=$('sndbtn'), tx=L().snd[sndOn?1:0], wt=sndOn&&!sndLive();
+    if(b._on===sndOn&&b._wt===wt&&b._lg===lang) return; b._on=sndOn; b._wt=wt; b._lg=lang;
+    b.setAttribute('aria-pressed',sndOn?'true':'false'); b.setAttribute('aria-label',tx); b.title=tx; b.classList.toggle('wait',wt); b.dataset.tip=L().sndtip(isTouch);
+  }
   function sndWake(){
     if(!sndOn||!sndInit()) return;
-    if(AC.state==='suspended'&&!document.hidden) AC.resume();
-    SN.out.gain.setTargetAtTime(.8,AC.currentTime,.9);
+    if(AC.state!=='running'&&!document.hidden){ try{ var pr=AC.resume(); if(pr&&pr.then) pr.then(sndLabel,function(){}); }catch(e){} }
+    SN.out.gain.cancelScheduledValues(AC.currentTime); SN.out.gain.setTargetAtTime(.8,AC.currentTime,.9);
   }
   function setSnd(v){
-    sndOn=!!v; store('sjc_snd',sndOn?'1':'0'); sndLabel();
-    if(sndOn) sndWake(); else if(AC&&SN){ SN.out.gain.setTargetAtTime(0,AC.currentTime,.08); setTimeout(function(){ if(!sndOn&&AC) AC.suspend() },500); }
+    sndOn=!!v; store('sjc_snd',sndOn?'1':'0');
+    if(sndOn) sndWake(); else if(AC&&SN){ SN.out.gain.cancelScheduledValues(AC.currentTime); SN.out.gain.setTargetAtTime(0,AC.currentTime,.08); setTimeout(function(){ if(!sndOn&&AC&&AC.state==='running') AC.suspend() },500); }
+    sndLabel();
   }
-  /* ortam: dengede sakin akor ve çan; kaos büyüdükçe yağmur sertleşir, akor bozulur, uğultu yükselir; oyunda ritim girer */
+  /* ortam: dengede sakin akor, çan ve yağmur; kaos büyüdükçe yağmur sıklaşır, akor bozulur, kalp atışı hızlanır, parazit ve sirenler girer; oyunda ritim çalar */
   function sndStep(){
     if(!sndReady()) return;
-    var n=SN, t=AC.currentTime, gm=game||pre, lv=order?strain/100*.5:Math.min(1,.15+ent/100*.85), mute=finOn&&!finMus;
-    setT(n.rainG.gain,mute?0:(gm?.07:.055+lv*.09)); setT(n.rainF.frequency,2200+lv*1600);
-    setT(n.rumG.gain,mute?0:.28+lv*.75);
-    setT(n.padG.gain,mute?0:(gm?.03:.085*(1-lv*.7))); setT(n.padF.frequency,order?900:520);
-    n.pad.forEach(function(o,k){ setT(o.detune,(k%2?1:-1)*lv*(8+k*7),.8) });
-    setT(n.humG.gain,mute?0:(gm?.03:(order?strain/100*.035:lv*.1)),.25); setT(n.humF.frequency,170+lv*lv*900,.3);
+    var n=SN, t=AC.currentTime, gm=game||pre, lv=order?strain/100*.5:Math.min(1,.15+ent/100*.85), mute=finOn&&!finMus, k2;
+    setT(n.rainG.gain,mute?0:(gm?.2:.15+lv*.22)); setT(n.rainF.frequency,3200+lv*2600);
+    setT(n.drops.gain,mute?0:(gm?.06:.09+lv*.07));
+    setT(n.rumG.gain,mute?0:.15+lv*.42);
+    setT(n.padG.gain,mute?0:(gm?.03:.085*(1-lv*.8))); setT(n.padF.frequency,order?900:520+lv*900);
+    n.pad.forEach(function(o,k){ setT(o.detune,(k%2?1:-1)*lv*(10+k*9)+(order?0:rnd(-1,1)*lv*70),.25) });
+    setT(n.humG.gain,mute?0:(gm?.03:(order?strain/100*.035:lv*.11)),.25); setT(n.humF.frequency,170+lv*lv*1100,.3); setT(n.lfo.frequency,.23+lv*lv*7,.5);
+    /* damlalar */
+    if(!mute){ var rate=gm?9:5+lv*20; if(dropT<t) dropT=t+.02; while(dropT<t+.3){ drop(dropT-t,lv); dropT+=-Math.log(1-Math.random())/rate; } }
     if(game){
       if(seqT<t){ seqT=t+.06; seqI=0; }
       var wv=G?G.wave:1, stp=G&&G.slowT>0?.17:.125;
@@ -2107,16 +2147,36 @@ html,body{margin:0}
         if(wv>=2&&st%2===0) tone(ARP[(seqI/2|0)%ARP.length]*(wv>=4?2:1),.11,.035,'triangle',w);
         seqI++; seqT+=stp;
       }
-    } else if(!mute&&!gm&&t>=bellT){
-      if(order||lv<.45){
+    } else if(!mute&&!gm){
+      if((order||lv<.3)&&t>=bellT){
         bellI=Math.max(0,Math.min(SCALE.length-1,bellI+[-2,-1,-1,1,1,2,3,-3][Math.random()*8|0]));
         bell(SCALE[bellI],.055*(1-lv)); if(Math.random()<.3) bell(SCALE[Math.max(0,bellI-2)],.03,.5);
         bellT=t+rnd(2.4,5.2);
-      } else { bell(SCALEX[Math.random()*SCALEX.length|0]*(Math.random()<.5?1:.5),.035); bellT=t+rnd(1.2,3.4); }
+      }
+      if(!order){
+        /* kalp atışı: kaos büyüdükçe hızlanır ve sertleşir */
+        if(hbT<t) hbT=t+.1;
+        while(hbT<t+.4){ var hw=hbT-t; sweep(96,42,.2,.1+lv*.24,'sine',hw); sweep(82,38,.16,.06+lv*.15,'sine',hw+.17); hbT+=1.15-lv*.66; }
+        /* düzensiz olaylar: parazit patlamaları, cızırtı, siren, bozuk çan */
+        if(chT<t) chT=t+.2;
+        while(chT<t+.4){
+          var cw=chT-t, r=Math.random(), bf;
+          if(r<.42){
+            var nb=3+(Math.random()*(3+lv*7)|0), gp=rnd(.035,.09); bf=SCALEX[Math.random()*SCALEX.length|0]*[1,2,4][Math.random()*3|0];
+            for(k2=0;k2<nb;k2++) tone(bf*(Math.random()<.3?1.4142:1)*(1+rnd(-.03,.03)),.05,.02+lv*.04,Math.random()<.5?'square':'sawtooth',cw+k2*gp);
+          } else if(r<.6){ for(k2=0;k2<3+(lv*4|0);k2++) noiseHit(.03,.03+lv*.05,rnd(2500,6000),'highpass',cw+k2*.07); }
+          else if(r<.6+lv*.28){ var up2=Math.random()<.5, hf=rnd(500,900); sweep(up2?90:hf,up2?hf:70,rnd(.7,1.5),.025+lv*.045,'sawtooth',cw); }
+          else bell(SCALEX[Math.random()*SCALEX.length|0]*(Math.random()<.5?1:.5),.03+lv*.02,cw);
+          chT+=rnd(.3,1.3)*(1.25-lv*.9);
+        }
+      }
     }
   }
-  ['pointerdown','touchend','click','keydown'].forEach(function(ev){ addEventListener(ev,function(){ if(sndOn&&(!AC||AC.state!=='running')) sndWake(); },{passive:true,capture:true}) });
-  $('sndbtn').onclick=function(){ setSnd(!sndOn); if(sndOn) setTimeout(function(){ note(659.25,.6,.12) },120); };
+  ['pointerdown','pointerup','mousedown','touchend','click','keydown'].forEach(function(ev){ addEventListener(ev,function(){ if(sndOn&&!sndLive()){ wokeAt=performance.now(); sndWake(); } },{passive:true,capture:true}) });
+  $('sndbtn').onclick=function(){
+    if(sndOn&&performance.now()-wokeAt<800) return; /* ses açıktı ama tarayıcı bekletiyordu: bu tık onu başlattı, kapatma */
+    setSnd(!sndOn); if(sndOn) setTimeout(function(){ note(659.25,.6,.12) },200);
+  };
   sndLabel();
 
 
@@ -2125,18 +2185,18 @@ html,body{margin:0}
   function qCount(){ var n=0; QK.forEach(function(k){ if(qHas(k)) n++ }); return n }
   function qSync(){
     var n=qCount(), TQ=L().q, b=$('qbtn');
-    b.querySelector('.qd').textContent=MEM.fin||n===5?'◆':'◇';
-    $('qbl').textContent=MEM.fin?TQ.btndone:(n===5?TQ.btnfin:TQ.btn); $('qbn').textContent=MEM.fin?'':n+'/5';
+    b.querySelector('.qd').textContent=MEM.fin||n===QN?'◆':'◇';
+    $('qbl').textContent=MEM.fin?TQ.btndone:(n===QN?TQ.btnfin:TQ.btn); $('qbn').textContent=MEM.fin?'':n+'/'+QN;
     b.classList.toggle('new',!MEM.qo&&!MEM.fin);
-    $('qnav').textContent=(n===5?'◆ ':'◇ ')+n+'/5'; $('qnav').setAttribute('aria-label',TQ.title);
+    $('qnav').textContent=(n===QN?'◆ ':'◇ ')+n+'/'+QN; $('qnav').setAttribute('aria-label',TQ.title);
     $('qp').firstElementChild.setAttribute('aria-label',TQ.title);
     document.body.classList.toggle('won',!!MEM.fin);
     if(MEM.fin&&!(MEM.dev&&MEM.rain)) RAINC=RAINS.gold;
     if(!$('qp').hidden) qRender();
   }
   function qRender(){
-    var TQ=L().q, n=qCount(), dm='', i; for(i=0;i<5;i++) dm+=i<n?'◆':'◇';
-    var h='<div class="qhd"><h3>'+TQ.title+'</h3><span>'+dm+' '+n+'/5</span><button type="button" class="qx" data-q="x" aria-label="×">×</button></div><p class="qin">'+TQ.intro+'</p><ol class="ql">';
+    var TQ=L().q, n=qCount(), dm='', i; for(i=0;i<QN;i++) dm+=i<n?'◆':'◇';
+    var h='<div class="qhd"><h3>'+TQ.title+'</h3><span>'+dm+' '+n+'/'+QN+'</span><button type="button" class="qx" data-q="x" aria-label="×">×</button></div><p class="qin">'+TQ.intro+'</p><ol class="ql">';
     QK.forEach(function(k){
       var ok=qHas(k), lv=(MEM.qh&&MEM.qh[k])|0;
       h+='<li'+(ok?' class="ok"':'')+'><span class="qd">'+(ok?'◆':'◇')+'</span><div><b>'+esc(TQ.t[k])+'</b>';
@@ -2145,11 +2205,12 @@ html,body{margin:0}
       else {
         for(i=0;i<lv;i++) h+='<p>'+esc(TQ.h[k][i])+'</p>';
         if(k==='s'&&(lv||qSeenN)) h+='<p class="qs">'+TQ.prog(qSeenN)+'</p>';
+        if(k==='y') h+='<form class="qme" data-f="y"><input id="qcy" type="text" maxlength="20" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="'+TQ.cph+'" aria-label="'+TQ.cph+'"><button class="btn sm" type="submit">'+TQ.ctry+'</button></form>';
         if(lv<2) h+='<button type="button" class="qh" data-q="h" data-k="'+k+'">'+(lv?TQ.hint2:TQ.hint)+'</button>';
       }
       h+='</div></li>';
     });
-    h+='</ol><div class="qft"><span>'+(MEM.fin?'':(n<5?TQ.left(5-n):TQ.ready))+'</span>'+(n===5?'<button type="button" class="btn solid" data-q="fin">'+(MEM.fin?TQ.replay:TQ.btnfin)+'</button>':'')+'</div>';
+    h+='</ol><div class="qft"><span>'+(MEM.fin?'':(n<QN?TQ.left(QN-n):TQ.ready))+'</span>'+(n===QN?'<button type="button" class="btn solid" data-q="fin">'+(MEM.fin?TQ.replay:TQ.btnfin)+'</button>':'')+'</div>';
     $('qp').firstElementChild.innerHTML=h;
   }
   function openQ(){
@@ -2160,7 +2221,7 @@ html,body{margin:0}
   }
   function closeQ(){ if($('qp').hidden) return; $('qp').hidden=true; if(gov.hidden||!gov.classList.contains('modal')) document.body.classList.remove('lock'); lastAct=performance.now(); }
   function meOk(t){ t=String(t||'').trim().replace(/\s+/g,' '); return t.length>=2&&t.length<=40&&!/[\d<>&"'\/\\@]/.test(t) }
-  function setMe(t){ MEM.me=cap(String(t).replace(/\s+/g,' ')).slice(0,40); memSave(); tbarSync(); qEdit=false; if(qHas('n')) qSync(); else qGot('n'); }
+  function setMe(t){ MEM.me=cap(String(t).replace(/\s+/g,' ')).slice(0,40); memSave(); tbarSync(); qEdit=false; if(MEM.fin) namePut(MEM.me); if(qHas('n')) qSync(); else qGot('n'); }
   /* terminale yazılan isim ziyaretçinin kendisi mi? */
   function askMe(t){
     if(MEM.me||!meOk(t)) return;
@@ -2177,8 +2238,8 @@ html,body{margin:0}
     var n=qCount(), ln=L().q.say[k](MEM.me||'');
     qSync(); sfx('piece',n);
     [$('qnav'),$('qbtn')].forEach(function(e){ e.classList.remove('bump'); void e.offsetWidth; e.classList.add('bump'); });
-    flashHud('◆ '+n+'/5 · '+ln,5200); out(esc('◆ '+n+'/5  _ '+ln),'c');
-    if(n===5&&!MEM.fin) setTimeout(qOffer,3400);
+    flashHud('◆ '+n+'/'+QN+' · '+ln,5200); out(esc('◆ '+n+'/'+QN+'  _ '+ln),'c');
+    if(n===QN&&!MEM.fin) setTimeout(qOffer,3400);
   }
   function qOffer(tries){
     if(MEM.fin||finOn) return;
@@ -2190,10 +2251,10 @@ html,body{margin:0}
     if(qSeenN>=10) qGot('s'); else if(!$('qp').hidden) qRender();
   }
   function qIdle(){
-    if(qHas('w')||!order||game||pre||finOn||document.hidden||!gov.hidden||!$('qp').hidden||strain>0) return;
+    if(qHas('w')||!order||game||pre||finOn||document.hidden||!gov.hidden||strain>0) return;
     if(performance.now()-lastAct>30000) qGot('w');
   }
-  $('qbtn').onclick=$('qnav').onclick=function(){ if(qCount()===5&&!MEM.fin) startFinale(); else openQ(); };
+  $('qbtn').onclick=$('qnav').onclick=function(){ if(qCount()===QN&&!MEM.fin) startFinale(); else openQ(); };
   $('qp').addEventListener('click',function(e){
     if(e.target===$('qp')){ closeQ(); return; }
     var b=e.target.closest('[data-q]'); if(!b) return;
@@ -2204,7 +2265,9 @@ html,body{margin:0}
     else if(a==='fin'){ closeQ(); startFinale(); }
   });
   $('qp').addEventListener('submit',function(e){
-    e.preventDefault(); var qi=$('qme'); if(!qi) return;
+    e.preventDefault();
+    if(e.target.dataset.f==='y'){ var qc=$('qcy'); if(!qc) return; if(cipherOk(qc.value)) qGot('y'); else { qc.value=''; qc.placeholder=L().q.cbad; qc.focus(); } return; }
+    var qi=$('qme'); if(!qi) return;
     if(meOk(qi.value)) setMe(qi.value); else { qi.value=''; qi.placeholder=L().q.mebad; qi.focus(); }
   });
   addEventListener('keydown',function(e){
@@ -2213,17 +2276,39 @@ html,body{margin:0}
     else if(!$('qp').hidden) closeQ();
   });
 
-  /* başlık kısa süreliğine ziyaretçinin ismine dönüşür */
-  function nameSwap(nm,ms){
-    var OLD=NAME.slice(), ws=String(nm).split(' ').slice(0,3);
-    function put(words){
-      nameSpans.forEach(function(x,i){
-        var w=words[i]||''; NAME[i]=w; x.style.display=w?'':'none';
-        x.innerHTML=w.split('').map(function(ch){ return '<span class="lt">'+SC[Math.random()*SC.length|0]+'</span>' }).join('');
-        [].forEach.call(x.children,function(l,li){ if(reduce) l.textContent=w[li]; else decodeLetter(l,w[li],6+i*5+li*2) });
-      });
-    }
-    put(ws); setTimeout(function(){ put(OLD) },ms);
+
+  /* ================= yağmurdaki şifre: arada bir sütun altına döner ve bir kelime yazar ================= */
+  var cipNext=performance.now()+rnd(16000,26000), cipBusy=false;
+  function cipherOk(t){ var k=norm(String(t||'')).replace(/[^a-z]/g,''), e=''; try{ e=btoa(k) }catch(x){} return e==='eWlueWFuZw=='||e==='eWluZ3lhbmc='; }
+  function cipherShow(){
+    if(cipBusy||qHas('y')||game||pre||finOn||document.hidden||!gov.hidden||!$('qp').hidden) return;
+    cipBusy=true;
+    var word=atob('WUlOWUFORw==').split(''), box=$('cipher'), gut=(W-940)/2, x, y0=H*rnd(.14,.5), right=Math.random()<.5;
+    if(lang==='tr') word[1]='İ';
+    if(gut>70){ var gc=Math.max(1,Math.floor((gut-34)/CW)), ci=1+(Math.random()*gc|0); x=(right?Math.floor(W/CW)-1-ci:ci)*CW; }
+    else x=right?W-17:-1;
+    box.className=''; box.style.transform='translate('+x+'px,'+y0.toFixed(0)+'px)';
+    box.innerHTML=word.map(function(ch,i){ return '<span style="top:'+(i*RH)+'px">'+ch+'</span>' }).join('');
+    [].forEach.call(box.children,function(sp,i){ setTimeout(function(){ sp.className='on' },120+i*130) });
+    if(!reduce) box.animate([{transform:'translate('+x+'px,'+y0.toFixed(0)+'px)'},{transform:'translate('+x+'px,'+(y0+54).toFixed(0)+'px)'}],{duration:6400,easing:'linear'});
+    setTimeout(function(){ box.className='out' },4800);
+    setTimeout(function(){ box.innerHTML=''; box.className=''; cipBusy=false; },6300);
+  }
+  function cipherTick(){
+    var now=performance.now(); if(now<cipNext) return;
+    var fast=MEM.qh&&MEM.qh.y; cipNext=now+(fast?rnd(8000,12000):rnd(15000,24000)); cipherShow();
+  }
+
+  /* gizemi çözen için başlık kalıcı olarak onun ismi olur; site sahibinin adı üst satıra taşınır */
+  var NAME0=NAME.slice(), EBEL=document.querySelector('.eyebrow'), EB0=EBEL.textContent;
+  function namePut(nm,quiet){
+    var words=nm?String(nm).split(' ').slice(0,3):NAME0;
+    nameSpans.forEach(function(x,i){
+      var w=words[i]||''; NAME[i]=w; x.style.display=w?'':'none';
+      x.innerHTML=w.split('').map(function(ch){ return '<span class="lt">'+(quiet||reduce?esc(ch):SC[Math.random()*SC.length|0])+'</span>' }).join('');
+      if(!quiet&&!reduce) [].forEach.call(x.children,function(l,li){ decodeLetter(l,w[li],6+i*5+li*2) });
+    });
+    EBEL._o=null; EBEL.textContent=(nm?'Selman Jir Can · ':'')+EB0;
   }
 
   /* ================= final ================= */
@@ -2233,12 +2318,12 @@ html,body{margin:0}
     setTimeout(function(){
       Fx.hidden=true; $('fgh').innerHTML=''; $('fcard').hidden=true; finOn=false; finMus=false; document.body.classList.remove('lock'); lastAct=performance.now();
       var de=document.documentElement; de.style.scrollBehavior='auto'; scrollTo(0,0); setTimeout(function(){ de.style.scrollBehavior='' },60);
-      if(MEM.me) nameSwap(MEM.me,7000);
+      if(MEM.me) namePut(MEM.me);
       flashHud(L().q.f.yours,7000);
     },900);
   }
   function startFinale(){
-    if(finOn||game||pre||qCount()<5) return;
+    if(finOn||game||pre||qCount()<QN) return;
     closeQ(); govHide(); if(!order) setOrder(true,true);
     finOn=true; finMus=false;
     var id=++finId, skipped=false, dimName=false, Fx=$('fin'), TF=L().q.f, nm=MEM.me||'?', FH=innerHeight, loc=lang==='tr'?'tr-TR':'en-GB';
@@ -2377,7 +2462,7 @@ html,body{margin:0}
   function frame(t){
     var gap=reduce?400:(order?95:60);
     if(t-last>gap){ last=t; stepRain(); }
-    stepPk(t); stepChaos(); if(++sndTick%10===0) sndStep(); if(sndTick%30===0) qIdle();
+    stepPk(t); stepChaos(); if(++sndTick%10===0) sndStep(); if(sndTick%30===0){ qIdle(); cipherTick(); sndLabel(); }
     var play=game||pre;
     if(play) stepGame(game);
     if(game){
@@ -2415,11 +2500,12 @@ html,body{margin:0}
     if(bi!==lastBal){ lastBal=bi; balEl.textContent=bi; gf.style.width=bi+'%'; gf.style.background=bi>60?'var(--green)':bi>30?'var(--gold)':'var(--bug)'; }
     requestAnimationFrame(frame);
   }
+  if(MEM.fin&&MEM.me) namePut(MEM.me,true);
   form(); mstat(); decodeName();
   var TITLE=document.title;
   document.addEventListener('visibilitychange',function(){
     document.title=document.hidden&&!order&&!game?L().away:TITLE;
-    if(AC){ if(document.hidden) AC.suspend(); else if(sndOn) AC.resume(); }
+    if(AC){ try{ if(document.hidden){ if(AC.state==='running') AC.suspend(); } else if(sndOn){ var vr=AC.resume(); if(vr&&vr.then) vr.then(sndLabel,function(){}); } }catch(e){} }
     lastAct=performance.now();
   });
   tbarSync();
