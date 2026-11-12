@@ -19,7 +19,7 @@
 /* Layout: ortada sakin tek bir içerik sütunu; arkasında kısık kod yağmuru. Kaosta yağmur ve imleçler dağınık, dengede hizalı. Sitenin kendisi beceriyi gösterir: canlı sistem haritası, terminal, komut paleti, oyun. Tek (koyu) tema, bilinçli tercih. */
 :root{
   color-scheme:dark;
-  --bg:#060b09; --surface:#0c1512; --ink:#dfeee6; --muted:#86a093; --line:#1b2c25; --green:#4fe08a; --dim:#1f7a4a; --head:#d9ffe9; --bug:#ff6b5e; --cyan:#4fd8e0;
+  --bg:#060b09; --surface:#0c1512; --ink:#dfeee6; --muted:#86a093; --line:#1b2c25; --green:#4fe08a; --dim:#1f7a4a; --head:#d9ffe9; --bug:#ff6b5e; --cyan:#4fd8e0; --gold:#ffd166;
   --display:"Syne","Arial Black",system-ui,sans-serif;
   --body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
   --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
@@ -109,10 +109,15 @@ body.order .badge{border-color:var(--green); color:var(--green)}
 .tbar{display:flex; align-items:center; gap:6px; padding:10px 14px; border-bottom:1px solid var(--line); color:var(--muted); font-size:12px}
 .tbar i{width:10px; height:10px; border-radius:50%; background:var(--line)}
 .tbar span{margin-left:8px}
-#tout{padding:14px 16px 4px; max-height:340px; overflow:auto; white-space:pre-wrap; overflow-wrap:anywhere; line-height:1.5}
+#tout{padding:14px 16px 4px; height:320px; overflow:auto; overscroll-behavior:contain; white-space:pre-wrap; overflow-wrap:anywhere; line-height:1.5}
 #tout .c{color:var(--green)}
 #tout .m{color:var(--muted)}
 #tout a{color:var(--green)}
+.hr{display:grid; grid-template-columns:96px minmax(0,1fr); gap:12px; white-space:normal}
+.hr b{color:var(--green); font-weight:400}
+.tchips{display:flex; gap:8px; overflow-x:auto; padding:10px 16px 4px; border-top:1px solid var(--line); scrollbar-width:none}
+.tchips button{font:12px var(--mono); color:var(--muted); background:none; border:1px solid var(--line); border-radius:99px; padding:6px 11px; white-space:nowrap; flex:none; cursor:pointer}
+.tchips button:hover{color:var(--green); border-color:var(--dim)}
 .tline{display:flex; gap:8px; align-items:center; padding:6px 16px 14px}
 .tline label{color:var(--green); white-space:nowrap}
 #tin{flex:1; min-width:0; background:none; border:0; outline:0; color:var(--ink); font:16px var(--mono); padding:0; caret-color:var(--green)}
@@ -184,13 +189,24 @@ body.game #dock{opacity:.3; pointer-events:none}
 #core{position:fixed; z-index:19; width:0; height:0; pointer-events:none; opacity:0; transition:opacity .5s}
 body.order #core{opacity:1; transition:opacity .9s .5s}
 #core span{position:absolute; border-radius:50%}
-#core .hit{left:-78px; top:-78px; width:156px; height:156px; pointer-events:none; cursor:grab; touch-action:none}
+#core .hit{left:-96px; top:-96px; width:192px; height:192px; pointer-events:none; cursor:grab; touch-action:none}
 body.order #core .hit{pointer-events:auto}
 #core .hit:active{cursor:grabbing}
-#core .bk{left:-84px; top:-84px; width:168px; height:168px; background:radial-gradient(circle,color-mix(in srgb,var(--bg) 94%,transparent) 52%,transparent 70%)}
-#core .dot{left:-8px; top:-8px; width:16px; height:16px; background:var(--green); box-shadow:0 0 26px 7px color-mix(in srgb,var(--green) 55%,transparent); animation:pulse 2.4s ease-in-out infinite}
-#core .r1{left:-24px; top:-24px; width:48px; height:48px; border:1px dashed var(--green); animation:spin 12s linear infinite}
-#core .r2{left:-70px; top:-70px; width:140px; height:140px; border:1px solid var(--line)}
+#core .bk{left:-118px; top:-118px; width:236px; height:236px; background:radial-gradient(circle,color-mix(in srgb,var(--bg) 94%,transparent) 52%,transparent 70%)}
+#core svg{position:absolute; left:-110px; top:-110px; width:220px; height:220px; overflow:visible}
+#core svg *{fill:none; stroke:var(--green); transform-origin:0 0}
+#core .tk{stroke-width:5; stroke-dasharray:1 9.263; opacity:.45; animation:spin 60s linear infinite}
+#core .arc{stroke-width:2.5; stroke-linecap:round}
+#core .a1{stroke-dasharray:120 432.9; animation:spin 9s linear infinite}
+#core .a2{stroke-dasharray:60 492.9; stroke:var(--head); opacity:.85; animation:spin 14s linear infinite reverse}
+#core .thin{stroke:var(--line); stroke-width:1}
+#core .dash{stroke-width:1.2; stroke-dasharray:4 5; animation:spin 12s linear infinite reverse}
+#core .hex{stroke-width:1.2; opacity:.75; animation:spin 18s linear infinite}
+#core .orb{animation:spin 4s linear infinite}
+#core .orb circle{fill:var(--head); stroke:none}
+#core .dot{fill:var(--green); stroke:none; filter:drop-shadow(0 0 10px var(--green)); animation:pulse 2.4s ease-in-out infinite}
+#core .ping{stroke-width:1.5; animation:ping 3s ease-out infinite}
+@keyframes ping{from{transform:scale(.3); opacity:.9} to{transform:scale(3.2); opacity:0}}
 @keyframes pulse{50%{transform:scale(1.35)}}
 @keyframes spin{to{transform:rotate(360deg)}}
 .heart{position:fixed; z-index:60; left:50%; top:50%; color:var(--bug); font-size:220px; line-height:1; pointer-events:none; text-shadow:0 0 50px color-mix(in srgb,var(--bug) 70%,transparent); transform:translate(-50%,-50%); animation:hbeat 1.4s ease-in-out forwards}
@@ -204,7 +220,7 @@ body.order #core .hit{pointer-events:auto}
 #gn{font-family:var(--display); font-weight:800; font-size:4.5rem; line-height:1; color:var(--green); margin-top:14px}
 #gact{display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:20px}
 #gm{color:var(--ink); margin-top:12px; font-weight:500}
-@media (prefers-reduced-motion:reduce){#core .dot,#core .r1{animation:none}}
+@media (prefers-reduced-motion:reduce){#core svg *{animation:none}}
 .cur i{position:absolute; left:15px; top:17px; font:600 10px/1 var(--mono); font-style:normal; color:var(--bg); background:var(--green); padding:3px 5px; border-radius:2px; white-space:nowrap}
 .rip{position:absolute; width:34px; height:34px; margin:-17px 0 0 -17px; border-radius:50%; border:1px solid var(--green); animation:rip .8s ease-out forwards}
 @keyframes rip{from{transform:scale(.1); opacity:.9} to{transform:scale(1.3); opacity:0}}
@@ -215,7 +231,19 @@ body.order #core .hit{pointer-events:auto}
   background:var(--surface); color:var(--ink); border:1px solid var(--line); border-radius:6px; font-family:var(--mono); font-size:13px;
   font-variant-numeric:tabular-nums; white-space:nowrap;
 }
-#dock{bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+#dock{bottom:calc(16px + env(safe-area-inset-bottom,0px)); gap:16px; padding:10px 10px 10px 18px; border-radius:14px; border-color:var(--dim); font-size:14px; box-shadow:0 10px 34px rgb(0 0 0 / .55), 0 0 22px color-mix(in srgb,var(--green) 16%,transparent)}
+.dk{display:flex; flex-direction:column; line-height:1.15}
+.dkl{font-size:10px; letter-spacing:.16em; color:var(--muted)}
+.pct{font-size:20px; font-weight:600; color:var(--green); transition:color .6s}
+.gauge{width:130px; height:10px; border-radius:99px; background:var(--line); overflow:hidden; flex:none}
+#gfill{display:block; height:100%; width:100%; border-radius:99px; background:var(--green); transition:background-color .6s}
+.dkc{color:var(--muted)}
+#toggle{padding:12px 20px; font-size:14px; border-radius:10px}
+#dock::after{content:attr(data-hint); position:absolute; right:6px; bottom:calc(100% + 12px); background:var(--bug); color:#190806; font:600 12px var(--mono); padding:7px 11px; border-radius:8px; opacity:0; transform:translateY(6px); transition:opacity .4s, transform .4s; pointer-events:none}
+body.e2 #dock::after{opacity:1; transform:none; animation:bob 1.2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-5px)}}
+#gov.modal{pointer-events:auto; touch-action:none; background:color-mix(in srgb,var(--bg) 74%,transparent)}
+body.lock{overflow:hidden}
 #hud{top:calc(14px + env(safe-area-inset-top,0px)); z-index:40; padding:10px 16px; border-color:var(--green); color:var(--green)}
 .level{position:relative; width:72px; height:14px; border:1px solid var(--muted); border-radius:999px; flex:none}
 .level::before,.level::after{content:""; position:absolute; top:0; bottom:0; width:1px; background:var(--muted)}
@@ -232,8 +260,9 @@ body.order #core .hit{pointer-events:auto}
 @media (max-width:640px){
   .links{display:none} .bento{grid-template-columns:1fr} .wrap{gap:60px; background:color-mix(in srgb,var(--bg) 68%,transparent)}
   #rain{opacity:.62} body.order #rain{opacity:.42}
-  .tl article{grid-template-columns:1fr} #dock{gap:10px; font-size:12px} #dock .lbl{display:none}
-  #tout{font-size:12.5px} #hud{font-size:12px; padding:8px 12px} #core .bk{left:-56px; top:-56px; width:112px; height:112px} #core .r2{display:none}
+  .tl article{grid-template-columns:1fr} #dock{gap:10px; font-size:12px; padding:8px 8px 8px 14px} .dkc{display:none} .gauge{width:74px} #toggle{padding:11px 14px; font-size:13px}
+  body.typing #dock,body.typing #core{display:none}
+  #tout{font-size:12.5px; height:250px} .hr{grid-template-columns:minmax(74px,max-content) minmax(0,1fr)} .hr b{white-space:nowrap} #hud{font-size:12px; padding:8px 12px} #core svg{transform:scale(.56)} #core .bk{left:-66px; top:-66px; width:132px; height:132px} #core .hit{left:-62px; top:-62px; width:124px; height:124px}
   .gbox{padding:22px 18px 20px} .gbox h3{font-size:1.4rem} .gbox p{font-size:.93rem}
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
@@ -313,6 +342,7 @@ html,body{margin:0}
     <div class="term" id="term">
       <div class="tbar"><i></i><i></i><i></i><span>visitor@sjc: ~</span></div>
       <div id="tout" role="log"></div>
+      <div class="tchips" id="tchips"></div>
       <div class="tline"><label for="tin">~$</label><input id="tin" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Terminal"><button type="button" class="btn sm" id="tgo">Enter</button></div>
     </div>
   </section>
@@ -332,7 +362,9 @@ html,body{margin:0}
 </main>
 
 <div id="chaos" aria-hidden="true"></div>
-<div id="core" aria-hidden="true"><span class="bk"></span><span class="r2"></span><span class="r1"></span><span class="dot"></span><span class="hit"></span></div>
+<div id="core" aria-hidden="true"><span class="bk"></span>
+<svg viewBox="-110 -110 220 220"><circle class="ping" r="30"/><circle class="tk" r="98"/><circle class="arc a1" r="88"/><circle class="arc a2" r="88"/><circle class="thin" r="78"/><circle class="dash" r="27"/><polygon class="hex" points="0,-17 14.7,-8.5 14.7,8.5 0,17 -14.7,8.5 -14.7,-8.5"/><g class="orb"><circle cx="36" r="2.4"/><circle cx="-18" cy="31.2" r="2.4"/><circle cx="-18" cy="-31.2" r="2.4"/></g><circle class="dot" r="7"/></svg>
+<span class="hit"></span></div>
 <div id="hud" hidden></div>
 <canvas id="gcv" hidden></canvas>
 <div id="gjoy" hidden><span id="gknob"></span></div>
@@ -340,10 +372,10 @@ html,body{margin:0}
 <div id="gov" hidden><div class="gbox"><h3 id="gt"></h3><p id="gp"></p><p id="gm" hidden></p><div id="gn"></div><div id="gact"><button type="button" class="btn solid" id="gagain"></button><button type="button" class="btn" id="gclose"></button><button type="button" class="btn" id="gmail" hidden></button></div></div></div>
 
 <div id="dock">
-  <div class="level" title="Denge"><span id="bubble"></span></div>
-  <span class="pct"><span class="lbl" data-i18n="d_bal">denge </span>%<span id="bal">100</span></span>
-  <span><span id="cnt">0</span><span class="lbl" data-i18n="d_clk"> tıklama</span></span>
-  <button type="button" class="btn solid sm" id="toggle">Dengele</button>
+  <div class="dk"><span class="dkl" data-i18n="d_bal">DENGE</span><span class="pct">%<b id="bal">100</b></span></div>
+  <div class="gauge" aria-hidden="true"><span id="gfill"></span></div>
+  <span class="dkc"><span id="cnt">0</span><span class="lbl" data-i18n="d_clk"> tıklama</span></span>
+  <button type="button" class="btn solid" id="toggle">Dengele</button>
 </div>
 
 <div id="pal" hidden>
@@ -356,7 +388,7 @@ html,body{margin:0}
 <script>
 (function(){
   var $=function(id){return document.getElementById(id)};
-  var layer=$('chaos'), cntEl=$('cnt'), balEl=$('bal'), bubble=$('bubble'), btn=$('toggle'), cv=$('rain'), g=cv.getContext('2d'), hud=$('hud');
+  var layer=$('chaos'), cntEl=$('cnt'), balEl=$('bal'), gf=$('gfill'), lastBal=-1, btn=$('toggle'), cv=$('rain'), g=cv.getContext('2d'), hud=$('hud');
   var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   var W=innerWidth, H=innerHeight;
   function rnd(a,b){return a+Math.random()*(b-a)}
@@ -391,39 +423,39 @@ html,body{margin:0}
     t_sub:'The other face of this site. Start with <code>help</code>; Tab completes, arrow up recalls history.',
     h_contact:'Contact',c_sub:'Write to me about an idea, a job or a good game recommendation.',
     foot:'© 2026 Selman Jir Can · Chaos flows behind, balance stands in front.',
-    d_bal:'balance ',d_clk:' clicks'
+    d_bal:'BALANCE',d_clk:' clicks'
   };
   var S={
-    tr:{bal:'Dengele',chaos:'Kaos',copy:'Kopyala',copied:'Kopyalandı',pick:'Bir kutu seç.',done:'Denge sağlandı ✓',morder:'DENGE',mchaos:'KAOS',gtitle:'Mini oyun: Kaos ile savaş',ghow:function(T){return 'Sitedeki imleçler artık düşmanın ve çoğalıyorlar. Dokunurlarsa can gider. Yaklaştıklarında tıkla ya da dokun: darbe dalgası çevrendekileri yok eder. Elmasları topla: kırmızı bomba, sarı yavaşlatır, mavi dondurur. '+T+' klonu yok et, kaos çöksün.'},again:'Tekrar oyna',close:'Kapat',fight:'Kaos ile savaş',w1:'Kaos artıyor…',w2:'Site dağılmaya başladı. Dengelemek ister misin?',w3:'Kritik seviye! Dengele ya da savaş.',ptitle:'Kaos kontrolü ele geçirdi',ptext:'Site dağıldı. Ya tek tuşla dengele ya da kaosla kendin savaş.',wtitle:'Denge sağlandı!',win:function(s,b){return 'Bütün klonlar çöktü, site artık dengede. Skor '+s+' · en iyi '+b},ltitle:'Kaos kazandı',lose:function(k,T,s,b){return k+' klon yok ettin, hedef '+T+'. Skor '+s+' · en iyi '+b+'. Oynamak istersen tekrar dene, siteyi gezmek istersen dengele.'},frz:'DONDU',hit:'DARBE',pw:['BOMBA','YAVAŞ','DONDU'],ghowT:function(T){return 'Sitedeki imleçler artık düşmanın ve çoğalıyorlar. Dokunurlarsa can gider. Sol alttaki yuvarlakla hareket et; yaklaştıklarında sağdaki DARBE tuşuna bas, çevrendekiler yok olsun. Elmasları topla: kırmızı bomba, sarı yavaşlatır, mavi dondurur. '+T+' klonu yok et, kaos çöksün.'},memo:'Gerçek sistemlerde de işim bu: kaosu alıp dengeye çevirmek.',reach:'Bana yaz',browse:'Siteyi gez',balgo:'Dengele ve gez',htitle:'Hoş geldin',htext:'Bu site iki şekilde gezilir. Sakin modda her şey yerinde durur. Kaos modunda site yavaş yavaş dağılır; dengelemek ya da savaşmak sana kalır. Alttaki tuşla istediğin an değiştirebilirsin.',hcalm:'Sakin: kariyerimi incele',hchaos:'Kaosu serbest bırak',away:'⚠ Kaos büyüyor… geri dön',ranks:['Düzen çırağı','Denge ustası','Kaos terbiyecisi','Entropi düşmanı'],status:function(e,b){return 'kaos %'+e+' · denge %'+b},clients:'İstemciler',
+    tr:{bal:'Dengele',chaos:'Kaos',copy:'Kopyala',copied:'Kopyalandı',pick:'Bir kutu seç.',done:'Denge sağlandı ✓',morder:'DENGE',mchaos:'KAOS',gtitle:'Mini oyun: Kaos ile savaş',ghow:function(T){return 'Sitedeki imleçler artık düşmanın ve çoğalıyorlar. Dokunurlarsa can gider. Yaklaştıklarında tıkla ya da dokun: darbe dalgası çevrendekileri yok eder. Elmasları topla: kırmızı bomba, sarı yavaşlatır, mavi dondurur. '+T+' klonu yok et, kaos çöksün.'},again:'Tekrar oyna',close:'Kapat',fight:'Kaos ile savaş',w1:'Kaos artıyor…',w2:'Site dağılmaya başladı. Dengelemek ister misin?',w3:'Kritik seviye! Dengele ya da savaş.',ptitle:'Kaos kontrolü ele geçirdi',ptext:'Site dağıldı. Ya tek tuşla dengele ya da kaosla kendin savaş.',wtitle:'Denge sağlandı!',win:function(s,b){return 'Bütün klonlar çöktü, site artık dengede. Skor '+s+' · en iyi '+b},ltitle:'Kaos kazandı',lose:function(k,T,s,b){return k+' klon yok ettin, hedef '+T+'. Skor '+s+' · en iyi '+b+'. Oynamak istersen tekrar dene, siteyi gezmek istersen dengele.'},frz:'DONDU',hint:'Site dağılıyor, dengele ↓',atitle:'Biraz kaos?',atext:'Bu sitenin bir de kaos modu var: imleçler çoğalır, sayfa yavaş yavaş dağılır ve dengeyi geri getirmek sana kalır. Aktif edilsin mi?',ayes:'Kaosu başlat',ano:'Sakin kalsın',hit:'DARBE',pw:['BOMBA','YAVAŞ','DONDU'],ghowT:function(T){return 'Sitedeki imleçler artık düşmanın ve çoğalıyorlar. Dokunurlarsa can gider. Sol alttaki yuvarlakla hareket et; yaklaştıklarında sağdaki DARBE tuşuna bas, çevrendekiler yok olsun. Elmasları topla: kırmızı bomba, sarı yavaşlatır, mavi dondurur. '+T+' klonu yok et, kaos çöksün.'},memo:'Gerçek sistemlerde de işim bu: kaosu alıp dengeye çevirmek.',reach:'Bana yaz',browse:'Siteyi gez',balgo:'Dengele ve gez',htitle:'Hoş geldin',htext:'Bu site iki şekilde gezilir. Sakin modda her şey yerinde durur. Kaos modunda site yavaş yavaş dağılır; dengelemek ya da savaşmak sana kalır. Alttaki tuşla istediğin an değiştirebilirsin.',hcalm:'Sakin: kariyerimi incele',hchaos:'Kaosu serbest bırak',away:'⚠ Kaos büyüyor… geri dön',ranks:['Düzen çırağı','Denge ustası','Kaos terbiyecisi','Entropi düşmanı'],status:function(e,b){return 'kaos %'+e+' · denge %'+b},clients:'İstemciler',
       hud:function(k,T,s){return 'klon '+k+'/'+T+' · skor '+s},
       n:{c:'İstemciler: web, mobil ve dış sistemler. Her şey buradan başlar.',k:'Kong: API gateway. İstekleri karşılar, yönlendirir, sınırlar.',g:'GraphQL: istemcinin tam ihtiyacı kadar veri istediği API katmanı.',n:'Nest.js: düzenli, modüler servisler için ana çatım.',e:'Express.js: hafif ve hızlı servisler için.',r:'Redis: önbellek. Aynı soruyu veritabanına iki kez sormamak için.',q:'RabbitMQ: mesaj kuyruğu. Servisler birbirini beklemeden konuşur.',w:'Node.js worker: kuyruktaki işleri arka planda tüketir.',m:'MySQL: ilişkisel veri.',o:'MongoDB: doküman tabanlı veri.'},
       p:['Hakkımda','Yolculuk','Sistem haritası','Terminal','İletişim','Dili değiştir: English','Kaos / denge','E-postayı kopyala'],ph:'Komut ara…',
       welcome:'Hoş geldin. Komutlar için <span class="c">help</span> yaz.',
-      help:'Komutlar:\n  whoami     ben kimim\n  about      kısaca ben\n  exp        deneyim\n  skills     kullandığım araçlar\n  edu        eğitim\n  contact    bana ulaş\n  neofetch   sistem bilgisi\n  lang en    dili değiştir (tr | en)\n  chaos      kaosu serbest bırak\n  balance    dengele\n  status     kaos seviyesi\n  dog        hav\n  ls, cat    dosyalara bak\n  clear      ekranı temizle',
+      help:[['whoami','ben kimim'],['about','kısaca ben'],['exp','deneyim'],['skills','kullandığım araçlar'],['edu','eğitim'],['contact','bana ulaş'],['neofetch','sistem bilgisi'],['lang en','dili değiştir (tr | en)'],['chaos','kaosu serbest bırak'],['balance','dengele'],['status','kaos seviyesi'],['dog','hav'],['ls, cat','dosyalara bak'],['clear','ekranı temizle']],
       whoami:'Selman Jir Can. Backend developer, yazılım mühendisi.\nYazılım benim için soyut bir varlıkla konuşmanın yolu.',
       about:"Her gün biraz daha iyi olmaya çalışan bir yazılım mühendisiyim.\nOyun oynarım, oyun sektörünü takip ederim.\nArkadaşlarımla teknolojiyi felsefi bir derinlikte tartışırım.\nBir de köpeğim var.",
-      exp:'2022 — bugün   Backend Developer · Pixa Software, İstanbul\n2021 — 2022    Full Stack Developer · Noda Bilişim, Ankara',
-      edu:'2018 — 2022    Fırat Üniversitesi · Yazılım Mühendisliği, Lisans',
-      nf:[' rol       Backend Developer',' uptime    '+YEARS+' yıldır profesyonel kod',' evcil     1 köpek'],
+      exp:[['2022 — bugün','Backend Developer · Pixa Software, İstanbul'],['2021 — 2022','Full Stack Developer · Noda Bilişim, Ankara']],
+      edu:[['2018 — 2022','Fırat Üniversitesi · Yazılım Mühendisliği, Lisans']],
+      nf:[['rol','Backend Developer'],['uptime',YEARS+' yıldır profesyonel kod'],['evcil','1 köpek']],
       langok:'Dil: Türkçe',langbad:'Kullanım: lang tr | lang en',t_chaos:'Kaos serbest.',t_balance:'Denge sağlandı.',t_game:'Kaos ile savaş başlıyor.',
       dog:'Hav! Sahibim şu an kod yazıyor.',sudo:'Yetki reddedildi. Ama işe almak istersen: contact',vim:'Vim açıldı. Çıkmak için… şaka, kapattım bile.',exit:'Buradan çıkış yok. Sekmeyi kapatabilirsin ama kalmanı tercih ederim.',
       nofile:'Böyle bir dosya yok. ls ile bak.',nf404:function(c){return 'komut bulunamadı: '+c+'. help yazabilirsin.'}},
-    en:{bal:'Balance',chaos:'Chaos',copy:'Copy',copied:'Copied',pick:'Pick a box.',done:'Balance restored ✓',morder:'BALANCE',mchaos:'CHAOS',gtitle:'Mini game: Fight the chaos',ghow:function(T){return 'The cursors on this site are now your enemies, and they multiply. A touch costs a life. When they get close, click or tap: a shockwave destroys the ones around you. Collect the diamonds: red is a bomb, yellow slows, blue freezes. Destroy '+T+' clones and the chaos collapses.'},again:'Play again',close:'Close',fight:'Fight the chaos',w1:'Chaos is rising…',w2:'The site is starting to fall apart. Want to balance it?',w3:'Critical! Balance or fight.',ptitle:'Chaos has taken over',ptext:'The site fell apart. Balance it with one button, or fight the chaos yourself.',wtitle:'Balance restored!',win:function(s,b){return 'Every clone collapsed and the site is balanced. Score '+s+' · best '+b},ltitle:'Chaos won',lose:function(k,T,s,b){return 'You destroyed '+k+' clones, the goal is '+T+'. Score '+s+' · best '+b+'. Play again if you like, or balance the site to look around.'},frz:'FROZEN',hit:'HIT',pw:['BOMB','SLOW','FREEZE'],ghowT:function(T){return 'The cursors on this site are now your enemies, and they multiply. A touch costs a life. Move with the round pad at the bottom left; when they get close, press HIT on the right to destroy the ones around you. Collect the diamonds: red is a bomb, yellow slows, blue freezes. Destroy '+T+' clones and the chaos collapses.'},memo:'This is what I do with real systems too: take the chaos and turn it into balance.',reach:'Write to me',browse:'Browse the site',balgo:'Balance and browse',htitle:'Welcome',htext:'There are two ways to visit this site. In calm mode everything stays in place. In chaos mode the site slowly falls apart; balancing it or fighting back is up to you. You can switch any time with the button below.',hcalm:'Calm: just the career',hchaos:'Release the chaos',away:'⚠ Chaos is growing… come back',ranks:['Order apprentice','Balance master','Chaos tamer','Enemy of entropy'],status:function(e,b){return 'chaos '+e+'% · balance '+b+'%'},clients:'Clients',
+    en:{bal:'Balance',chaos:'Chaos',copy:'Copy',copied:'Copied',pick:'Pick a box.',done:'Balance restored ✓',morder:'BALANCE',mchaos:'CHAOS',gtitle:'Mini game: Fight the chaos',ghow:function(T){return 'The cursors on this site are now your enemies, and they multiply. A touch costs a life. When they get close, click or tap: a shockwave destroys the ones around you. Collect the diamonds: red is a bomb, yellow slows, blue freezes. Destroy '+T+' clones and the chaos collapses.'},again:'Play again',close:'Close',fight:'Fight the chaos',w1:'Chaos is rising…',w2:'The site is starting to fall apart. Want to balance it?',w3:'Critical! Balance or fight.',ptitle:'Chaos has taken over',ptext:'The site fell apart. Balance it with one button, or fight the chaos yourself.',wtitle:'Balance restored!',win:function(s,b){return 'Every clone collapsed and the site is balanced. Score '+s+' · best '+b},ltitle:'Chaos won',lose:function(k,T,s,b){return 'You destroyed '+k+' clones, the goal is '+T+'. Score '+s+' · best '+b+'. Play again if you like, or balance the site to look around.'},frz:'FROZEN',hint:'The site is falling apart, balance it ↓',atitle:'A little chaos?',atext:'This site also has a chaos mode: cursors multiply, the page slowly falls apart, and restoring the balance is up to you. Turn it on?',ayes:'Start the chaos',ano:'Keep it calm',hit:'HIT',pw:['BOMB','SLOW','FREEZE'],ghowT:function(T){return 'The cursors on this site are now your enemies, and they multiply. A touch costs a life. Move with the round pad at the bottom left; when they get close, press HIT on the right to destroy the ones around you. Collect the diamonds: red is a bomb, yellow slows, blue freezes. Destroy '+T+' clones and the chaos collapses.'},memo:'This is what I do with real systems too: take the chaos and turn it into balance.',reach:'Write to me',browse:'Browse the site',balgo:'Balance and browse',htitle:'Welcome',htext:'There are two ways to visit this site. In calm mode everything stays in place. In chaos mode the site slowly falls apart; balancing it or fighting back is up to you. You can switch any time with the button below.',hcalm:'Calm: just the career',hchaos:'Release the chaos',away:'⚠ Chaos is growing… come back',ranks:['Order apprentice','Balance master','Chaos tamer','Enemy of entropy'],status:function(e,b){return 'chaos '+e+'% · balance '+b+'%'},clients:'Clients',
       hud:function(k,T,s){return 'clones '+k+'/'+T+' · score '+s},
       n:{c:'Clients: web, mobile and external systems. Everything starts here.',k:'Kong: API gateway. It receives, routes and rate-limits requests.',g:'GraphQL: an API layer where the client asks for exactly the data it needs.',n:'Nest.js: my main framework for tidy, modular services.',e:'Express.js: for light, fast services.',r:'Redis: cache. So the database is not asked the same question twice.',q:'RabbitMQ: message queue. Services talk without waiting on each other.',w:'Node.js worker: consumes queued jobs in the background.',m:'MySQL: relational data.',o:'MongoDB: document data.'},
       p:['About','Journey','System map','Terminal','Contact','Switch language: Türkçe','Chaos / balance','Copy email'],ph:'Search commands…',
       welcome:'Welcome. Type <span class="c">help</span> for commands.',
-      help:'Commands:\n  whoami     who I am\n  about      me, briefly\n  exp        experience\n  skills     tools I use\n  edu        education\n  contact    reach me\n  neofetch   system info\n  lang tr    switch language (tr | en)\n  chaos      release the chaos\n  balance    restore balance\n  status     chaos level\n  dog        woof\n  ls, cat    look at files\n  clear      clear the screen',
+      help:[['whoami','who I am'],['about','me, briefly'],['exp','experience'],['skills','tools I use'],['edu','education'],['contact','reach me'],['neofetch','system info'],['lang tr','switch language (tr | en)'],['chaos','release the chaos'],['balance','restore balance'],['status','chaos level'],['dog','woof'],['ls, cat','look at files'],['clear','clear the screen']],
       whoami:'Selman Jir Can. Backend developer, software engineer.\nTo me, software is a way of talking with an abstract existence.',
       about:'A software engineer trying to be a little better every day.\nI play games and follow the game industry.\nMy friends and I discuss technology with some philosophical depth.\nAlso, I have a dog.',
-      exp:'2022 — present  Backend Developer · Pixa Software, Istanbul\n2021 — 2022     Full Stack Developer · Noda Bilişim, Ankara',
-      edu:'2018 — 2022     Fırat University · BSc, Software Engineering',
-      nf:[' role      Backend Developer',' uptime    '+YEARS+' years of professional code',' pets      1 dog'],
+      exp:[['2022 — present','Backend Developer · Pixa Software, Istanbul'],['2021 — 2022','Full Stack Developer · Noda Bilişim, Ankara']],
+      edu:[['2018 — 2022','Fırat University · BSc, Software Engineering']],
+      nf:[['role','Backend Developer'],['uptime',YEARS+' years of professional code'],['pets','1 dog']],
       langok:'Language: English',langbad:'Usage: lang tr | lang en',t_chaos:'Chaos released.',t_balance:'Balance restored.',t_game:'Fight the chaos is starting.',
       dog:'Woof! My owner is writing code right now.',sudo:'Permission denied. But if you want to hire me: contact',vim:'Vim opened. To quit… just kidding, already closed it.',exit:'There is no exit. You can close the tab, but I would rather you stayed.',
       nofile:'No such file. Try ls.',nf404:function(c){return 'command not found: '+c+'. Try help.'}}
   };
-  var SKILLS='lang      JavaScript, TypeScript, C#\nbackend   Node.js, Nest.js, Express.js, GraphQL\nmessaging RabbitMQ, Redis, Kong\ndata      MySQL, MongoDB\nops       Docker, Kubernetes, GKE, Bitbucket CI/CD';
+  var SKILLS=[['lang','JavaScript, TypeScript, C#'],['backend','Node.js, Nest.js, Express.js, GraphQL'],['messaging','RabbitMQ, Redis, Kong'],['data','MySQL, MongoDB'],['ops','Docker, Kubernetes, GKE, Bitbucket CI/CD']];
   var DOG='  / \\__\n (    @\\___\n /         O\n/   (_____/\n/_____/   U';
   var i18nEls=[].slice.call(document.querySelectorAll('[data-i18n]')), TR={};
   i18nEls.forEach(function(e){TR[e.dataset.i18n]=e.innerHTML});
@@ -450,6 +482,7 @@ html,body{margin:0}
     syncBtn(); $('copy').textContent=L().copy; $('pin').placeholder=L().ph;
     if(clientLabel) clientLabel.textContent=L().clients;
     $('ninfo').textContent=curNode?L().n[curNode]:L().pick;
+    if(typeof tout!=='undefined'&&tout){ tout.innerHTML=''; out(neofetch()); out(L().welcome); }
   }
   $('ltr').onclick=function(){setLang('tr',true)}; $('len').onclick=function(){setLang('en',true)};
 
@@ -556,7 +589,7 @@ html,body{margin:0}
   }
   function form(){
     var m=(W-940)/2;
-    if(m>=170){ fc.x=W-m/2; fc.y=H*.42; fc.R=curs.length>12?58:46; } else { fc.x=W/2; fc.y=H-124; fc.R=W<640?26:40; }
+    if(m>=170){ fc.x=W-m/2; fc.y=H*.42; fc.R=curs.length>12?58:46; } else { fc.x=W<640?W-66:W-128; fc.y=H-(W<640?158:176); fc.R=W<640?26:46; }
     fc.s=W<640?.7:1;
     fc.vx=fc.vy=0; core.style.left=fc.x+'px'; core.style.top=fc.y+'px';
   }
@@ -606,7 +639,7 @@ html,body{margin:0}
   }
   function syncBtn(){
     btn.textContent=$('mtoggle').textContent=order?L().chaos:L().bal;
-    $('mmode').textContent=order?L().morder:L().mchaos;
+    $('mmode').textContent=order?L().morder:L().mchaos; $('dock').dataset.hint=L().hint;
   }
   function setOrder(v,quiet){
     if(v===order||((game||pre)&&v)) return;
@@ -664,15 +697,17 @@ html,body{margin:0}
 
   /* ================= oyun: kaos ile savaş ================= */
   var gcv=$('gcv'), gx=gcv.getContext('2d'), G=null;
-  function govShow(title,text,num,b1,f1,b2,f2,memo){
+  function govHide(){ gov.hidden=true; gov.classList.remove('modal'); document.body.classList.remove('lock'); }
+  function govShow(title,text,num,b1,f1,b2,f2,memo,modal){
+    gov.classList.toggle('modal',!!modal); document.body.classList.toggle('lock',!!modal);
     $('gm').hidden=$('gmail').hidden=!memo;
-    if(memo){ $('gm').textContent=L().memo; $('gmail').textContent=L().reach; $('gmail').onclick=function(){gov.hidden=true; setOrder(true); go('contact')}; }
+    if(memo){ $('gm').textContent=L().memo; $('gmail').textContent=L().reach; $('gmail').onclick=function(){govHide(); setOrder(true); go('contact')}; }
     $('gt').textContent=title; $('gp').textContent=text;
     $('gn').hidden=num==null; if(num!=null) $('gn').textContent=num;
     $('gact').hidden=!b1;
     if(b1){
-      $('gagain').textContent=b1; $('gagain').onclick=function(){gov.hidden=true; f1()};
-      $('gclose').textContent=b2; $('gclose').onclick=function(){gov.hidden=true; if(f2) f2()};
+      $('gagain').textContent=b1; $('gagain').onclick=function(){govHide(); f1()};
+      $('gclose').textContent=b2; $('gclose').onclick=function(){govHide(); if(f2) f2()};
     }
     gov.hidden=false;
   }
@@ -914,10 +949,17 @@ html,body{margin:0}
   var tout=$('tout'), tin=$('tin'), hist=[], hi=0;
   var CMDS=['help','whoami','about','exp','skills','edu','contact','neofetch','lang','chaos','balance','status','dog','ls','cat','clear','sudo','vim','exit','date','echo'];
   function out(html,cls){var d=document.createElement('div'); if(cls) d.className=cls; d.innerHTML=html; tout.appendChild(d); tout.scrollTop=tout.scrollHeight}
-  function contactTxt(){return 'mail      '+MAIL+'\nlinkedin  <a href="'+LI+'" target="_blank" rel="noopener">linkedin.com/in/selmanjir</a>'+(SOCIAL.github?'\ngithub    github.com/'+esc(SOCIAL.github):'')+(SOCIAL.instagram?'\ninsta     @'+esc(SOCIAL.instagram):'')}
+  function trows(a){ return a.map(function(r){return '<div class="hr"><b>'+r[0]+'</b><span>'+r[1]+'</span></div>'}).join('') }
+  function contactTxt(){
+    var a=[['mail','<a href="mailto:'+MAIL+'">'+MAIL+'</a>'],['linkedin','<a href="'+LI+'" target="_blank" rel="noopener">linkedin.com/in/selmanjir</a>']];
+    if(SOCIAL.github) a.push(['github','<a href="https://github.com/'+esc(SOCIAL.github)+'" target="_blank" rel="noopener">github.com/'+esc(SOCIAL.github)+'</a>']);
+    if(SOCIAL.instagram) a.push(['instagram','<a href="https://www.instagram.com/'+esc(SOCIAL.instagram)+'" target="_blank" rel="noopener">@'+esc(SOCIAL.instagram)+'</a>']);
+    return trows(a);
+  }
   function neofetch(){
-    var a=['  ███ █ ███','  █   █ █  ','  ███ █ █  ','    █ █ █  ','  ███ █ ███'], b=['<span class="c">selman@jir-can</span>','--------------'].concat(L().nf,[' stack     Node.js · Nest.js · GraphQL',' infra     Docker · Kubernetes (GKE)']);
-    var s=''; if(W<640) return b.join('\n')+'\n';
+    var a=['  ███ █ ███','  █   █ █  ','  ███ █ █  ','    █ █ █  ','  ███ █ ███'], kv=L().nf.concat([['stack','Node.js · Nest.js · GraphQL'],['infra','Docker · Kubernetes (GKE)']]);
+    if(W<640) return '<span class="c">selman@jir-can</span>\n'+trows(kv);
+    var b=['<span class="c">selman@jir-can</span>','--------------'].concat(kv.map(function(r){return ' '+(r[0]+'          ').slice(0,10)+r[1]})), s='';
     for(var i=0;i<Math.max(a.length,b.length);i++) s+='<span class="c">'+(a[i]||'           ')+'</span>   '+(b[i]||'')+'\n';
     return s;
   }
@@ -939,12 +981,12 @@ html,body{margin:0}
     hist.push(line); hi=hist.length;
     var parts=line.split(/\s+/), c=parts[0].toLowerCase(), arg=(parts[1]||'').toLowerCase(), T=L();
     switch(c){
-      case 'help': out(T.help); break;
+      case 'help': out(trows(T.help)); break;
       case 'whoami': out(T.whoami); break;
       case 'about': out(T.about); break;
-      case 'exp': case 'experience': out(T.exp); break;
-      case 'skills': out(SKILLS); break;
-      case 'edu': out(T.edu); break;
+      case 'exp': case 'experience': out(trows(T.exp)); break;
+      case 'skills': out(trows(SKILLS)); break;
+      case 'edu': out(trows(T.edu)); break;
       case 'contact': out(contactTxt()); break;
       case 'neofetch': out(neofetch()); break;
       case 'lang': if(arg==='tr'||arg==='en'){ setLang(arg,true); out(L().langok); } else out(T.langbad); break;
@@ -954,7 +996,7 @@ html,body{margin:0}
       case 'dog': case 'woof': case 'hav': out(DOG,'c'); out(T.dog); break;
       case 'ls': out('about.txt  experience.log  skills.json  dog.png  game.exe'); break;
       case 'cat':
-        if(arg==='about.txt') out(T.about); else if(arg==='experience.log') out(T.exp+'\n'+T.edu); else if(arg==='skills.json') out(SKILLS);
+        if(arg==='about.txt') out(T.about); else if(arg==='experience.log') out(trows(T.exp.concat(T.edu))); else if(arg==='skills.json') out(trows(SKILLS));
         else if(arg==='dog.png'){ out(DOG,'c'); out(T.dog); } else if(arg==='game.exe') out('→ game'); else out(T.nofile); break;
       case 'clear': tout.innerHTML=''; break;
       case 'elif': heart(); out('♥','c'); break;
@@ -973,8 +1015,13 @@ html,body{margin:0}
     else if(e.key==='ArrowDown'){ if(hi<hist.length){ hi++; tin.value=hist[hi]||''; } e.preventDefault(); }
     else if(e.key==='Tab'){ var v=tin.value.toLowerCase(); if(v){ var m=CMDS.filter(function(c){return c.indexOf(v)===0}); if(m.length===1) tin.value=m[0]+' '; else if(m.length>1) out(m.join('  '),'m'); } e.preventDefault(); }
   });
-  $('tgo').addEventListener('click',function(){ run(tin.value); tin.value=''; tin.focus({preventScroll:true}); });
-  $('term').addEventListener('click',function(e){ if(e.target.closest('#tgo')) return; if(!e.target.closest('a')&&!String(getSelection())) tin.focus({preventScroll:true}); });
+  $('tgo').addEventListener('click',function(){ run(tin.value); tin.value=''; if(!isTouch) tin.focus({preventScroll:true}); });
+  ['help','whoami','about','skills','exp','contact','neofetch','dog'].forEach(function(c){
+    var bt=document.createElement('button'); bt.type='button'; bt.textContent=c; bt.onclick=function(){ run(c) }; $('tchips').appendChild(bt);
+  });
+  tin.addEventListener('focus',function(){document.body.classList.add('typing')});
+  tin.addEventListener('blur',function(){document.body.classList.remove('typing')});
+  $('term').addEventListener('click',function(e){ if(isTouch||e.target.closest('#tgo,#tchips')) return; if(!e.target.closest('a')&&!String(getSelection())) tin.focus({preventScroll:true}); });
 
   /* ================= kopyala ================= */
   function copyMail(){
@@ -1016,7 +1063,6 @@ html,body{margin:0}
   /* ================= başlat ================= */
   var saved=store('sjc_lang');
   setLang(saved==='tr'||saved==='en'?saved:((navigator.language||'tr').toLowerCase().indexOf('tr')===0?'tr':'en'),false);
-  out(neofetch()); out(L().welcome);
   try{ console.log('%csjc_ %cMerhaba, meraklı insan. Terminalde "dog" yazmayı dene.','color:#4fe08a;font-weight:bold','color:inherit'); }catch(e){}
   initRain();
 
@@ -1056,17 +1102,21 @@ html,body{margin:0}
       o.el.style.transform='translate('+(o.x-4).toFixed(1)+'px,'+(o.y-2).toFixed(1)+'px) rotate('+o.r.toFixed(3)+'rad)'+(order&&fc.s<1?' scale('+fc.s+')':'');
     }
     if(order){ bv=0; bx*=.9; } else { bv+=-bx*.03+rnd(-.3,.3)*(1+ent/60); bv*=.94; bx+=bv; if(bx>29){bx=29;bv=0} if(bx<-29){bx=-29;bv=0} }
-    bubble.style.transform='translateX('+bx.toFixed(1)+'px)';
     var tgt=order?100:Math.max(3,75-ent*.7-Math.abs(bx)/29*8);
-    balS+=(tgt-balS)*.035; balEl.textContent=Math.round(balS);
+    balS+=(tgt-balS)*.035; var bi=Math.round(balS);
+    if(bi!==lastBal){ lastBal=bi; balEl.textContent=bi; gf.style.width=bi+'%'; gf.style.background=bi>60?'var(--green)':bi>30?'var(--gold)':'var(--bug)'; }
     requestAnimationFrame(frame);
   }
   form(); mstat(); decodeName();
   var TITLE=document.title;
   document.addEventListener('visibilitychange',function(){ document.title=document.hidden&&!order&&!game?L().away:TITLE; });
   /* ilk ziyaret: sakin mi kaos mu? selmanjircan.com/#cv doğrudan sakin açılır */
-  /* site kaosla açılır; selmanjircan.com/#cv doğrudan sakin (dengeli) açılır */
-  if(location.hash==='#cv') setOrder(true,true);
+  /* site dengede açılır; 20 sn sonra kaosu sorar. selmanjircan.com/#cv hiç sormaz */
+  setOrder(true,true);
+  if(location.hash!=='#cv') setTimeout(function(){
+    if(!order||game||pre||!gov.hidden) return;
+    govShow(L().atitle,L().atext,null,L().ayes,function(){setOrder(false)},L().ano,null,false,true);
+  },20000);
   requestAnimationFrame(frame);
 })();
 </script>
