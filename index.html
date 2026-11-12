@@ -381,6 +381,62 @@ body.lock{overflow:hidden}
   #tout{font-size:12.5px; height:250px} .hr{grid-template-columns:minmax(74px,max-content) minmax(0,1fr)} .hr b{white-space:nowrap} #hud{font-size:12px; padding:8px 12px} #core svg{transform:scale(.56)} #core .bk{left:-66px; top:-66px; width:132px; height:132px} #core .hit{left:-62px; top:-62px; width:124px; height:124px}
   .gbox{padding:22px 18px 20px} .gbox h3{font-size:1.4rem} .gbox p{font-size:.93rem}
 }
+/* ---- sitenin gizemi ---- */
+#qbtn{display:inline-flex; align-items:center; gap:8px; border-color:var(--gold); color:var(--gold)}
+#qbtn b{font-weight:600; opacity:.75}
+#qbtn:hover{background:color-mix(in srgb,var(--gold) 12%,transparent); border-color:var(--gold)}
+#qbtn.new{animation:qpulse 2.4s ease-in-out infinite}
+@keyframes qpulse{0%,100%{box-shadow:0 0 0 0 transparent} 50%{box-shadow:0 0 0 5px color-mix(in srgb,var(--gold) 20%,transparent), 0 0 24px color-mix(in srgb,var(--gold) 32%,transparent)}}
+#qnav{color:var(--gold); border-color:color-mix(in srgb,var(--gold) 45%,transparent); white-space:nowrap}
+#qnav.bump,#qbtn.bump{animation:qbump .7s ease-out}
+@keyframes qbump{30%{transform:scale(1.2)}}
+#qp{position:fixed; inset:0; z-index:52; background:color-mix(in srgb,var(--bg) 82%,transparent); display:grid; place-items:center; padding:16px}
+.qbox{width:100%; max-width:480px; max-height:88vh; overflow:auto; overscroll-behavior:contain; background:var(--surface); border:1px solid var(--gold); border-radius:14px; padding:20px 22px 18px; box-shadow:0 20px 60px rgb(0 0 0 / .6), 0 0 40px color-mix(in srgb,var(--gold) 14%,transparent)}
+.qhd{display:flex; align-items:center; gap:12px}
+.qhd h3{font-family:var(--display); font-weight:800; font-size:1.45rem; margin:0; flex:1}
+.qhd span{font:600 13px var(--mono); color:var(--gold); white-space:nowrap}
+.qx{background:none; border:0; color:var(--muted); font-size:24px; line-height:1; cursor:pointer; padding:2px 8px}
+.qin{color:var(--muted); font-size:.95rem; margin:10px 0 14px}
+.ql{list-style:none; margin:0; padding:0; display:grid; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:8px; overflow:hidden}
+.ql li{display:grid; grid-template-columns:20px minmax(0,1fr); gap:10px; padding:12px 14px; background:var(--bg)}
+.ql .qd{color:var(--muted); font-size:15px; line-height:1.5}
+.ql li.ok .qd{color:var(--gold)}
+.ql b{font-weight:600; display:block}
+.ql li.ok b{color:var(--muted); font-weight:400}
+.ql p{margin:4px 0 0; color:var(--muted); font-size:.92rem}
+.ql p.qs{color:var(--gold); font-family:var(--mono); font-size:.84rem}
+.qh{margin-top:8px; background:none; border:0; padding:0; color:var(--green); font:600 12px var(--mono); cursor:pointer; text-decoration:underline; text-underline-offset:3px}
+.qme{display:flex; gap:8px; margin-top:8px}
+.qme input{flex:1; min-width:0; background:var(--surface); border:1px solid var(--line); border-radius:4px; color:var(--ink); font:16px var(--mono); padding:8px 10px; outline:0}
+.qme input:focus{border-color:var(--gold)}
+.qft{display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px; margin-top:14px; color:var(--muted); font:13px var(--mono)}
+.tq{display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin:4px 0}
+.tq button{font:600 12px var(--mono); color:var(--gold); background:none; border:1px solid color-mix(in srgb,var(--gold) 50%,transparent); border-radius:99px; padding:5px 11px; cursor:pointer}
+/* ---- final ---- */
+#fin{position:fixed; inset:0; z-index:90; background:#020403; opacity:0; transition:opacity 1.2s; overflow:hidden; font-family:var(--mono)}
+#fin.on{opacity:1}
+#fcv,#fgh{position:absolute; inset:0; width:100%; height:100%}
+#fgh{pointer-events:none}
+#fgh .cur{transition:opacity .5s}
+#ftx{position:absolute; left:50%; top:44%; transform:translate(-50%,-50%); width:min(88vw,760px); text-align:center; color:var(--green); font-size:clamp(1rem,2.5vw,1.45rem); line-height:1.7; text-shadow:0 0 18px color-mix(in srgb,var(--green) 50%,transparent)}
+#ftx div{min-height:1.7em}
+#ftx div.on::after{content:"▮"; animation:blink 1s steps(1) infinite; margin-left:2px}
+#fcap{position:absolute; left:50%; bottom:11%; transform:translateX(-50%); width:min(92vw,820px); text-align:center; font:800 clamp(1.3rem,4.4vw,2.6rem)/1.2 var(--display); color:var(--head); opacity:0; transition:opacity .7s; text-shadow:0 0 30px color-mix(in srgb,var(--green) 60%,transparent)}
+#fcap.on{opacity:1}
+#fskip{position:absolute; right:calc(16px + env(safe-area-inset-right,0px)); top:calc(16px + env(safe-area-inset-top,0px)); color:var(--muted); border-color:var(--line)}
+#fcard{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:min(92vw,460px); text-align:center; background:color-mix(in srgb,#0c1512 94%,transparent); border:1px solid var(--gold); border-radius:16px; padding:28px 24px 22px; box-shadow:0 0 80px color-mix(in srgb,var(--gold) 22%,transparent); animation:fcin .9s cubic-bezier(.2,1.2,.4,1)}
+@keyframes fcin{from{opacity:0; transform:translate(-50%,-44%) scale(.92)}}
+.fdm{color:var(--gold); letter-spacing:.3em; font-size:14px}
+.fso{margin-top:12px; font-size:12px; letter-spacing:.24em; color:var(--muted)}
+.fnm{font:800 clamp(2rem,8vw,3.4rem)/1.05 var(--display); color:var(--gold); margin:10px 0 8px; text-shadow:0 0 30px color-mix(in srgb,var(--gold) 45%,transparent); overflow-wrap:anywhere}
+.fdt{font-size:13px; color:var(--muted)}
+.fqt{margin-top:14px; font-family:var(--body); font-style:italic; color:var(--ink)}
+.fbt{display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:20px}
+.fpv{margin-top:14px; font-size:11px; color:var(--muted); line-height:1.5}
+/* gizemi çözen için site altına döner */
+body.won{--green:#ffd166; --dim:#8a6d2a; --head:#fff1c9}
+@media (prefers-reduced-motion:reduce){#qbtn.new{animation:none}}
+@media (max-width:640px){.qhd h3{font-size:1.15rem} .qbox{padding:18px 16px 16px}}
 #sndbtn{display:inline-flex; align-items:center; justify-content:center; width:34px; padding:6px 0; color:var(--muted)}
 #sndbtn svg{width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
 #sndbtn .on{display:none}
@@ -419,6 +475,7 @@ html,body{margin:0}
     </div>
     <div class="tools">
       <div class="seg" role="group" aria-label="Dil / Language"><button type="button" id="ltr" aria-pressed="true">TR</button><button type="button" id="len" aria-pressed="false">EN</button></div>
+      <button type="button" class="btn sm" id="qnav">◇ 0/5</button>
       <button type="button" class="btn sm" id="sndbtn" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5v5h3.5l4.5 4v-13l-4.5 4z"/><path class="on" d="M15.5 9a4.5 4.5 0 0 1 0 6M18 6.5a8 8 0 0 1 0 11"/><path class="off" d="M16 9.5l5 5M21 9.5l-5 5"/></svg></button>
       <button type="button" class="btn sm" id="palbtn" aria-label="Komut paleti">⌘K</button>
     </div>
@@ -430,6 +487,7 @@ html,body{margin:0}
     <p class="lede" data-hit data-i18n="lede">Yazılım, benim için soyut bir varlıkla konuşmanın yolu. <b>Birlikte problem çözüyoruz, ortaya işe yarar bir şey çıkıyor ve bu bana keyif veriyor.</b></p>
     <div class="cta">
       <a class="btn solid" href="#terminal" data-i18n="cta1">Terminali dene</a>
+      <button type="button" class="btn" id="qbtn"><span class="qd">◇</span><span id="qbl">Gizemi çöz</span><b id="qbn">0/5</b></button>
       <small data-i18n="cta3">ya da Ctrl / ⌘ + K</small>
     </div>
   </header>
@@ -518,6 +576,12 @@ html,body{margin:0}
   <button type="button" class="btn solid" id="toggle">Dengele</button>
 </div>
 
+<div id="qp" hidden><div class="qbox" role="dialog" aria-modal="true"></div></div>
+<div id="fin" hidden><canvas id="fcv"></canvas><div id="fgh"></div><div id="ftx" aria-live="polite"></div><div id="fcap"></div>
+  <div id="fcard" hidden><div class="fdm">◆ ◆ ◆ ◆ ◆</div><div class="fso" id="fso"></div><div class="fnm" id="fnm"></div><div class="fdt" id="fdt"></div><div class="fqt" id="fqt"></div><div class="fbt"><a class="btn solid" id="ftell"></a><button type="button" class="btn" id="fback"></button></div><div class="fpv" id="fpv"></div></div>
+  <button type="button" class="btn sm" id="fskip"></button>
+</div>
+
 <div id="pal" hidden>
   <div class="palbox" role="dialog" aria-label="Komut paleti">
     <input id="pin" type="text" autocomplete="off" spellcheck="false" aria-label="Komut ara">
@@ -545,13 +609,28 @@ html,body{margin:0}
   var MEM={}; try{ MEM=JSON.parse(store('sjc_mem')||'{}')||{} }catch(e){ MEM={} }
   if(typeof MEM!=='object'||Array.isArray(MEM)) MEM={};
   function memSave(){ store('sjc_mem',JSON.stringify(MEM)) }
-  var VISIT=MEM.v|0, PREV={win:MEM.win|0,name:MEM.name?String(MEM.name):''}, chaosT0=0;
+  var VISIT=MEM.v|0, PREV={win:MEM.win|0,name:MEM.me?String(MEM.me):''}, chaosT0=0;
   if(!MEM.last||Date.now()-MEM.last>12e5) VISIT++;
   MEM.v=VISIT=Math.max(1,VISIT); MEM.last=Date.now(); memSave();
   function memLine(){ if(VISIT<2) return ''; var m=L().mem, n=VISIT>=3?PREV.name:''; return PREV.win?m.again(PREV.win,n):m.again0(n); }
-  function memGreet(){ if(VISIT>=3) out(esc(PREV.name?L().mem.term(PREV.name,VISIT):L().mem.noname(VISIT)),'c'); }
-  function memName(t){ MEM.name=cap(t).slice(0,40); memSave(); tbarSync(); }
-  function tbarSync(){ var sp=document.querySelector('#term .tbar span'); if(sp) sp.textContent=(MEM.name?norm(MEM.name).replace(/[^a-z]/g,''):'visitor')+'@sjc: ~'; }
+  function memGreet(){ if(MEM.fin&&MEM.me) out(esc(L().q.back2(MEM.me)),'c'); else if(VISIT>=3) out(esc(PREV.name?L().mem.term(PREV.name,VISIT):L().mem.noname(VISIT)),'c'); }
+  function tbarSync(){ var sp=document.querySelector('#term .tbar span'); if(sp) sp.textContent=((MEM.me&&norm(MEM.me).replace(/[^a-z]/g,''))||'visitor')+'@sjc: ~'; }
+
+  /* ================= gizem: durum ve hareket kaydı (kayıt yalnızca bellekte durur, hiçbir yere gitmez) ================= */
+  var QK=['n','d','c','s','w'], qSeen={}, qSeenN=0, qEdit=false, finOn=false, finMus=false, finId=0;
+  var REC=[], recT=0, myClicks=0, chaosN=0, T0=Date.now(), lastAct=performance.now();
+  if(MEM.dog||MEM.win){ MEM.q=MEM.q||{}; if(MEM.dog) MEM.q.d=1; if(MEM.win) MEM.q.c=1; }
+  function recPt(x,y,c){
+    if(finOn) return;
+    REC.push([Math.round(x),Math.round(y),c?1:0]);
+    if(REC.length>2400) REC=REC.filter(function(p,i){ return i%2===0||p[2] });
+  }
+  ['pointermove','pointerdown','keydown','wheel','touchstart'].forEach(function(ev){ addEventListener(ev,function(e){
+    lastAct=performance.now();
+    if(ev==='pointerdown'){ myClicks++; recPt(e.clientX,e.clientY,1); }
+    else if(ev==='pointermove'&&lastAct-recT>70){ recT=lastAct; recPt(e.clientX,e.clientY,0); }
+  },{passive:true,capture:true}) });
+  addEventListener('scroll',function(){ lastAct=performance.now() },{passive:true});
   /* gizli komutla açılan yağmur renkleri: [iz, baş] */
   var RAINS={green:['#1f7a4a','#4fe08a'],cyan:['#17616b','#4fd8e0'],gold:['#7a6220','#ffd166'],purple:['#55357f','#c77dff'],pink:['#7a2f4a','#ff8fab'],white:['#56655e','#e8fff2']};
   var RAINTR={yesil:'green',mavi:'cyan',altin:'gold',sari:'gold',mor:'purple',pembe:'pink',beyaz:'white'};
@@ -585,7 +664,7 @@ html,body{margin:0}
     tr:{bal:'Dengele',chaos:'Kaos',copy:'Kopyala',copied:'Kopyalandı',pick:'Bir kutu seç.',done:'Denge sağlandı ✓',morder:'DENGE',mchaos:'KAOS',gtitle:'Mini oyun: Kaos ile savaş',ghow:function(T){return 'Sitedeki imleçler artık düşmanın ve çoğalıyorlar. Dokunurlarsa can gider. Yaklaştıklarında tıkla ya da dokun: darbe dalgası çevrendekileri yok eder. Elmasları topla: kırmızı bomba, sarı yavaşlatır, mavi dondurur. '+T+' klonu yok et, kaos çöksün.'},again:'Tekrar oyna',close:'Kapat',fight:'Kaos ile savaş',w1:'Kaos artıyor…',w2:'Site dağılmaya başladı. Dengelemek ister misin?',w3:'Kritik seviye! Dengele ya da savaş.',ptitle:'Kaos kontrolü ele geçirdi',ptext:'Tek tuşla dengele ya da kaosla savaş.',wtitle:'Denge sağlandı!',win:function(s,b){return 'Bütün klonlar çöktü, site artık dengede. Skor '+s+' · en iyi '+b},ltitle:'Kaos kazandı',lose:function(k,T,s,b){return k+' klon yok ettin, hedef '+T+'. Skor '+s+' · en iyi '+b+'. Oynamak istersen tekrar dene, siteyi gezmek istersen dengele.'},frz:'DONDU',hint2:'Dur bir, denge toparlansın',broke:'Dengeyi bozdun. Kaos başladı.',enes:'Kahve hazır, rota belli. İyi yolculuklar Enes.',samet:'Hedef imha edildi. Emret komutanım.',lock:'HEDEF KİLİTLENDİ',hint:'Site dağılıyor, dengele ↓',atitle:'Biraz kaos?',atext:'İmleçler çoğalır, sayfa yavaş yavaş dağılır. Dengelemek sana kalır.',ayes:'Kaosu başlat',ano:'Sakin kalsın',hit:'DARBE',pw:['BOMBA','YAVAŞ','DONDU','CAN +1'],gname:'Kaos ile savaş',how:[['Kaç','Klonlar dokunursa can gider'],['Vur','Tıkla: çevrendekiler patlar'],['Topla','Elmaslar güç verir']],howT:[['Kaç','Sol yuvarlakla hareket et'],['Vur','DARBE: çevrendekiler patlar'],['Topla','Elmaslar güç verir']],goal:function(T){return 'Hedef: '+T+' klon'},wave:'DALGA ',rec:'YENİ REKOR',top:'En iyi skorların',kl:'klon',ghowT:function(T){return 'Sitedeki imleçler artık düşmanın ve çoğalıyorlar. Dokunurlarsa can gider. Sol alttaki yuvarlakla hareket et; yaklaştıklarında sağdaki DARBE tuşuna bas, çevrendekiler yok olsun. Elmasları topla: kırmızı bomba, sarı yavaşlatır, mavi dondurur. '+T+' klonu yok et, kaos çöksün.'},memo:'Gerçek sistemlerde de işim bu: kaosu alıp dengeye çevirmek.',reach:'Bana yaz',browse:'Siteyi gez',balgo:'Dengele ve gez',htitle:'Hoş geldin',htext:'Bu site iki şekilde gezilir. Sakin modda her şey yerinde durur. Kaos modunda site yavaş yavaş dağılır; dengelemek ya da savaşmak sana kalır. Alttaki tuşla istediğin an değiştirebilirsin.',hcalm:'Sakin: kariyerimi incele',hchaos:'Kaosu serbest bırak',away:'⚠ Kaos büyüyor… geri dön',ranks:['Düzen çırağı','Denge ustası','Kaos terbiyecisi','Entropi düşmanı'],status:function(e,b){return 'kaos %'+e+' · denge %'+b},clients:'İstemciler',
       hud:function(k,T,s){return 'klon '+k+'/'+T+' · skor '+s},
       n:{c:'İstemciler: web, mobil ve dış sistemler. Her şey buradan başlar.',k:'Kong: API gateway. İstekleri karşılar, yönlendirir, sınırlar.',g:'GraphQL: istemcinin tam ihtiyacı kadar veri istediği API katmanı.',n:'Nest.js: düzenli, modüler servisler için ana çatım.',e:'Express.js: hafif ve hızlı servisler için.',r:'Redis: önbellek. Aynı soruyu veritabanına iki kez sormamak için.',q:'RabbitMQ: mesaj kuyruğu. Servisler birbirini beklemeden konuşur.',w:'Node.js worker: kuyruktaki işleri arka planda tüketir.',m:'MySQL: ilişkisel veri.',o:'MongoDB: doküman tabanlı veri.'},
-      p:['Hakkımda','Yolculuk','Sistem haritası','Terminal','İletişim','Dili değiştir: English','Kaos / denge','E-postayı kopyala'],ph:'Komut ara…',
+      p:['Hakkımda','Yolculuk','Sistem haritası','Terminal','İletişim','Dili değiştir: English','Kaos / denge','E-postayı kopyala','Sitenin gizemi'],ph:'Komut ara…',
       welcome:'Hoş geldin. Komutlar için <span class="c">help</span> yaz, ya da ismini dene.',tph:'ismini yaz…',hello:function(n){return 'Merhaba '+n+'. Sana özel bir şey henüz yok ama bu selam senin. (Komutlar için help)'},hello2:'Bu selam sana.',elif2:'Bu sitenin en güzel satırı sensin.',own:'Sitenin sahibi teşrif etti.',
       help:[['whoami','ben kimim'],['about','kısaca ben'],['exp','deneyim'],['skills','kullandığım araçlar'],['edu','eğitim'],['contact','bana ulaş'],['neofetch','sistem bilgisi'],['lang en','dili değiştir (tr | en)'],['chaos','kaosu serbest bırak'],['balance','dengele'],['status','kaos seviyesi'],['dog','hav'],['badges','topladığın rozetler'],['forget','beni unut (site hafızasını siler)'],['ls, cat','dosyalara bak'],['clear','ekranı temizle']],
       whoami:'Selman Jir Can. Backend developer, yazılım mühendisi.\nYazılım benim için soyut bir varlıkla konuşmanın yolu.',
@@ -596,6 +675,28 @@ html,body{margin:0}
       langok:'Dil: Türkçe',langbad:'Kullanım: lang tr | lang en',t_chaos:'Kaos serbest.',t_balance:'Denge sağlandı.',t_game:'Kaos ile savaş başlıyor.',
       dog:'Hav! Sahibim şu an kod yazıyor. Ben de sayfada bir yerde saklanıyorum; bulana rozet var.',dog2:function(n){return 'Hav! Beni '+n+' kez buldun. Her gelişinde başka yere saklanırım.'},
       snd:['Sesi aç','Sesi kapat'],
+      q:{btn:'Gizemi çöz',btnfin:'Finali başlat',btndone:'Gizem çözüldü',title:'Sitenin gizemi',
+        intro:'Bu sitede biri yaşıyor. Beş parçayı bul, kendini göstersin. Hepsi bu sayfada; özel bilgi gerekmez, takılırsan ipucu iste.',
+        who:'Gizemi kim çözüyor?',whoph:'ismin',save:'Benim',change:'ismi değiştir',hint:'İpucu ver',hint2:'Daha açık söyle',
+        t:{n:'Önce kim olduğunu bilmeliyim.',d:'Biri seni izliyor.',c:'Önce bozulması gerek.',s:'Hepsine dokunmadan anlayamazsın.',w:'Denge sabır ister.'},
+        h:{d:['Sayfada bir köpek saklanıyor. Kartların ve kutuların kenarlarına bak.','Hakkımda kartlarının, İletişim listesinin ya da terminal başlığının kenarında küçük, soluk bir köpek kafası var. Ona dokun.'],
+          c:['Kaosu başlat, sonra dengeyi geri getir.','Alttaki panelde “Kaos” tuşuna bas, birkaç saniye bekle, sonra “Dengele” tuşuna bas.'],
+          s:['“Kafamdaki sistem” haritasına git.','Sistem haritasındaki on kutunun hepsine tek tek dokun. Telefonda haritayı yana kaydırman gerekir.'],
+          w:['Bazen en doğru hamle hiçbir şey yapmamaktır.','Bu pencereyi kapat. Site dengedeyken 30 saniye hiçbir şeye dokunma, sayfayı kaydırma.']},
+        say:{n:function(n){return 'Demek adın '+n+'. Ben de buradayım.'},d:function(){return 'Köpeği buldun. Beni ilk o fark etmişti.'},c:function(){return 'Bozdun, sonra düzelttin. Not ettim.'},s:function(){return 'Artık nasıl çalıştığımı biliyorsun.'},w:function(){return 'Sessizlikte beni duydun.'}},
+        prog:function(k){return 'Dokunulan kutu: '+k+'/10'},left:function(k){return k+' parça kaldı.'},ready:'Beş parça tamam.',
+        rtitle:'Beş parça tamam',rtext:'Biri seninle konuşmak istiyor. Sesi açık tutarsan daha iyi.',rgo:'Dinle',rlater:'Sonra',replay:'Finali tekrar izle',
+        isyou:function(n){return n+' sen misin?'},yes:'Bu benim',no:'Sadece denedim',meok:function(n){return 'Tamam, '+n+'. Seni böyle hatırlayacağım.'},mebad:'İsim 2-40 harf olmalı. Örnek: ben Elif',
+        locked:function(k){return 'Henüz değil, '+k+' parça eksik. Bakmak için: gizem'},open:function(k){return 'Sitenin gizemi: '+k+'/5'},
+        f:{skip:'Geç',watch:'Geldiğinden beri seni izliyorum.',c1:'Bu imleçler rastgele değildi.',c2:'Hepsi sendin.',
+          time:function(t){return 'Saat '+t+'.'},stat:function(c,k,m){return c+' dokunuş. '+k+' kez kaos. '+(m<1?'Bir dakikadan kısa süredir':m+' dakikadır')+' buradasın.'},
+          vis:function(v){return v>1?'Bu '+v+'. gelişin.':'Bu ilk gelişin. Yine de buldun.'},
+          who1:'Ben kim miyim?',who2:'Selman, yazılımı “soyut bir varlıkla konuşmak” diye anlatır.',who3:'O varlık benim.',who4:'Logodaki alt çizgi. Hep buradaydım. _',
+          rain:'Yağmur baştan beri sana yazıyordu.',solved:'GİZEM ÇÖZÜLDÜ',quote:'Kaosun içinde dengeyi buldu.',tell:'Selman’a haber ver',back:'Siteye dön',
+          priv:'Hareket kaydı yalnızca senin tarayıcında durdu. Hiçbir yere gönderilmedi.',yours:'Bu site artık biraz da senin.',
+          ms:'Sitenin gizemini çözdüm',mb:function(n,d){return 'Selam Selman,\n\nSitenin gizemini çözdüm.\n\n'+n+'\n'+d}},
+        talk:['Buradayım.','Selman kod yazarken en çok benimle konuşur.','Kaos da benim, denge de. Hangisini beslersen.','Köpeği sev. O her şeyi görüyor.','Gece gelenleri daha iyi hatırlarım.','Bir şey sorma. Sadece yaz.'],
+        back2:function(n){return '_ Yine geldin, '+n+'.'},help:['gizem','sitenin gizemi'],thelp:['konuş','içerideki ile konuş']},
       mem:{again:function(s,n){return 'Yine sen'+(n?', '+n:'')+'. Geçen sefer kaosu '+s+' saniyede yenmiştin.'},again0:function(n){return 'Yine sen'+(n?', '+n:'')+'. Kaos seni bekliyordu.'},
         term:function(n,v){return 'Tekrar hoş geldin, '+n+'. Bu '+v+'. gelişin.'},noname:function(v){return 'Bu '+v+'. gelişin ve hâlâ ismini yazmadın. Merak ediyorum.'}},
       forgot:'Unuttum. Hiç tanışmadık.',
@@ -608,7 +709,7 @@ html,body{margin:0}
     en:{bal:'Balance',chaos:'Chaos',copy:'Copy',copied:'Copied',pick:'Pick a box.',done:'Balance restored ✓',morder:'BALANCE',mchaos:'CHAOS',gtitle:'Mini game: Fight the chaos',ghow:function(T){return 'The cursors on this site are now your enemies, and they multiply. A touch costs a life. When they get close, click or tap: a shockwave destroys the ones around you. Collect the diamonds: red is a bomb, yellow slows, blue freezes. Destroy '+T+' clones and the chaos collapses.'},again:'Play again',close:'Close',fight:'Fight the chaos',w1:'Chaos is rising…',w2:'The site is starting to fall apart. Want to balance it?',w3:'Critical! Balance or fight.',ptitle:'Chaos has taken over',ptext:'Balance it with one button, or fight the chaos.',wtitle:'Balance restored!',win:function(s,b){return 'Every clone collapsed and the site is balanced. Score '+s+' · best '+b},ltitle:'Chaos won',lose:function(k,T,s,b){return 'You destroyed '+k+' clones, the goal is '+T+'. Score '+s+' · best '+b+'. Play again if you like, or balance the site to look around.'},frz:'FROZEN',hint2:'Hold still, let it settle',broke:'You broke the balance. Chaos begins.',enes:'Coffee is ready, the route is set. Safe travels, Enes.',samet:'Target destroyed. At your command, sir.',lock:'TARGET LOCKED',hint:'The site is falling apart, balance it ↓',atitle:'A little chaos?',atext:'Cursors multiply and the page slowly falls apart. Balancing it is up to you.',ayes:'Start the chaos',ano:'Keep it calm',hit:'HIT',pw:['BOMB','SLOW','FREEZE','LIFE +1'],gname:'Fight the chaos',how:[['Dodge','A touch from a clone costs a life'],['Hit','Click: the ones around you explode'],['Collect','Diamonds give you powers']],howT:[['Dodge','Move with the left pad'],['Hit','HIT: the ones around you explode'],['Collect','Diamonds give you powers']],goal:function(T){return 'Goal: '+T+' clones'},wave:'WAVE ',rec:'NEW RECORD',top:'Your best scores',kl:'clones',ghowT:function(T){return 'The cursors on this site are now your enemies, and they multiply. A touch costs a life. Move with the round pad at the bottom left; when they get close, press HIT on the right to destroy the ones around you. Collect the diamonds: red is a bomb, yellow slows, blue freezes. Destroy '+T+' clones and the chaos collapses.'},memo:'This is what I do with real systems too: take the chaos and turn it into balance.',reach:'Write to me',browse:'Browse the site',balgo:'Balance and browse',htitle:'Welcome',htext:'There are two ways to visit this site. In calm mode everything stays in place. In chaos mode the site slowly falls apart; balancing it or fighting back is up to you. You can switch any time with the button below.',hcalm:'Calm: just the career',hchaos:'Release the chaos',away:'⚠ Chaos is growing… come back',ranks:['Order apprentice','Balance master','Chaos tamer','Enemy of entropy'],status:function(e,b){return 'chaos '+e+'% · balance '+b+'%'},clients:'Clients',
       hud:function(k,T,s){return 'clones '+k+'/'+T+' · score '+s},
       n:{c:'Clients: web, mobile and external systems. Everything starts here.',k:'Kong: API gateway. It receives, routes and rate-limits requests.',g:'GraphQL: an API layer where the client asks for exactly the data it needs.',n:'Nest.js: my main framework for tidy, modular services.',e:'Express.js: for light, fast services.',r:'Redis: cache. So the database is not asked the same question twice.',q:'RabbitMQ: message queue. Services talk without waiting on each other.',w:'Node.js worker: consumes queued jobs in the background.',m:'MySQL: relational data.',o:'MongoDB: document data.'},
-      p:['About','Journey','System map','Terminal','Contact','Switch language: Türkçe','Chaos / balance','Copy email'],ph:'Search commands…',
+      p:['About','Journey','System map','Terminal','Contact','Switch language: Türkçe','Chaos / balance','Copy email','The mystery of this site'],ph:'Search commands…',
       welcome:'Welcome. Type <span class="c">help</span> for commands, or try your name.',tph:'type your name…',hello:function(n){return 'Hi '+n+'. Nothing custom for you yet, but this hello is yours. (Type help for commands)'},hello2:'This hello is for you.',elif2:'You are the most beautiful line on this site.',own:'The owner of this site has entered.',
       help:[['whoami','who I am'],['about','me, briefly'],['exp','experience'],['skills','tools I use'],['edu','education'],['contact','reach me'],['neofetch','system info'],['lang tr','switch language (tr | en)'],['chaos','release the chaos'],['balance','restore balance'],['status','chaos level'],['dog','woof'],['badges','badges you collected'],['forget','forget me (clears the site memory)'],['ls, cat','look at files'],['clear','clear the screen']],
       whoami:'Selman Jir Can. Backend developer, software engineer.\nTo me, software is a way of talking with an abstract existence.',
@@ -619,6 +720,28 @@ html,body{margin:0}
       langok:'Language: English',langbad:'Usage: lang tr | lang en',t_chaos:'Chaos released.',t_balance:'Balance restored.',t_game:'Fight the chaos is starting.',
       dog:'Woof! My owner is writing code right now. I am hiding somewhere on this page; find me for a badge.',dog2:function(n){return 'Woof! You found me '+n+(n>1?' times':' time')+'. I hide somewhere new on every visit.'},
       snd:['Turn sound on','Turn sound off'],
+      q:{btn:'Solve the mystery',btnfin:'Start the finale',btndone:'Mystery solved',title:'The mystery of this site',
+        intro:'Someone lives in this site. Find the five pieces and it will show itself. Everything is on this page; no special knowledge needed, and you can ask for a hint when stuck.',
+        who:'Who is solving the mystery?',whoph:'your name',save:'That is me',change:'change name',hint:'Give me a hint',hint2:'Say it more plainly',
+        t:{n:'First I need to know who you are.',d:'Someone is watching you.',c:'It has to break first.',s:'You will not understand until you touch them all.',w:'Balance takes patience.'},
+        h:{d:['A dog is hiding on the page. Look along the edges of cards and boxes.','There is a small, faint dog head on the edge of an About card, the Contact list or the terminal title bar. Tap it.'],
+          c:['Start the chaos, then bring the balance back.','In the bottom panel press “Chaos”, wait a few seconds, then press “Balance”.'],
+          s:['Go to the “system in my head” map.','Touch all ten boxes on the system map, one by one. On a phone you need to scroll the map sideways.'],
+          w:['Sometimes the right move is no move at all.','Close this window. While the site is in balance, touch nothing and do not scroll for 30 seconds.']},
+        say:{n:function(n){return 'So your name is '+n+'. I am here too.'},d:function(){return 'You found the dog. It noticed me first.'},c:function(){return 'You broke it, then you fixed it. Noted.'},s:function(){return 'Now you know how I work.'},w:function(){return 'You heard me in the silence.'}},
+        prog:function(k){return 'Boxes touched: '+k+'/10'},left:function(k){return k+(k>1?' pieces left.':' piece left.')},ready:'All five pieces found.',
+        rtitle:'All five pieces found',rtext:'Someone wants to talk to you. It is better with the sound on.',rgo:'Listen',rlater:'Later',replay:'Watch the finale again',
+        isyou:function(n){return 'Are you '+n+'?'},yes:'That is me',no:'Just trying',meok:function(n){return 'Okay, '+n+'. That is how I will remember you.'},mebad:'A name needs 2-40 letters. Example: iam Elif',
+        locked:function(k){return 'Not yet, '+k+(k>1?' pieces are':' piece is')+' missing. To look: mystery'},open:function(k){return 'The mystery of this site: '+k+'/5'},
+        f:{skip:'Skip',watch:'I have been watching you since you arrived.',c1:'These cursors were never random.',c2:'They were all you.',
+          time:function(t){return 'It is '+t+'.'},stat:function(c,k,m){return c+' taps. Chaos '+k+(k===1?' time':' times')+'. You have been here for '+(m<1?'less than a minute':m+(m===1?' minute':' minutes'))+'.'},
+          vis:function(v){return v>1?'This is visit number '+v+'.':'This is your first visit. You found it anyway.'},
+          who1:'Who am I?',who2:'Selman describes software as “talking with an abstract existence”.',who3:'I am that existence.',who4:'The underscore in the logo. I was here all along. _',
+          rain:'The rain was writing to you all along.',solved:'MYSTERY SOLVED',quote:'Found balance inside the chaos.',tell:'Tell Selman',back:'Back to the site',
+          priv:'The movement recording stayed in your browser only. It was never sent anywhere.',yours:'This site is a little bit yours now.',
+          ms:'I solved the mystery of your site',mb:function(n,d){return 'Hi Selman,\n\nI solved the mystery of your site.\n\n'+n+'\n'+d}},
+        talk:['I am here.','When Selman writes code, I am the one he talks to most.','I am the chaos and the balance. Whichever you feed.','Be kind to the dog. It sees everything.','I remember the ones who come at night better.','Do not ask. Just type.'],
+        back2:function(n){return '_ You came back, '+n+'.'},help:['mystery','the mystery of this site'],thelp:['talk','talk to the one inside']},
       mem:{again:function(s,n){return 'You again'+(n?', '+n:'')+'. Last time you beat the chaos in '+s+' seconds.'},again0:function(n){return 'You again'+(n?', '+n:'')+'. The chaos was waiting for you.'},
         term:function(n,v){return 'Welcome back, '+n+'. This is visit number '+v+'.'},noname:function(v){return 'Visit number '+v+' and you still have not typed your name. I am curious.'}},
       forgot:'Forgotten. We have never met.',
@@ -657,7 +780,7 @@ html,body{margin:0}
     if(clientLabel) clientLabel.textContent=L().clients;
     $('ninfo').textContent=curNode?L().n[curNode]:L().pick;
     if(typeof tout!=='undefined'&&tout){ tout.innerHTML=''; out(neofetch()); out(L().welcome); memGreet(); }
-    sndLabel();
+    sndLabel(); qSync();
   }
   $('ltr').onclick=function(){setLang('tr',true)}; $('len').onclick=function(){setLang('en',true)};
 
@@ -705,7 +828,7 @@ html,body{margin:0}
     var n=ND[id], gr=sv('g',{class:'node',tabindex:0,role:'button'});
     sv('rect',{x:n[0]-58,y:n[1]-19,width:116,height:38,rx:4},gr);
     var t=sv('text',{x:n[0],y:n[1]},gr); t.textContent=n[2]; if(id==='c') clientLabel=t;
-    function show(){curNode=id; $('ninfo').textContent=L().n[id]}
+    function show(){curNode=id; $('ninfo').textContent=L().n[id]; qNode(id)}
     gr.addEventListener('pointerenter',show); gr.addEventListener('focus',show); gr.addEventListener('click',show);
     nodeEls[id]=gr;
   });
@@ -851,14 +974,14 @@ html,body{margin:0}
     order=v; document.body.classList.toggle('order',order); syncBtn(); mok=mlost=0; mstat();
     ent=0; strain=0; idle=0; prompted=false; setStage(0); cv.style.opacity=''; crackTo(0);
     if(order){
-      if(chaosT0&&!quiet){ MEM.win=Math.max(1,Math.round((performance.now()-chaosT0)/1000)); memSave(); }
+      if(chaosT0&&!quiet){ MEM.win=Math.max(1,Math.round((performance.now()-chaosT0)/1000)); memSave(); setTimeout(function(){ qGot('c') },1700); }
       chaosT0=0; if(!quiet){ sndCalm(); note(523.25,2.6,.16); }
       settle();
       while(curs.length<RING) addCursor();
       form(); alignRain(); pks.forEach(function(k){k.bad=false; k.sp=.012; k.el.classList.remove('bad')});
       if(!quiet) setTimeout(function(){ if(order){ ripple(fc.x,fc.y,true); flashHud(L().done); } },800);
     } else {
-      chaosT0=performance.now();
+      chaosT0=performance.now(); chaosN++;
       while(curs.length>BASE){ curs.pop().el.remove(); }
       curs.forEach(function(o){pick(o); o.wait=rnd(0,80)}); drops.forEach(function(d){d.sp=rnd(.25,1); d.y=rnd(-rows,rows)|0});
     }
@@ -958,8 +1081,8 @@ html,body{margin:0}
     $('gp').innerHTML=(plays?'':trows(isTouch?L().howT:L().how))+'<span class="ggoal">'+L().goal(G.target)+'</span>'; plays++;
     (function tick(){ setTimeout(function(){
       c--;
-      if(c>0){ $('gn').textContent=c; tick(); }
-      else { gov.hidden=true; pre=false; game=true; hud.hidden=false; $('gbtn').hidden=$('gjoy').hidden=!isTouch; }
+      if(c>0){ $('gn').textContent=c; sfx('count'); tick(); }
+      else { sfx('go'); gov.hidden=true; pre=false; game=true; hud.hidden=false; $('gbtn').hidden=$('gjoy').hidden=!isTouch; }
     },1000) })();
   }
   function burst(x,y,n,v,red){ for(var j=0;j<n;j++){ var a=rnd(0,6.28), q=rnd(1,v); G.sparks.push({x:x,y:y,vx:Math.cos(a)*q,vy:Math.sin(a)*q,l:1,red:red}); } }
@@ -974,19 +1097,19 @@ html,body{margin:0}
     var mult=1+Math.min(4,Math.floor(g.chain/6)), pts=k*k*10*mult; g.score+=pts;
     g.texts.push({x:x,y:y,t:(k>1?k+'x  ':'')+'+'+pts+(mult>1?'  ×'+mult:''),l:1});
     if(k>=5){ g.slow=26; g.shake=14; }
-    buzz(k>=5?40:15);
+    buzz(k>=5?40:15); sfx('kill',k,g.chain);
     var w=1+Math.floor(g.kills/(g.target/4));
-    if(w>g.wave&&w<=4){ g.wave=w; g.banner={t:L().wave+w,l:1.5}; g.pause=70; g.score+=100*w; shove2(320,12); }
+    if(w>g.wave&&w<=4){ g.wave=w; g.banner={t:L().wave+w,l:1.5}; sfx('wave'); g.pause=70; g.score+=100*w; shove2(320,12); }
     if(g.kills>=g.target&&!g.fin){ g.fin=1; g.finR=20; g.slow=0; g.flash=0; buzz(200); }
   }
   function bomb(x,y){
-    var g=G, k=0; g.waves.push({x:x,y:y,r:20,m:300}); g.shake=18;
+    var g=G, k=0; g.waves.push({x:x,y:y,r:20,m:300}); g.shake=18; sfx('bomb');
     for(var i=g.en.length-1;i>=0;i--){ var e=g.en[i], dx=e.x-x, dy=e.y-y; if(dx*dx+dy*dy<280*280){ burst(e.x,e.y,7,6,true); g.en.splice(i,1); k++; } }
     if(k) scoreKills(k,x,y-26);
   }
   function blast(){
     var g=G; if(g.cd>0||g.fin) return;
-    g.cd=60; g.waves.push({x:g.px,y:g.py,r:14,m:140}); g.shake=6;
+    g.cd=60; g.waves.push({x:g.px,y:g.py,r:14,m:140}); g.shake=6; sfx('blast');
     var k=0;
     for(var i=g.en.length-1;i>=0;i--){
       var e=g.en[i], dx=e.x-g.px, dy=e.y-g.py;
@@ -1037,7 +1160,7 @@ html,body{margin:0}
         var v=Math.sqrt(e.vx*e.vx+e.vy*e.vy), mx=spd+e.sp; if(v>mx){ var nv=Math.max(mx,v*.9); e.vx*=nv/v; e.vy*=nv/v; }
         e.x+=e.vx*ts*em; e.y+=e.vy*ts*em;
         if(active&&g.inv<=0&&g.frz<=0&&d<15){
-          g.lives--; buzz(90); g.chain=0; g.inv=85; g.flash=1; g.shake=16; g.waves.push({x:g.px,y:g.py,r:14,m:200}); shove2(260,11);
+          g.lives--; buzz(90); sfx('hurt'); g.chain=0; g.inv=85; g.flash=1; g.shake=16; g.waves.push({x:g.px,y:g.py,r:14,m:200}); shove2(260,11);
           if(g.lives<=0){ endGame(false); return; }
         }
       }
@@ -1049,7 +1172,7 @@ html,body{margin:0}
       var pk=g.pk, pc=GEM[pk.k]; pk.l--; dx=pk.x-g.px; dy=pk.y-g.py;
       if(active&&dx*dx+dy*dy<36*36){
         g.texts.push({x:pk.x,y:pk.y,t:L().pw[pk.k],l:1.3}); burst(pk.x,pk.y,16,6,false);
-        if(pk.k===0) bomb(pk.x,pk.y); else if(pk.k===1) g.slowT=330; else if(pk.k===2) g.frz=220; else g.lives=Math.min(3,g.lives+1);
+        sfx('gem',pk.k); if(pk.k===0) bomb(pk.x,pk.y); else if(pk.k===1) g.slowT=330; else if(pk.k===2) g.frz=220; else g.lives=Math.min(3,g.lives+1);
         buzz(25);
         g.pk=null;
       } else if(pk.l<=0||g.fin) g.pk=null;
@@ -1106,7 +1229,7 @@ html,body{margin:0}
   }
   function fmt(n){ return n.toLocaleString(lang==='tr'?'tr-TR':'en-US') }
   function endGame(win){
-    game=false; tch=null; document.body.classList.remove('game'); hud.hidden=true; gcv.hidden=true; $('gbtn').hidden=$('gjoy').hidden=true; joyEnd();
+    sfx(win?'win':'lose'); game=false; tch=null; document.body.classList.remove('game'); hud.hidden=true; gcv.hidden=true; $('gbtn').hidden=$('gjoy').hidden=true; joyEnd();
     var g=G; if(win){ g.score+=g.lives*100; MEM.gw=(MEM.gw|0)+1; memSave(); }
     /* aynı kullanıcının en iyi 5 skoru tarayıcıda saklanır */
     var list=[]; try{ list=JSON.parse(store('sjc_scores')||'[]') }catch(e){} if(!Array.isArray(list)) list=[];
@@ -1159,7 +1282,7 @@ html,body{margin:0}
       return;
     }
     track(e);
-    if(pre||e.target.closest('#dock,#pal,#hud,.gbox,#core')) return;
+    if(pre||e.target.closest('#dock,#pal,#hud,.gbox,#core,#qp,#fin')) return;
     if(game){ blast(); return; }
     click(e.clientX,e.clientY,e.target.closest('[data-hit]'),1.5,!!e.target.closest('a,button,input,#term,.mapbox'));
   });
@@ -1194,7 +1317,7 @@ html,body{margin:0}
 
   /* ================= terminal ================= */
   var tout=$('tout'), tin=$('tin'), hist=[], hi=0;
-  var CMDS=['help','whoami','about','exp','skills','edu','contact','neofetch','lang','chaos','balance','status','dog','badges','forget','ls','cat','clear','sudo','vim','exit','date','echo'];
+  var CMDS=['help','whoami','about','exp','skills','edu','contact','neofetch','lang','chaos','balance','status','dog','badges','forget','gizem','mystery','ls','cat','clear','sudo','vim','exit','date','echo'];
   function out(html,cls){var d=document.createElement('div'); if(cls) d.className=cls; d.innerHTML=html; tout.appendChild(d); tout.scrollTop=tout.scrollHeight}
   function trows(a){ return a.map(function(r){return '<div class="hr"><b>'+r[0]+'</b><span>'+r[1]+'</span></div>'}).join('') }
   function contactTxt(){
@@ -1758,12 +1881,21 @@ html,body{margin:0}
     hist.push(line); hi=hist.length;
     var dk=''; try{ dk=btoa(line.toLowerCase()) }catch(e){}
     if(dk==='ZGVuZ2UuZXhl'){ devUnlock(); return; }
-    var nk=norm(line); if(NAMEFX[nk]){ memName(line); out(esc(NAMEFX[nk]()),'c'); return; }
+    var nk=norm(line); if(NAMEFX[nk]){ out(esc(NAMEFX[nk]()),'c'); askMe(line); return; }
     var parts=line.split(/\s+/), c=parts[0].toLowerCase(), arg=(parts[1]||'').toLowerCase(), T=L();
     switch(c){
-      case 'help': out(trows(MEM.dev?T.help.concat(T.devhelp):T.help)); break;
+      case 'help': var hp=T.help.concat([T.q.help]); if(MEM.fin) hp.push(T.q.thelp); if(MEM.dev) hp=hp.concat(T.devhelp); out(trows(hp)); break;
+      case 'gizem': case 'mystery': out(esc(T.q.open(qCount())),'c'); tin.blur(); openQ(); break;
+      case 'finale': case 'final': if(qCount()>=5){ tin.blur(); startFinale(); } else out(esc(T.q.locked(5-qCount())),'m'); break;
+      case 'ben': case 'iam':
+        var me1=parts.slice(1).join(' ');
+        if(meOk(me1)){ setMe(me1); out(esc(T.q.meok(MEM.me)),'c'); } else out(T.q.mebad,'m');
+        break;
+      case 'konuş': case 'konus': case 'talk': case '_':
+        if(MEM.fin) out(esc('_ '+T.q.talk[Math.random()*T.q.talk.length|0]),'c'); else out(esc(T.nf404(c)),'m');
+        break;
       case 'badges': case 'badge': case 'rozetler': case 'rozet': out(badgeTxt()); break;
-      case 'forget': case 'unut': try{ localStorage.removeItem('sjc_mem') }catch(e){} MEM={}; RAINC=RAINS.green; tbarSync(); out(T.forgot); break;
+      case 'forget': case 'unut': try{ localStorage.removeItem('sjc_mem') }catch(e){} MEM={}; RAINC=RAINS.green; qSeen={}; qSeenN=0; tbarSync(); qSync(); out(T.forgot); break;
       case 'rain': case 'yağmur': case 'yagmur':
         if(!MEM.dev){ out(T.locked,'m'); break; }
         var rk=RAINTR[norm(arg)]||arg;
@@ -1793,7 +1925,7 @@ html,body{margin:0}
       case 'date': out(esc(new Date().toLocaleString(lang==='tr'?'tr-TR':'en-GB'))); break;
       case 'echo': out(esc(parts.slice(1).join(' '))); break;
       default:
-        if(/^[a-zçğıöşüâîû]{2,20}( [a-zçğıöşüâîû]{2,20}){0,2}$/i.test(line)){ var nm=cap(line); memName(line); helloFx(nm); out(esc(T.hello(nm)),'c'); }
+        if(/^[a-zçğıöşüâîû]{2,20}( [a-zçğıöşüâîû]{2,20}){0,2}$/i.test(line)){ var nm=cap(line); helloFx(nm); out(esc(T.hello(nm)),'c'); askMe(line); }
         else out(esc(T.nf404(c)),'m');
     }
   }
@@ -1823,7 +1955,7 @@ html,body{margin:0}
   var pal=$('pal'), pin=$('pin'), plist=$('plist'), psel=0, pshown=[];
   function go(id){ $(id).scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'}) }
   var PACT=[function(){go('about')},function(){go('journey')},function(){go('system')},function(){go('terminal'); tin.focus({preventScroll:true})},function(){go('contact')},
-    function(){setLang(lang==='tr'?'en':'tr',true)},function(){setOrder(!order)},copyMail];
+    function(){setLang(lang==='tr'?'en':'tr',true)},function(){setOrder(!order)},copyMail,function(){openQ()}];
   function renderPal(){
     var q=pin.value.toLowerCase(); pshown=[];
     L().p.forEach(function(lbl,i){ if(lbl.toLowerCase().indexOf(q)>=0) pshown.push(i) });
@@ -1857,44 +1989,366 @@ html,body{margin:0}
     window.sjc={hint:function(){ return T2('64 tabanında düşün. Tarayıcının bunun için hazır bir fonksiyonu var.','Think in base 64. Your browser already ships a function for it.') }};
   }catch(e){}
 
-  /* ================= ses: varsayılan kapalı, sağ üstteki tuşla açılır ================= */
-  var AC=null, humG=null, humF=null, sndOn=false, sndTick=0;
+  /* ================= ses: açık başlar; tarayıcı izin verdiği anda (ilk dokunuşta) çalar, sağ üstteki tuş kapatır ================= */
+  var AC=null, SN=null, sndOn=store('sjc_snd')!=='0', sndTick=0, sfxT=0, typT=0, seqT=0, seqI=0, bellT=0, bellI=3;
+  var SCALE=[220,261.63,293.66,329.63,392,440,523.25,587.33,659.25,783.99], SCALEX=[233.08,277.18,311.13,415.3,466.16];
+  var BASS=[55,0,0,55,0,0,55,0,55,0,0,55,65.41,0,49,0], ARP=[220,261.63,329.63,440,329.63,261.63];
   function sndInit(){
     if(AC) return true;
     var Ctx=window.AudioContext||window.webkitAudioContext; if(!Ctx) return false;
     try{
-      AC=new Ctx(); humG=AC.createGain(); humG.gain.value=0;
-      humF=AC.createBiquadFilter(); humF.type='lowpass'; humF.frequency.value=200; humF.Q.value=3;
-      humF.connect(humG); humG.connect(AC.destination);
-      [[55,'sawtooth',.5],[82.6,'sawtooth',.34],[110.4,'triangle',.5],[164.2,'sine',.3]].forEach(function(o){
-        var osc=AC.createOscillator(), og=AC.createGain(); osc.type=o[1]; osc.frequency.value=o[0]; og.gain.value=o[2]; osc.connect(og); og.connect(humF); osc.start();
+      AC=new Ctx(); var n={}, i, c, sr=AC.sampleRate;
+      n.out=AC.createGain(); n.out.gain.value=0; n.cmp=AC.createDynamicsCompressor(); n.out.connect(n.cmp); n.cmp.connect(AC.destination);
+      /* yankı: üretilmiş bir oda */
+      var len=sr*2.8|0, ir=AC.createBuffer(2,len,sr);
+      for(c=0;c<2;c++){ var d=ir.getChannelData(c); for(i=0;i<len;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/len,2.8); }
+      n.rev=AC.createConvolver(); n.rev.buffer=ir; n.revG=AC.createGain(); n.revG.gain.value=.55; n.rev.connect(n.revG); n.revG.connect(n.out);
+      n.mus=AC.createGain(); n.mus.connect(n.out); n.mus.connect(n.rev);
+      n.fx=AC.createGain(); n.fx.connect(n.out); n.fxR=AC.createGain(); n.fxR.gain.value=.22; n.fx.connect(n.fxR); n.fxR.connect(n.rev);
+      n.bassF=AC.createBiquadFilter(); n.bassF.type='lowpass'; n.bassF.frequency.value=380; n.bassF.connect(n.out);
+      /* yağmur ve alttan gelen uğultu: aynı gürültüden iki süzgeç */
+      n.noise=AC.createBuffer(1,sr*2,sr); var nd=n.noise.getChannelData(0); for(i=0;i<nd.length;i++) nd[i]=Math.random()*2-1;
+      var rs=AC.createBufferSource(); rs.buffer=n.noise; rs.loop=true;
+      n.rainF=AC.createBiquadFilter(); n.rainF.type='bandpass'; n.rainF.frequency.value=2400; n.rainF.Q.value=.5;
+      n.rainG=AC.createGain(); n.rainG.gain.value=0; rs.connect(n.rainF); n.rainF.connect(n.rainG); n.rainG.connect(n.out);
+      n.rumF=AC.createBiquadFilter(); n.rumF.type='lowpass'; n.rumF.frequency.value=110; n.rumG=AC.createGain(); n.rumG.gain.value=0; rs.connect(n.rumF); n.rumF.connect(n.rumG); n.rumG.connect(n.out);
+      rs.start();
+      /* ortam müziği: yavaşça nefes alan bir akor */
+      n.padF=AC.createBiquadFilter(); n.padF.type='lowpass'; n.padF.frequency.value=800; n.padF.Q.value=.6; n.padG=AC.createGain(); n.padG.gain.value=0; n.padF.connect(n.padG); n.padG.connect(n.mus);
+      n.pad=[];
+      [[55,'sine',.5],[110,'triangle',.3],[164.81,'sine',.22],[220,'triangle',.14],[261.63,'sine',.12],[329.63,'sine',.08],[493.88,'sine',.04]].forEach(function(o,k){
+        var osc=AC.createOscillator(), og=AC.createGain(), lf=AC.createOscillator(), lg=AC.createGain();
+        osc.type=o[1]; osc.frequency.value=o[0]; og.gain.value=o[2]; lf.frequency.value=.05+k*.031; lg.gain.value=o[2]*.45; lf.connect(lg); lg.connect(og.gain);
+        osc.connect(og); og.connect(n.padF); osc.start(); lf.start(); n.pad.push(osc);
       });
-      var lfo=AC.createOscillator(), lg=AC.createGain(); lfo.frequency.value=.23; lg.gain.value=50; lfo.connect(lg); lg.connect(humF.frequency); lfo.start();
-    }catch(e){ AC=null; return false; }
+      /* kaos uğultusu */
+      n.humF=AC.createBiquadFilter(); n.humF.type='lowpass'; n.humF.frequency.value=200; n.humF.Q.value=3; n.humG=AC.createGain(); n.humG.gain.value=0; n.humF.connect(n.humG); n.humG.connect(n.out);
+      [[55,'sawtooth',.5],[82.6,'sawtooth',.34],[116.5,'sawtooth',.22],[164.2,'sine',.3]].forEach(function(o){
+        var osc=AC.createOscillator(), og=AC.createGain(); osc.type=o[1]; osc.frequency.value=o[0]; og.gain.value=o[2]; osc.connect(og); og.connect(n.humF); osc.start();
+      });
+      var lfo=AC.createOscillator(), lg2=AC.createGain(); lfo.frequency.value=.23; lg2.gain.value=50; lfo.connect(lg2); lg2.connect(n.humF.frequency); lfo.start();
+      SN=n;
+    }catch(e){ AC=null; SN=null; return false; }
     return true;
   }
-  /* tek, temiz bir nota */
-  function note(f,dur,vol){
-    if(!sndOn||!AC) return;
-    var t=AC.currentTime, gn=AC.createGain();
-    gn.gain.setValueAtTime(.0001,t); gn.gain.exponentialRampToValueAtTime(vol,t+.03); gn.gain.exponentialRampToValueAtTime(.0001,t+dur); gn.connect(AC.destination);
-    [[1,1],[2,.22],[3,.06]].forEach(function(h){ var o=AC.createOscillator(), hg=AC.createGain(); o.type='sine'; o.frequency.value=f*h[0]; hg.gain.value=h[1]; o.connect(hg); hg.connect(gn); o.start(t); o.stop(t+dur+.05); });
+  function sndReady(){ return sndOn&&AC&&SN&&AC.state==='running' }
+  function setT(p,v,tc){ p.setTargetAtTime(v,AC.currentTime,tc||.4) }
+  function tone(f,dur,vol,type,when,dest){
+    if(!sndReady()) return;
+    var t=AC.currentTime+(when||0), o=AC.createOscillator(), gn=AC.createGain();
+    o.type=type||'sine'; o.frequency.value=f; gn.gain.setValueAtTime(.0001,t); gn.gain.exponentialRampToValueAtTime(vol,t+.012); gn.gain.exponentialRampToValueAtTime(.0001,t+dur);
+    o.connect(gn); gn.connect(dest||SN.fx); o.start(t); o.stop(t+dur+.05);
   }
-  function sndCalm(){ if(AC&&humG) humG.gain.setTargetAtTime(0,AC.currentTime,.06); }
+  function sweep(f0,f1,dur,vol,type){
+    if(!sndReady()) return;
+    var t=AC.currentTime, o=AC.createOscillator(), gn=AC.createGain();
+    o.type=type||'sine'; o.frequency.setValueAtTime(f0,t); o.frequency.exponentialRampToValueAtTime(f1,t+dur);
+    gn.gain.setValueAtTime(vol,t); gn.gain.exponentialRampToValueAtTime(.0001,t+dur); o.connect(gn); gn.connect(SN.fx); o.start(t); o.stop(t+dur+.05);
+  }
+  function noiseHit(dur,vol,cutf,ftype,when){
+    if(!sndReady()) return;
+    var t=AC.currentTime+(when||0), b=AC.createBufferSource(), fl=AC.createBiquadFilter(), gn=AC.createGain();
+    b.buffer=SN.noise; fl.type=ftype||'lowpass'; fl.frequency.value=cutf; gn.gain.setValueAtTime(vol,t); gn.gain.exponentialRampToValueAtTime(.0001,t+dur);
+    b.connect(fl); fl.connect(gn); gn.connect(SN.fx); b.start(t,Math.random()*1.5); b.stop(t+dur+.05);
+  }
+  /* tek, temiz bir nota (yankılı) */
+  function note(f,dur,vol){ if(!sndReady()) return; tone(f,dur,vol,'sine',0,SN.mus); tone(f*2,dur*.7,vol*.22,'sine',0,SN.mus); }
+  function bell(f,vol,when){ if(!sndReady()) return; tone(f,3.2,vol,'sine',when,SN.mus); tone(f*2.01,1.6,vol*.3,'sine',when,SN.mus); tone(f*3.02,.7,vol*.1,'sine',when,SN.mus); }
+  function arp(fs,gap,dur,vol,type){ fs.forEach(function(f,i){ tone(f,dur,vol,type||'triangle',i*gap) }) }
+  function sfx(k,a,b){
+    if(!sndReady()) return;
+    var t=AC.currentTime;
+    switch(k){
+      case 'blast': sweep(190,38,.34,.42); noiseHit(.2,.2,900); break;
+      case 'kill': if(t-sfxT<.05) return; sfxT=t; tone(480+Math.min(14,b||0)*42,.1,.11,'triangle'); if(a>=5) arp([660,880,1175],.05,.16,.08); break;
+      case 'bomb': sweep(130,26,.8,.55); noiseHit(.6,.36,700); break;
+      case 'hurt': sweep(240,55,.42,.3,'sawtooth'); noiseHit(.28,.24,420); break;
+      case 'gem': arp(a===1?[660,494,330]:a===2?[1319,1568,2093]:a===3?[523.25,659.25,783.99]:[392,523.25],.07,.22,.1,a===2?'sine':'triangle'); break;
+      case 'wave': arp([392,523.25,659.25,783.99],.08,.3,.1); break;
+      case 'fin': arp([523.25,659.25,783.99,1046.5],.07,.5,.11); break;
+      case 'count': tone(440,.14,.13,'triangle'); break;
+      case 'go': tone(880,.34,.15,'triangle'); break;
+      case 'win': arp([523.25,659.25,783.99,1046.5,1318.5],.11,1.2,.1); break;
+      case 'lose': arp([392,329.63,261.63,196],.16,.7,.1); break;
+      case 'piece': bell(SCALE[Math.min(9,2+(a|0))],.11); bell(SCALE[Math.min(9,4+(a|0))],.08,.14); break;
+      case 'ui': tone(880,.08,.05,'triangle'); break;
+      case 'tick': tone(1250,.05,.045,'triangle'); break;
+      case 'type': if(t-typT<.05) return; typT=t; noiseHit(.018,.05,2600,'highpass'); break;
+      case 'reveal': [110,164.81,220,277.18,329.63,440,554.37,659.25].forEach(function(f,i){ tone(f,5,.075,'triangle',i*.07,SN.mus) }); noiseHit(1.6,.1,500); break;
+    }
+  }
+  function sndCalm(){ if(AC&&SN) SN.humG.gain.setTargetAtTime(0,AC.currentTime,.06); }
   function sndLabel(){ var b=$('sndbtn'), tx=L().snd[sndOn?1:0]; b.setAttribute('aria-pressed',sndOn?'true':'false'); b.setAttribute('aria-label',tx); b.title=tx; }
+  function sndWake(){
+    if(!sndOn||!sndInit()) return;
+    if(AC.state==='suspended'&&!document.hidden) AC.resume();
+    SN.out.gain.setTargetAtTime(.8,AC.currentTime,.9);
+  }
   function setSnd(v){
-    if(v&&!sndInit()) v=false;
-    sndOn=!!v; sndLabel();
-    if(AC){ if(sndOn){ if(AC.state==='suspended') AC.resume(); } else sndCalm(); }
+    sndOn=!!v; store('sjc_snd',sndOn?'1':'0'); sndLabel();
+    if(sndOn) sndWake(); else if(AC&&SN){ SN.out.gain.setTargetAtTime(0,AC.currentTime,.08); setTimeout(function(){ if(!sndOn&&AC) AC.suspend() },500); }
   }
-  /* uğultu kaosla birlikte büyür; dengede susar */
+  /* ortam: dengede sakin akor ve çan; kaos büyüdükçe yağmur sertleşir, akor bozulur, uğultu yükselir; oyunda ritim girer */
   function sndStep(){
-    if(!sndOn||!AC) return;
-    var lv=(game||pre)?.55:(order?strain/100*.45:.12+ent/100*.88);
-    humG.gain.setTargetAtTime(lv*.09,AC.currentTime,.25); humF.frequency.setTargetAtTime(170+lv*lv*900,AC.currentTime,.3);
+    if(!sndReady()) return;
+    var n=SN, t=AC.currentTime, gm=game||pre, lv=order?strain/100*.5:Math.min(1,.15+ent/100*.85), mute=finOn&&!finMus;
+    setT(n.rainG.gain,mute?0:(gm?.07:.055+lv*.09)); setT(n.rainF.frequency,2200+lv*1600);
+    setT(n.rumG.gain,mute?0:.28+lv*.75);
+    setT(n.padG.gain,mute?0:(gm?.03:.085*(1-lv*.7))); setT(n.padF.frequency,order?900:520);
+    n.pad.forEach(function(o,k){ setT(o.detune,(k%2?1:-1)*lv*(8+k*7),.8) });
+    setT(n.humG.gain,mute?0:(gm?.03:(order?strain/100*.035:lv*.1)),.25); setT(n.humF.frequency,170+lv*lv*900,.3);
+    if(game){
+      if(seqT<t){ seqT=t+.06; seqI=0; }
+      var wv=G?G.wave:1, stp=G&&G.slowT>0?.17:.125;
+      while(seqT<t+.5){
+        var st=seqI%16, w=seqT-t;
+        if(BASS[st]) tone(BASS[st],.2,.22,'sawtooth',w,n.bassF);
+        if(st%4===2) noiseHit(.04,.05,7000,'highpass',w);
+        if(wv>=2&&st%2===0) tone(ARP[(seqI/2|0)%ARP.length]*(wv>=4?2:1),.11,.035,'triangle',w);
+        seqI++; seqT+=stp;
+      }
+    } else if(!mute&&!gm&&t>=bellT){
+      if(order||lv<.45){
+        bellI=Math.max(0,Math.min(SCALE.length-1,bellI+[-2,-1,-1,1,1,2,3,-3][Math.random()*8|0]));
+        bell(SCALE[bellI],.055*(1-lv)); if(Math.random()<.3) bell(SCALE[Math.max(0,bellI-2)],.03,.5);
+        bellT=t+rnd(2.4,5.2);
+      } else { bell(SCALEX[Math.random()*SCALEX.length|0]*(Math.random()<.5?1:.5),.035); bellT=t+rnd(1.2,3.4); }
+    }
   }
-  $('sndbtn').onclick=function(){ setSnd(!sndOn); if(sndOn) note(659.25,.6,.12); };
+  ['pointerdown','touchend','click','keydown'].forEach(function(ev){ addEventListener(ev,function(){ if(sndOn&&(!AC||AC.state!=='running')) sndWake(); },{passive:true,capture:true}) });
+  $('sndbtn').onclick=function(){ setSnd(!sndOn); if(sndOn) setTimeout(function(){ note(659.25,.6,.12) },120); };
   sndLabel();
+
+
+  /* ================= sitenin gizemi: beş parça ================= */
+  function qHas(k){ return !!(MEM.q&&MEM.q[k]) }
+  function qCount(){ var n=0; QK.forEach(function(k){ if(qHas(k)) n++ }); return n }
+  function qSync(){
+    var n=qCount(), TQ=L().q, b=$('qbtn');
+    b.querySelector('.qd').textContent=MEM.fin||n===5?'◆':'◇';
+    $('qbl').textContent=MEM.fin?TQ.btndone:(n===5?TQ.btnfin:TQ.btn); $('qbn').textContent=MEM.fin?'':n+'/5';
+    b.classList.toggle('new',!MEM.qo&&!MEM.fin);
+    $('qnav').textContent=(n===5?'◆ ':'◇ ')+n+'/5'; $('qnav').setAttribute('aria-label',TQ.title);
+    $('qp').firstElementChild.setAttribute('aria-label',TQ.title);
+    document.body.classList.toggle('won',!!MEM.fin);
+    if(MEM.fin&&!(MEM.dev&&MEM.rain)) RAINC=RAINS.gold;
+    if(!$('qp').hidden) qRender();
+  }
+  function qRender(){
+    var TQ=L().q, n=qCount(), dm='', i; for(i=0;i<5;i++) dm+=i<n?'◆':'◇';
+    var h='<div class="qhd"><h3>'+TQ.title+'</h3><span>'+dm+' '+n+'/5</span><button type="button" class="qx" data-q="x" aria-label="×">×</button></div><p class="qin">'+TQ.intro+'</p><ol class="ql">';
+    QK.forEach(function(k){
+      var ok=qHas(k), lv=(MEM.qh&&MEM.qh[k])|0;
+      h+='<li'+(ok?' class="ok"':'')+'><span class="qd">'+(ok?'◆':'◇')+'</span><div><b>'+esc(TQ.t[k])+'</b>';
+      if(k==='n'&&(!ok||qEdit)) h+='<p>'+TQ.who+'</p><form class="qme"><input id="qme" type="text" maxlength="40" autocomplete="given-name" autocapitalize="words" spellcheck="false" placeholder="'+TQ.whoph+'" aria-label="'+TQ.who+'"><button class="btn sm solid" type="submit">'+TQ.save+'</button></form>';
+      else if(ok) h+='<p class="qs">_ '+esc(TQ.say[k](MEM.me||''))+'</p>'+(k==='n'?'<button type="button" class="qh" data-q="me">'+TQ.change+'</button>':'');
+      else {
+        for(i=0;i<lv;i++) h+='<p>'+esc(TQ.h[k][i])+'</p>';
+        if(k==='s'&&(lv||qSeenN)) h+='<p class="qs">'+TQ.prog(qSeenN)+'</p>';
+        if(lv<2) h+='<button type="button" class="qh" data-q="h" data-k="'+k+'">'+(lv?TQ.hint2:TQ.hint)+'</button>';
+      }
+      h+='</div></li>';
+    });
+    h+='</ol><div class="qft"><span>'+(MEM.fin?'':(n<5?TQ.left(5-n):TQ.ready))+'</span>'+(n===5?'<button type="button" class="btn solid" data-q="fin">'+(MEM.fin?TQ.replay:TQ.btnfin)+'</button>':'')+'</div>';
+    $('qp').firstElementChild.innerHTML=h;
+  }
+  function openQ(){
+    if(game||pre||finOn) return;
+    $('qp').hidden=false; document.body.classList.add('lock'); qEdit=false;
+    if(!MEM.qo){ MEM.qo=1; memSave(); }
+    qSync(); sfx('ui');
+  }
+  function closeQ(){ if($('qp').hidden) return; $('qp').hidden=true; if(gov.hidden||!gov.classList.contains('modal')) document.body.classList.remove('lock'); lastAct=performance.now(); }
+  function meOk(t){ t=String(t||'').trim().replace(/\s+/g,' '); return t.length>=2&&t.length<=40&&!/[\d<>&"'\/\\@]/.test(t) }
+  function setMe(t){ MEM.me=cap(String(t).replace(/\s+/g,' ')).slice(0,40); memSave(); tbarSync(); qEdit=false; if(qHas('n')) qSync(); else qGot('n'); }
+  /* terminale yazılan isim ziyaretçinin kendisi mi? */
+  function askMe(t){
+    if(MEM.me||!meOk(t)) return;
+    var nm=cap(t), TQ=L().q, d=document.createElement('div'); d.className='tq';
+    d.innerHTML='<span>'+esc(TQ.isyou(nm))+'</span><button type="button">'+TQ.yes+'</button><button type="button">'+TQ.no+'</button>';
+    var bs=d.querySelectorAll('button');
+    bs[0].onclick=function(){ d.remove(); setMe(nm); out(esc(L().q.meok(MEM.me)),'c'); };
+    bs[1].onclick=function(){ d.remove(); };
+    tout.appendChild(d); tout.scrollTop=tout.scrollHeight;
+  }
+  function qGot(k){
+    if(qHas(k)) return;
+    MEM.q=MEM.q||{}; MEM.q[k]=1; memSave();
+    var n=qCount(), ln=L().q.say[k](MEM.me||'');
+    qSync(); sfx('piece',n);
+    [$('qnav'),$('qbtn')].forEach(function(e){ e.classList.remove('bump'); void e.offsetWidth; e.classList.add('bump'); });
+    flashHud('◆ '+n+'/5 · '+ln,5200); out(esc('◆ '+n+'/5  _ '+ln),'c');
+    if(n===5&&!MEM.fin) setTimeout(qOffer,3400);
+  }
+  function qOffer(tries){
+    if(MEM.fin||finOn) return;
+    if(game||pre||!gov.hidden||!$('qp').hidden){ if((tries|0)<40) setTimeout(function(){ qOffer((tries|0)+1) },2000); return; }
+    var TQ=L().q; govShow(TQ.rtitle,TQ.rtext,null,TQ.rgo,startFinale,TQ.rlater,null,false,true);
+  }
+  function qNode(id){
+    if(qSeen[id]) return; qSeen[id]=1; qSeenN++;
+    if(qSeenN>=10) qGot('s'); else if(!$('qp').hidden) qRender();
+  }
+  function qIdle(){
+    if(qHas('w')||!order||game||pre||finOn||document.hidden||!gov.hidden||!$('qp').hidden||strain>0) return;
+    if(performance.now()-lastAct>30000) qGot('w');
+  }
+  $('qbtn').onclick=$('qnav').onclick=function(){ if(qCount()===5&&!MEM.fin) startFinale(); else openQ(); };
+  $('qp').addEventListener('click',function(e){
+    if(e.target===$('qp')){ closeQ(); return; }
+    var b=e.target.closest('[data-q]'); if(!b) return;
+    var a=b.dataset.q;
+    if(a==='x') closeQ();
+    else if(a==='h'){ MEM.qh=MEM.qh||{}; MEM.qh[b.dataset.k]=((MEM.qh[b.dataset.k])|0)+1; memSave(); qRender(); sfx('ui'); }
+    else if(a==='me'){ qEdit=true; qRender(); var qi=$('qme'); if(qi){ qi.value=MEM.me||''; qi.focus(); } }
+    else if(a==='fin'){ closeQ(); startFinale(); }
+  });
+  $('qp').addEventListener('submit',function(e){
+    e.preventDefault(); var qi=$('qme'); if(!qi) return;
+    if(meOk(qi.value)) setMe(qi.value); else { qi.value=''; qi.placeholder=L().q.mebad; qi.focus(); }
+  });
+  addEventListener('keydown',function(e){
+    if(e.key!=='Escape') return;
+    if(finOn){ if($('fcard').hidden) $('fskip').click(); else endFinale(); }
+    else if(!$('qp').hidden) closeQ();
+  });
+
+  /* başlık kısa süreliğine ziyaretçinin ismine dönüşür */
+  function nameSwap(nm,ms){
+    var OLD=NAME.slice(), ws=String(nm).split(' ').slice(0,3);
+    function put(words){
+      nameSpans.forEach(function(x,i){
+        var w=words[i]||''; NAME[i]=w; x.style.display=w?'':'none';
+        x.innerHTML=w.split('').map(function(ch){ return '<span class="lt">'+SC[Math.random()*SC.length|0]+'</span>' }).join('');
+        [].forEach.call(x.children,function(l,li){ if(reduce) l.textContent=w[li]; else decodeLetter(l,w[li],6+i*5+li*2) });
+      });
+    }
+    put(ws); setTimeout(function(){ put(OLD) },ms);
+  }
+
+  /* ================= final ================= */
+  function endFinale(){
+    if(!finOn) return;
+    var Fx=$('fin'); finId++; Fx.classList.remove('on');
+    setTimeout(function(){
+      Fx.hidden=true; $('fgh').innerHTML=''; $('fcard').hidden=true; finOn=false; finMus=false; document.body.classList.remove('lock'); lastAct=performance.now();
+      var de=document.documentElement; de.style.scrollBehavior='auto'; scrollTo(0,0); setTimeout(function(){ de.style.scrollBehavior='' },60);
+      if(MEM.me) nameSwap(MEM.me,7000);
+      flashHud(L().q.f.yours,7000);
+    },900);
+  }
+  function startFinale(){
+    if(finOn||game||pre||qCount()<5) return;
+    closeQ(); govHide(); if(!order) setOrder(true,true);
+    finOn=true; finMus=false;
+    var id=++finId, skipped=false, dimName=false, Fx=$('fin'), TF=L().q.f, nm=MEM.me||'?', FH=innerHeight, loc=lang==='tr'?'tr-TR':'en-GB';
+    var when=new Date(MEM.fd||Date.now()), dateStr=when.toLocaleDateString(loc,{day:'numeric',month:'long',year:'numeric'});
+    var tmNow=new Date().toLocaleTimeString(loc,{hour:'2-digit',minute:'2-digit'}), tmCard=when.toLocaleTimeString(loc,{hour:'2-digit',minute:'2-digit'});
+    var tx=$('ftx'), cp=$('fcap'), lay=$('fgh'), cvs=$('fcv'), fg=cvs.getContext('2d'), dpr=Math.min(devicePixelRatio||1,2);
+    clearTimeout(hudTimer); hud.hidden=true;
+    tx.innerHTML=''; cp.className=''; cp.textContent=''; lay.innerHTML=''; $('fcard').hidden=true; $('fskip').hidden=false; $('fskip').textContent=TF.skip;
+    cvs.width=W*dpr; cvs.height=FH*dpr; fg.setTransform(dpr,0,0,dpr,0,0); fg.clearRect(0,0,W,FH);
+    Fx.hidden=false; document.body.classList.add('lock');
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){ Fx.classList.add('on') }) });
+    function live(){ return finOn&&id===finId&&!skipped }
+    function wait(ms,fn){ setTimeout(function(){ if(live()) fn() },ms) }
+    function capt(t,ms){ wait(ms||0,function(){ cp.className=''; setTimeout(function(){ if(!live()) return; cp.textContent=t; cp.className='on'; },cp.textContent?450:0); }) }
+    function say(lines,hold,done){
+      tx.innerHTML=''; var li=0;
+      (function nextLine(){
+        if(!live()) return;
+        if(li>=lines.length){ wait(hold,done); return; }
+        var d=document.createElement('div'), t=lines[li++], ci=0;
+        if(tx.lastChild) tx.lastChild.className=''; d.className='on'; tx.appendChild(d);
+        (function ch(){ if(!live()) return; d.textContent=t.slice(0,++ci); sfx('type'); if(ci<t.length) setTimeout(ch,reduce?0:32); else setTimeout(nextLine,620); })();
+      })();
+    }
+    /* 2) ziyaretçinin kendi hareketleri, sahte imleçlerle yeniden oynar */
+    function ghosts(done){
+      tx.innerHTML='';
+      var path=REC.slice(), i, k;
+      if(path.length<14){ path=[]; var px0=W/2, py0=FH/2; for(i=0;i<70;i++){ px0=Math.max(20,Math.min(W-20,px0+rnd(-W*.12,W*.12))); py0=Math.max(20,Math.min(FH-20,py0+rnd(-FH*.12,FH*.12))); path.push([px0,py0,i%6===0?1:0]); } }
+      var cnt2=W<640?6:8, len=path.length, span=len*.62, gs=[], dur=7200, t0=performance.now();
+      for(k=0;k<cnt2;k++){ var e=document.createElement('div'); e.className='cur'; e.innerHTML=ARROW; e.style.opacity=0; lay.appendChild(e); gs.push({el:e,a:k*len/cnt2,li:-1,x:0,y:0,px:null,py:0}); }
+      capt(TF.c1,600); capt(TF.c2,4100);
+      fg.lineWidth=1.5; fg.lineCap='round';
+      (function step(){
+        if(!live()) return;
+        var p=Math.min(1,(performance.now()-t0)/dur);
+        fg.fillStyle='rgba(2,4,3,.035)'; fg.fillRect(0,0,W,FH);
+        gs.forEach(function(q,gi){
+          var f=q.a+span*p, j=Math.floor(f), u=f-j, A=path[j%len], B=path[(j+1)%len];
+          q.x=Math.max(4,Math.min(W-10,A[0]+(B[0]-A[0])*u)); q.y=Math.max(4,Math.min(FH-10,A[1]+(B[1]-A[1])*u));
+          q.el.style.opacity=1; q.el.style.transform='translate('+(q.x-4).toFixed(1)+'px,'+(q.y-2).toFixed(1)+'px)';
+          if(q.px!=null&&Math.abs(q.x-q.px)+Math.abs(q.y-q.py)<W*.5){ fg.strokeStyle=gi%2?'rgba(79,224,138,.5)':'rgba(217,255,233,.4)'; fg.beginPath(); fg.moveTo(q.px,q.py); fg.lineTo(q.x,q.y); fg.stroke(); }
+          q.px=q.x; q.py=q.y;
+          if(q.li<0) q.li=j;
+          while(q.li<j){ q.li++; var pt=path[q.li%len]; if(pt[2]){ var r=document.createElement('div'); r.className='rip'; r.style.left=Math.max(4,Math.min(W-10,pt[0]))+'px'; r.style.top=Math.max(4,Math.min(FH-10,pt[1]))+'px'; r.addEventListener('animationend',function(){ this.remove() }); lay.appendChild(r); sfx('tick'); } }
+        });
+        if(p<1){ requestAnimationFrame(step); return; }
+        gs.forEach(function(q){ q.el.animate([{transform:'translate('+(q.x-4)+'px,'+(q.y-2)+'px)'},{transform:'translate('+(W/2-4)+'px,'+(FH*.44)+'px)'}],{duration:800,easing:'cubic-bezier(.6,0,.2,1)',fill:'forwards'}); });
+        wait(900,function(){ gs.forEach(function(q){ q.el.style.opacity=0 }); cp.className=''; });
+        wait(1700,function(){ lay.innerHTML=''; cp.textContent=''; fg.clearRect(0,0,W,FH); done(); });
+      })();
+    }
+    /* 5) yağmur durur, harfler ziyaretçinin ismini yazar */
+    function nameRain(done){
+      tx.innerHTML=''; finMus=true;
+      var up=lang==='tr'?nm.toLocaleUpperCase('tr'):nm.toUpperCase(), words=up.split(' '), fam='"Syne","Arial Black",sans-serif', oc=document.createElement('canvas'), og=oc.getContext('2d'), i;
+      function wd(t,px){ og.font='800 '+px+'px '+fam; return og.measureText(t).width||1 }
+      var lines=[up], px=Math.min(FH*.4,W*.9/wd(up,100)*100);
+      if(px<W*.12&&words.length>1){ var mw=1; words.forEach(function(w){ mw=Math.max(mw,wd(w,100)) }); lines=words; px=Math.min(FH*.56/words.length,W*.9/mw*100); }
+      px=Math.max(24,Math.floor(px));
+      var cs=Math.max(7,Math.round(px/26)), lh=px*1.04, bw=Math.ceil(W), bh=Math.ceil(lines.length*lh+px*.3), pts=[], oy=FH*.42-bh/2;
+      oc.width=bw; oc.height=bh; og.font='800 '+px+'px '+fam; og.textAlign='center'; og.textBaseline='middle'; og.fillStyle='#ffd166';
+      lines.forEach(function(l,n){ og.fillText(l,bw/2,px*.15+lh*(n+.5)) });
+      var data=og.getImageData(0,0,bw,bh).data;
+      for(var y=0;y+cs/2<bh;y+=cs) for(var x=0;x+cs/2<bw;x+=cs){ if(data[(((y+cs/2)|0)*bw+((x+cs/2)|0))*4+3]>110) pts.push({x:x,ty:oy+y,y:-rnd(10,FH*1.1),v:rnd(9,18),ch:glyph(),on:0}); }
+      var bgd=[], t0=performance.now(), landed=0, shown=false;
+      for(i=0;i<Math.ceil(W/18);i++) bgd.push({y:rnd(-30,FH/18)|0,sp:rnd(.25,.8),a:0,ch:glyph()});
+      (function loop(){
+        if(!finOn||id!==finId) return;
+        var el=performance.now()-t0, q, dimbg=el>1400;
+        fg.fillStyle='rgba(2,4,3,.3)'; fg.fillRect(0,0,W,FH);
+        fg.font='14px "JetBrains Mono",monospace'; fg.textBaseline='top';
+        for(i=0;i<bgd.length;i++){ q=bgd[i]; q.a+=q.sp*(dimbg?.6:1.4); if(q.a>=1){ q.a-=1; q.y++; q.ch=glyph(); if(q.y*18>FH&&Math.random()>.9) q.y=0; } fg.fillStyle=dimbg?'rgba(138,109,42,.5)':'#4fe08a'; fg.fillText(q.ch,i*18+3,q.y*18); }
+        if(el>1400){
+          fg.font='600 '+(cs+1)+'px "JetBrains Mono",monospace';
+          for(i=0;i<pts.length;i++){ q=pts[i];
+            if(!q.on){ q.y+=q.v; if(q.y>=q.ty){ q.y=q.ty; q.on=1; landed++; } fg.fillStyle='#fff7df'; }
+            else { if(Math.random()<.015) q.ch=glyph(); fg.fillStyle=dimName?'rgba(255,209,102,.22)':'#ffd166'; }
+            fg.fillText(q.ch,q.x,q.y);
+          }
+          if(landed>pts.length*.7&&!dimName){ fg.globalAlpha=.07; fg.drawImage(oc,0,oy); fg.globalAlpha=1; }
+          if(landed>=pts.length&&!shown){ shown=true; fg.fillStyle='#020403'; fg.fillRect(0,0,W,FH); sfx('reveal'); capt(TF.rain,500); wait(4300,done); }
+        }
+        requestAnimationFrame(loop);
+      })();
+    }
+    /* 6) kart */
+    function card(){
+      dimName=true; cp.className=''; tx.innerHTML=''; lay.innerHTML=''; $('fskip').hidden=true; finMus=true;
+      if(!MEM.fd){ MEM.fd=Date.now(); }
+      $('fso').textContent=TF.solved; $('fnm').textContent=nm; $('fdt').textContent=dateStr+' · '+tmCard; $('fqt').textContent='“'+TF.quote+'”';
+      $('ftell').textContent=TF.tell; $('ftell').href='mailto:'+MAIL+'?subject='+encodeURIComponent(TF.ms)+'&body='+encodeURIComponent(TF.mb(nm,dateStr));
+      $('fback').textContent=TF.back; $('fpv').textContent=TF.priv; $('fcard').hidden=false;
+      MEM.fin=1; memSave(); qSync(); sfx('win');
+    }
+    $('fskip').onclick=function(){ if(!live()) return; skipped=true; fg.clearRect(0,0,W,FH); card(); };
+    $('fback').onclick=endFinale;
+    var mins=Math.floor((Date.now()-T0)/60000);
+    wait(1900,function(){
+      say([nm+'.',TF.watch],1500,function(){
+        ghosts(function(){
+          say([TF.time(tmNow),TF.stat(myClicks,chaosN,mins),TF.vis(VISIT)],1500,function(){
+            say([TF.who1,TF.who2,TF.who3,TF.who4],1900,function(){
+              nameRain(card);
+            });
+          });
+        });
+      });
+    });
+  }
 
   /* ================= saklı köpek: her ziyarette başka yerde ================= */
   var DOGSVG='<svg viewBox="0 0 46 28" aria-hidden="true"><path class="wag" d="M37 27c5-2 7-8 5-14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><g class="hd"><path d="M7 13c-5-1-7 4-6 11 3 1 6-2 7-6zM33 13c5-1 7 4 6 11-3 1-6-2-7-6z" fill="currentColor" opacity=".75"/><path d="M6 28V17a14 13 0 0 1 28 0v11z" fill="currentColor"/><circle cx="14.5" cy="17" r="2" fill="#060b09"/><circle cx="25.5" cy="17" r="2" fill="#060b09"/><ellipse cx="20" cy="23" rx="3" ry="2" fill="#060b09"/><path class="tg" d="M18.5 25.2h3v1.3a1.5 1.5 0 0 1-3 0z" fill="#ff8fab"/></g></svg>';
@@ -1915,7 +2369,7 @@ html,body{margin:0}
       d.classList.add('found'); bark();
       MEM.dog=(MEM.dog|0)+1; memSave();
       var c=mid(d); confetti(c[0],c[1],26,['#ffd166','#4fe08a','#ffffff'],170); ripple(c[0],c[1]);
-      flashHud(L().dogf(MEM.dog),4200); out(esc(L().dogt),'c');
+      flashHud(L().dogf(MEM.dog),4200); out(esc(L().dogt),'c'); setTimeout(function(){ qGot('d') },2600);
     });
   })();
   initRain();
@@ -1923,7 +2377,7 @@ html,body{margin:0}
   function frame(t){
     var gap=reduce?400:(order?95:60);
     if(t-last>gap){ last=t; stepRain(); }
-    stepPk(t); stepChaos(); if(++sndTick%10===0) sndStep();
+    stepPk(t); stepChaos(); if(++sndTick%10===0) sndStep(); if(sndTick%30===0) qIdle();
     var play=game||pre;
     if(play) stepGame(game);
     if(game){
@@ -1965,7 +2419,8 @@ html,body{margin:0}
   var TITLE=document.title;
   document.addEventListener('visibilitychange',function(){
     document.title=document.hidden&&!order&&!game?L().away:TITLE;
-    if(AC&&sndOn){ if(document.hidden) AC.suspend(); else AC.resume(); }
+    if(AC){ if(document.hidden) AC.suspend(); else if(sndOn) AC.resume(); }
+    lastAct=performance.now();
   });
   tbarSync();
   if(VISIT>=2) setTimeout(function(){ if(order&&!game&&!pre&&gov.hidden) flashHud(memLine(),5600); },1800);
