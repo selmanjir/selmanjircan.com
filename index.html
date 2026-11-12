@@ -440,6 +440,13 @@ body.won{--green:#ffd166; --dim:#8a6d2a; --head:#fff1c9}
 #sndbtn{position:relative; display:inline-flex; align-items:center; justify-content:center; width:34px; padding:6px 0; color:var(--muted)}
 #sndbtn.wait{border-color:var(--gold); color:var(--gold); animation:qpulse 2s ease-in-out infinite}
 #sndbtn.wait::after{content:attr(data-tip); position:absolute; right:0; top:calc(100% + 8px); font:600 11px var(--mono); color:var(--bg); background:var(--gold); padding:5px 8px; border-radius:6px; white-space:nowrap; pointer-events:none}
+/* telefon eğimi: kaosta panelde su terazisi görünür */
+#lvl{display:none; position:relative; width:40px; height:40px; flex:none; border-radius:50%; border:2px solid var(--muted); background:conic-gradient(color-mix(in srgb,var(--green) 50%,transparent) calc(var(--p,0)*360deg),transparent 0); transition:border-color .3s}
+#lvl::after{content:""; position:absolute; left:50%; top:50%; width:14px; height:14px; margin:-8px 0 0 -8px; border-radius:50%; border:1px solid var(--muted)}
+#lvl i{position:absolute; left:50%; top:50%; width:10px; height:10px; margin:-5px 0 0 -5px; border-radius:50%; background:var(--bug); box-shadow:0 0 8px var(--bug); transition:background-color .3s}
+#lvl.ok{border-color:var(--green)} #lvl.ok i{background:var(--green); box-shadow:0 0 8px var(--green)}
+body.tilt:not(.order):not(.game) #lvl{display:block}
+body.tilt:not(.order):not(.game) .gauge{display:none}
 /* yağmurdaki şifre: bir sütun kısa süreliğine altına döner */
 #cipher{position:fixed; left:0; top:0; z-index:2; pointer-events:none; font:600 15px/20px var(--mono)}
 #cipher span{position:absolute; left:0; width:18px; text-align:center; color:#fffdf2; opacity:0; text-shadow:0 0 8px var(--gold), 0 0 20px color-mix(in srgb,var(--gold) 70%,transparent); transition:color .6s}
@@ -579,6 +586,7 @@ html,body{margin:0}
 <div id="dock">
   <div class="dk"><span class="dkl" data-i18n="d_bal">DENGE</span><span class="pct">%<b id="bal">100</b></span></div>
   <div class="gauge" aria-hidden="true"><span id="gfill"></span></div>
+  <span id="lvl" aria-hidden="true"><i></i></span>
   <span class="dkc"><span id="cnt">0</span><span class="lbl" data-i18n="d_clk"> tıklama</span></span>
   <button type="button" class="btn solid" id="toggle">Dengele</button>
 </div>
@@ -682,7 +690,7 @@ html,body{margin:0}
       nf:[['rol','Backend Developer'],['uptime',YEARS+' yıldır profesyonel kod'],['evcil','1 köpek']],
       langok:'Dil: Türkçe',langbad:'Kullanım: lang tr | lang en',t_chaos:'Kaos serbest.',t_balance:'Denge sağlandı.',t_game:'Kaos ile savaş başlıyor.',
       dog:'Hav! Sahibim şu an kod yazıyor. Ben de sayfada bir yerde saklanıyorum; bulana rozet var.',dog2:function(n){return 'Hav! Beni '+n+' kez buldun. Her gelişinde başka yere saklanırım.'},
-      snd:['Sesi aç','Sesi kapat'],sndtip:function(t){return 'ses için bir yere '+(t?'dokun':'tıkla')},
+      snd:['Sesi aç','Sesi kapat'],tilt1:'Telefonu eğ: site de eğilir. Dümdüz tut: denge gelir.',hintT:'Telefonu düz tut ya da dengele ↓',shake:'Salladın. Kaos uyandı.',tiltok:'Dengeyi elinle kurdun ✓',sndtip:function(t){return 'ses için bir yere '+(t?'dokun':'tıkla')},
       q:{btn:'Gizemi çöz',btnfin:'Finali başlat',btndone:'Gizem çözüldü',title:'Sitenin gizemi',
         intro:'Bu sitede biri yaşıyor. Altı parçayı bul, kendini göstersin. Hepsi bu sayfada; özel bilgi gerekmez, takılırsan ipucu iste.',
         who:'Gizemi kim çözüyor?',whoph:'ismin',save:'Benim',change:'ismi değiştir',hint:'İpucu ver',hint2:'Daha açık söyle',
@@ -729,7 +737,7 @@ html,body{margin:0}
       nf:[['role','Backend Developer'],['uptime',YEARS+' years of professional code'],['pets','1 dog']],
       langok:'Language: English',langbad:'Usage: lang tr | lang en',t_chaos:'Chaos released.',t_balance:'Balance restored.',t_game:'Fight the chaos is starting.',
       dog:'Woof! My owner is writing code right now. I am hiding somewhere on this page; find me for a badge.',dog2:function(n){return 'Woof! You found me '+n+(n>1?' times':' time')+'. I hide somewhere new on every visit.'},
-      snd:['Turn sound on','Turn sound off'],sndtip:function(t){return (t?'tap':'click')+' anywhere for sound'},
+      snd:['Turn sound on','Turn sound off'],tilt1:'Tilt your phone and the site tilts too. Hold it flat to restore balance.',hintT:'Hold the phone flat or balance ↓',shake:'You shook it. The chaos woke up.',tiltok:'You balanced it by hand ✓',sndtip:function(t){return (t?'tap':'click')+' anywhere for sound'},
       q:{btn:'Solve the mystery',btnfin:'Start the finale',btndone:'Mystery solved',title:'The mystery of this site',
         intro:'Someone lives in this site. Find the six pieces and it will show itself. Everything is on this page; no special knowledge needed, and you can ask for a hint when stuck.',
         who:'Who is solving the mystery?',whoph:'your name',save:'That is me',change:'change name',hint:'Give me a hint',hint2:'Say it more plainly',
@@ -979,7 +987,7 @@ html,body{margin:0}
   }
   function syncBtn(){
     btn.textContent=$('mtoggle').textContent=order?L().chaos:L().bal;
-    $('mmode').textContent=order?L().morder:L().mchaos; $('dock').dataset.hint=order?L().hint2:L().hint;
+    $('mmode').textContent=order?L().morder:L().mchaos; $('dock').dataset.hint=order?L().hint2:(tiltOn?L().hintT:L().hint);
   }
   function setOrder(v,quiet){
     if(v===order||((game||pre)&&v)) return;
@@ -993,7 +1001,8 @@ html,body{margin:0}
       form(); alignRain(); pks.forEach(function(k){k.bad=false; k.sp=.012; k.el.classList.remove('bad')});
       if(!quiet) setTimeout(function(){ if(order){ ripple(fc.x,fc.y,true); flashHud(L().done); } },800);
     } else {
-      chaosT0=performance.now(); chaosN++;
+      chaosT0=performance.now(); chaosN++; tiltHold=0;
+      if(tiltOn&&!tiltTold){ tiltTold=true; setTimeout(function(){ if(!order&&!game&&!pre) flashHud(L().tilt1,5600) },1200); }
       while(curs.length>BASE){ curs.pop().el.remove(); }
       curs.forEach(function(o){pick(o); o.wait=rnd(0,80)}); drops.forEach(function(d){d.sp=rnd(.25,1); d.y=rnd(-rows,rows)|0});
     }
@@ -1042,7 +1051,7 @@ html,body{margin:0}
       }
       return;
     }
-    ent=Math.min(100,ent+.018);
+    ent=Math.min(100,ent+.018+(tiltOn?tiltMag*.0009:0));
     setStage(ent>=70?3:ent>=45?2:ent>=22?1:0);
     if(!reduce&&stage>=2&&tickN%(stage>=3?7:24)===0){ if(Math.random()<.5) corrupt(); else shove(hits[Math.random()*hits.length|0]); }
     if(!reduce&&stage>=2&&tickN%(stage>=3?24:75)===0) dropOne();
@@ -2078,6 +2087,55 @@ html,body{margin:0}
     window.sjc={hint:function(){ return T2('64 tabanında düşün. Tarayıcının bunun için hazır bir fonksiyonu var.','Think in base 64. Your browser already ships a function for it.') }};
   }catch(e){}
 
+  /* ================= telefonun eğimi: site eğilir, sallayınca kaos başlar, dümdüz tutunca denge gelir ================= */
+  var tiltOn=false, tiltAsked=false, tiltTold=false, tgx=0, tgy=0, tiltMag=0, rawB=0, rawG=0, baseY=null, tsx=0, tsy=0, tsk=0, tiltHold=0, tiltT=0, shakeN=0, shakeT=0, shakeCd=0;
+  var wrapEl=document.querySelector('.wrap'), lvlEl=$('lvl');
+  function clampT(v,m){ return Math.max(-m,Math.min(m,v)) }
+  function onTilt(e){
+    if(e.gamma==null||e.beta==null) return;
+    if(!tiltOn){ if(!isTouch) return; tiltOn=true; document.body.classList.add('tilt'); syncBtn(); }
+    rawB=e.beta; rawG=e.gamma;
+    var ang=(screen.orientation&&screen.orientation.angle)||0, gx=rawG, gy=rawB;
+    if(ang===90){ gx=rawB; gy=-rawG; } else if(ang===270||ang===-90){ gx=-rawB; gy=rawG; }
+    if(baseY==null) baseY=gy; baseY+=(gy-baseY)*.02; /* telefonu tutuş açısı zamanla "sıfır" kabul edilir */
+    tgx=clampT(gx,40); tgy=clampT(gy-baseY,40); tiltMag=Math.min(50,Math.abs(tgx)+Math.abs(tgy));
+  }
+  function onShake(e){
+    var a=e.acceleration, m=0;
+    if(a&&a.x!=null) m=Math.sqrt(a.x*a.x+a.y*a.y+a.z*a.z);
+    else if(e.accelerationIncludingGravity&&e.accelerationIncludingGravity.x!=null){ var g2=e.accelerationIncludingGravity; m=Math.abs(Math.sqrt(g2.x*g2.x+g2.y*g2.y+g2.z*g2.z)-9.81); }
+    var now=performance.now();
+    if(m>14&&now-shakeT>90){ if(now-shakeT>900) shakeN=0; shakeN++; shakeT=now;
+      if(shakeN>=3&&now>shakeCd&&isTouch&&order&&!game&&!pre&&!finOn&&gov.hidden&&$('qp').hidden){ shakeN=0; shakeCd=now+5000; setOrder(false); ent=38; buzz(60); setTimeout(function(){ if(!order&&!game&&!pre) flashHud(L().shake,3600) },900); }
+    }
+  }
+  addEventListener('deviceorientation',onTilt); addEventListener('devicemotion',onShake);
+  /* iPhone hareket sensörü için bir kez izin ister; izin yalnızca bir dokunuşun içinden istenebilir */
+  function tiltAsk(){
+    if(tiltAsked) return; tiltAsked=true;
+    try{
+      var D=window.DeviceOrientationEvent, M=window.DeviceMotionEvent;
+      if(D&&typeof D.requestPermission==='function') D.requestPermission().then(function(){},function(){});
+      if(M&&typeof M.requestPermission==='function') M.requestPermission().then(function(){},function(){});
+    }catch(e){}
+  }
+  addEventListener('click',function(e){ if(isTouch&&e.target.closest&&e.target.closest('#toggle,#mtoggle,#gagain')) tiltAsk(); },true);
+  function tiltStep(t){
+    var dt=Math.min(60,t-tiltT||16); tiltT=t;
+    var off=game||pre||finOn||reduce, k=off?0:(order?.16:.36);
+    tsx+=(tgx*k-tsx)*.12; tsy+=(tgy*k-tsy)*.12; tsk+=((off?0:-tgx*(order?.22:.6))-tsk)*.1;
+    wrapEl.style.translate=tsx.toFixed(1)+'px '+(tsy*.4).toFixed(1)+'px'; wrapEl.style.rotate=order||off?'':(tsx*.07).toFixed(2)+'deg';
+    layer.style.translate=(tsx*2.6).toFixed(1)+'px '+(tsy*2.6).toFixed(1)+'px';
+    cv.style.transform=Math.abs(tsk)<.3?'':'skewX('+tsk.toFixed(1)+'deg) scale(1.3)';
+    if(order||game||pre||finOn){ tiltHold=0; return; }
+    /* su terazisi: telefon yere paralel ve kıpırtısızsa denge dolmaya başlar */
+    var flat=Math.abs(rawB)<8&&Math.abs(rawG)<8;
+    tiltHold=flat?tiltHold+dt:Math.max(0,tiltHold-dt*3);
+    lvlEl.classList.toggle('ok',flat); lvlEl.style.setProperty('--p',Math.min(1,tiltHold/3200).toFixed(3));
+    lvlEl.firstChild.style.transform='translate('+(clampT(rawG,22)*.55).toFixed(1)+'px,'+(clampT(rawB,22)*.55).toFixed(1)+'px)';
+    if(tiltHold>=3200){ tiltHold=0; setOrder(true); buzz(40); setTimeout(function(){ if(order) flashHud(L().tiltok,4200) },950); }
+  }
+
   /* ================= ses: açık başlar; tarayıcılar ilk tıklama/dokunuştan önce ses çalmaya izin vermez, o yüzden o ana kadar tuş "bekliyor" görünür ================= */
   var AC=null, SN=null, sndOn=store('sjc_snd')!=='0', sndTick=0, wokeAt=0, sfxT=0, typT=0, seqT=0, seqI=0, bellT=0, bellI=3, dropT=0, chT=0, hbT=0;
   var SCALE=[220,261.63,293.66,329.63,392,440,523.25,587.33,659.25,783.99], SCALEX=[233.08,277.18,311.13,415.3,466.16];
@@ -2087,7 +2145,7 @@ html,body{margin:0}
     var Ctx=window.AudioContext||window.webkitAudioContext; if(!Ctx) return false;
     try{
       try{ if(navigator.audioSession) navigator.audioSession.type='playback' }catch(e2){}
-      AC=new Ctx(); var n={}, i, c, sr=AC.sampleRate;
+      AC=new Ctx(); var n={}, i, c, sr=AC.sampleRate; sfxT=typT=seqT=bellT=dropT=chT=hbT=0;
       n.out=AC.createGain(); n.out.gain.value=0; n.cmp=AC.createDynamicsCompressor(); n.out.connect(n.cmp); n.cmp.connect(AC.destination);
       /* yankı: üretilmiş bir oda */
       var len=sr*2.8|0, ir=AC.createBuffer(2,len,sr);
@@ -2185,6 +2243,14 @@ html,body{margin:0}
       case 'reveal': [110,164.81,220,277.18,329.63,440,554.37,659.25].forEach(function(f,i){ tone(f,5,.075,'triangle',i*.07,SN.mus) }); noiseHit(1.6,.1,500); break;
     }
   }
+  /* ses motorunu yumuşakça kapatır (pat sesi olmasın diye önce kısar). Telefonda başka uygulamaya geçince eski motor bozulabildiği için dönüşte yenisi kurulur. */
+  function sndKill(){
+    if(!AC) return;
+    var a=AC, n=SN; AC=null; SN=null;
+    try{ a.onstatechange=null; if(n){ n.out.gain.cancelScheduledValues(a.currentTime); n.out.gain.setTargetAtTime(0,a.currentTime,.012); } }catch(e){}
+    setTimeout(function(){ try{ a.close() }catch(e){} },140);
+    sndLabel();
+  }
   function sndCalm(){ if(AC&&SN) SN.humG.gain.setTargetAtTime(0,AC.currentTime,.06); }
   function sndLabel(){
     var b=$('sndbtn'), tx=L().snd[sndOn?1:0], wt=sndOn&&!sndLive();
@@ -2198,7 +2264,7 @@ html,body{margin:0}
   }
   function setSnd(v){
     sndOn=!!v; store('sjc_snd',sndOn?'1':'0');
-    if(sndOn) sndWake(); else if(AC&&SN){ SN.out.gain.cancelScheduledValues(AC.currentTime); SN.out.gain.setTargetAtTime(0,AC.currentTime,.08); setTimeout(function(){ if(!sndOn&&AC&&AC.state==='running') AC.suspend() },500); }
+    if(sndOn){ wokeAt=wokeAt||1; sndWake(); } else sndKill();
     sndLabel();
   }
   /* ortam: dengede sakin akor, çan ve yağmur; kaos büyüdükçe yağmur sıklaşır, akor bozulur, kalp atışı hızlanır, parazit ve sirenler girer; oyunda ritim çalar */
@@ -2248,7 +2314,8 @@ html,body{margin:0}
       }
     }
   }
-  ['pointerdown','pointerup','mousedown','touchend','click','keydown'].forEach(function(ev){ addEventListener(ev,function(){ if(sndOn&&!sndLive()){ wokeAt=performance.now(); sndWake(); } },{passive:true,capture:true}) });
+  ['pointerdown','pointerup','mousedown','touchend','click','keydown'].forEach(function(ev){ addEventListener(ev,function(){ if(sndOn&&!sndLive()){ if(AC&&AC.state!=='suspended') sndKill(); wokeAt=performance.now(); sndWake(); } },{passive:true,capture:true}) });
+  addEventListener('pageshow',function(e){ if(e.persisted){ sndKill(); if(sndOn&&wokeAt) sndWake(); } });
   $('sndbtn').onclick=function(){
     if(sndOn&&performance.now()-wokeAt<800) return; /* ses açıktı ama tarayıcı bekletiyordu: bu tık onu başlattı, kapatma */
     setSnd(!sndOn); if(sndOn) setTimeout(function(){ note(659.25,.6,.12) },200);
@@ -2538,7 +2605,7 @@ html,body{margin:0}
   function frame(t){
     var gap=reduce?400:(order?95:60);
     if(t-last>gap){ last=t; stepRain(); }
-    stepPk(t); stepChaos(); if(++sndTick%10===0) sndStep(); if(sndTick%30===0){ qIdle(); cipherTick(); sndLabel(); }
+    stepPk(t); stepChaos(); if(tiltOn) tiltStep(t); if(++sndTick%10===0) sndStep(); if(sndTick%30===0){ qIdle(); cipherTick(); sndLabel(); }
     var play=game||pre;
     if(play) stepGame(game);
     if(game){
@@ -2563,6 +2630,7 @@ html,body{margin:0}
       if(!order){
         var mx=o.x-mouse.x, my=o.y-mouse.y, md=mx*mx+my*my;
         if(md<10000&&md>1){ var m=Math.sqrt(md), f=(100-m)/100*1.6; o.vx+=mx/m*f; o.vy+=my/m*f; }
+        if(tiltOn){ o.vx+=tgx*.012; o.vy+=tgy*.012; }
         if(o.wait>0){ o.wait--; if(o.wait<=0) pick(o); }
         else if(dx*dx+dy*dy<30){ click(o.x,o.y,o.t,.12); o.wait=rnd(70,220)/(1+ent/100); }
       }
@@ -2581,7 +2649,8 @@ html,body{margin:0}
   var TITLE=document.title;
   document.addEventListener('visibilitychange',function(){
     document.title=document.hidden&&!order&&!game?L().away:TITLE;
-    if(AC){ try{ if(document.hidden){ if(AC.state==='running') AC.suspend(); } else if(sndOn){ var vr=AC.resume(); if(vr&&vr.then) vr.then(sndLabel,function(){}); } }catch(e){} }
+    if(document.hidden) sndKill(); else if(sndOn&&wokeAt) sndWake();
+    sndLabel();
     lastAct=performance.now();
   });
   tbarSync();
